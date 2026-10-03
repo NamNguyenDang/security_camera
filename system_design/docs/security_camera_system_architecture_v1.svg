@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1900" viewBox="0 0 1400 1900">
+<defs>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif;fill:#172033}
+    .hdr{font-size:28px;font-weight:bold;fill:#fff}
+    .lt{font-size:22px;font-weight:bold;fill:#fff}
+    .ct{font-size:15px;text-anchor:middle}
+    .box{fill:#fff;stroke:#73849a;stroke-width:1.4}
+    .sec{fill:#eaf7ff;stroke:#2b91cf;stroke-width:2}
+    .bus{fill:#f3ecff;stroke:#7254b3;stroke-width:2}
+    .arrow{stroke:#4f6075;stroke-width:2.5}
+  </style>
+</defs>
+<rect width="1400" height="1900" fill="#ffffff"/>
+<rect x="20" y="20" width="820" height="64" rx="8" fill="#34424f"/>
+<rect x="855" y="20" width="300" height="64" rx="8" fill="#155b91"/>
+<rect x="1170" y="20" width="210" height="64" rx="8" fill="#5a3d91"/>
+<text x="430" y="61" class="hdr" text-anchor="middle">System Layers / Components</text>
+<text x="1005" y="61" class="hdr" text-anchor="middle">Security Services</text>
+<text x="1275" y="61" class="hdr" text-anchor="middle">Communication Bus</text>
+
+<!-- Application -->
+<rect x="20" y="105" width="820" height="205" rx="10" fill="#f7dede" stroke="#a64242" stroke-width="2"/>
+<rect x="20" y="105" width="220" height="205" rx="10" fill="#963a3a"/>
+<text x="130" y="150" class="lt" text-anchor="middle">1. Application Layer</text>
+<rect class="box" x="270" y="135" width="120" height="44" rx="6"/><text class="ct" x="330" y="162">Live View</text><rect class="box" x="405" y="135" width="120" height="44" rx="6"/><text class="ct" x="465" y="162">Playback</text><rect class="box" x="540" y="135" width="120" height="44" rx="6"/><text class="ct" x="600" y="162">Alarm</text><rect class="box" x="675" y="135" width="120" height="44" rx="6"/><text class="ct" x="735" y="162">Settings</text><rect class="box" x="270" y="205" width="120" height="44" rx="6"/><text class="ct" x="330" y="232">User Management</text><rect class="box" x="405" y="205" width="120" height="44" rx="6"/><text class="ct" x="465" y="232">Event Search</text><rect class="box" x="540" y="205" width="120" height="44" rx="6"/><text class="ct" x="600" y="232">Device Config</text><rect class="box" x="675" y="205" width="120" height="44" rx="6"/><text class="ct" x="735" y="232">Mobile / Web UI</text>
+<rect class="sec" x="855" y="105" width="300" height="205" rx="10"/>
+<rect class="box" x="885" y="135" width="240" height="54" rx="6"/><text class="ct" x="1005" y="167">IAM / RBAC</text>
+<rect class="box" x="885" y="205" width="240" height="54" rx="6"/><text class="ct" x="1005" y="237">Device Identity / Audit</text>
+<rect class="bus" x="1170" y="105" width="210" height="205" rx="10"/>
+<text class="ct" x="1275" y="170">Application Bus</text><text class="ct" x="1275" y="196">IPC / Binder</text>
+
+<!-- Framework -->
+<rect x="20" y="345" width="820" height="205" rx="10" fill="#f5e7ca" stroke="#92662f" stroke-width="2"/>
+<rect x="20" y="345" width="220" height="205" rx="10" fill="#8a5b2d"/>
+<text x="130" y="390" class="lt" text-anchor="middle">2. Application</text><text x="130" y="420" class="lt" text-anchor="middle">Framework</text>
+<rect class="box" x="270" y="375" width="120" height="44" rx="6"/><text class="ct" x="330" y="402">Activity Manager</text><rect class="box" x="405" y="375" width="120" height="44" rx="6"/><text class="ct" x="465" y="402">Window Manager</text><rect class="box" x="540" y="375" width="120" height="44" rx="6"/><text class="ct" x="600" y="402">Content Providers</text><rect class="box" x="675" y="375" width="120" height="44" rx="6"/><text class="ct" x="735" y="402">Package Manager</text><rect class="box" x="270" y="445" width="120" height="44" rx="6"/><text class="ct" x="330" y="472">Resource Manager</text><rect class="box" x="405" y="445" width="120" height="44" rx="6"/><text class="ct" x="465" y="472">Notification Manager</text><rect class="box" x="540" y="445" width="120" height="44" rx="6"/><text class="ct" x="600" y="472">Location Manager</text><rect class="box" x="675" y="445" width="120" height="44" rx="6"/><text class="ct" x="735" y="472">View System</text>
+<rect class="sec" x="855" y="345" width="300" height="205" rx="10"/>
+<rect class="box" x="885" y="375" width="240" height="54" rx="6"/><text class="ct" x="1005" y="407">Security Policy</text>
+<rect class="box" x="885" y="445" width="240" height="54" rx="6"/><text class="ct" x="1005" y="477">Device Identity</text>
+<rect class="bus" x="1170" y="345" width="210" height="205" rx="10"/>
+<text class="ct" x="1275" y="410">System Service Bus</text><text class="ct" x="1275" y="436">Service / IPC</text>
+
+<!-- Services -->
+<rect x="20" y="585" width="820" height="205" rx="10" fill="#dff1e2" stroke="#2b7a3f" stroke-width="2"/>
+<rect x="20" y="585" width="220" height="205" rx="10" fill="#23723b"/>
+<text x="130" y="630" class="lt" text-anchor="middle">3. System Services</text>
+<rect class="box" x="285" y="615" width="150" height="44" rx="6"/><text class="ct" x="360" y="642">Media Service</text><rect class="box" x="455" y="615" width="150" height="44" rx="6"/><text class="ct" x="530" y="642">Camera Service</text><rect class="box" x="625" y="615" width="150" height="44" rx="6"/><text class="ct" x="700" y="642">AI Inference</text><rect class="box" x="285" y="685" width="150" height="44" rx="6"/><text class="ct" x="360" y="712">Storage Service</text><rect class="box" x="455" y="685" width="150" height="44" rx="6"/><text class="ct" x="530" y="712">Network Service</text><rect class="box" x="625" y="685" width="150" height="44" rx="6"/><text class="ct" x="700" y="712">Device Management</text>
+<rect class="sec" x="855" y="585" width="300" height="205" rx="10"/>
+<rect class="box" x="885" y="615" width="240" height="54" rx="6"/><text class="ct" x="1005" y="647">TLS / mTLS</text>
+<rect class="box" x="885" y="685" width="240" height="54" rx="6"/><text class="ct" x="1005" y="717">Encryption Services</text>
+<rect class="bus" x="1170" y="585" width="210" height="205" rx="10"/>
+<text class="ct" x="1275" y="650">Data Bus</text><text class="ct" x="1275" y="676">Message / Stream</text>
+
+<!-- Middleware -->
+<rect x="20" y="825" width="820" height="205" rx="10" fill="#dceefa" stroke="#24759b" stroke-width="2"/>
+<rect x="20" y="825" width="220" height="205" rx="10" fill="#20769b"/>
+<text x="130" y="870" class="lt" text-anchor="middle">4. Middleware</text>
+<rect class="box" x="270" y="855" width="120" height="44" rx="6"/><text class="ct" x="330" y="882">Media Framework</text><rect class="box" x="405" y="855" width="120" height="44" rx="6"/><text class="ct" x="465" y="882">AI Runtime</text><rect class="box" x="540" y="855" width="120" height="44" rx="6"/><text class="ct" x="600" y="882">Database</text><rect class="box" x="675" y="855" width="120" height="44" rx="6"/><text class="ct" x="735" y="882">OpenGL ES</text><rect class="box" x="270" y="925" width="120" height="44" rx="6"/><text class="ct" x="330" y="952">Vulkan</text><rect class="box" x="405" y="925" width="120" height="44" rx="6"/><text class="ct" x="465" y="952">SSL / TLS</text><rect class="box" x="540" y="925" width="120" height="44" rx="6"/><text class="ct" x="600" y="952">Codec Libraries</text>
+<rect class="sec" x="855" y="825" width="300" height="205" rx="10"/>
+<rect class="box" x="885" y="855" width="240" height="54" rx="6"/><text class="ct" x="1005" y="887">Secrets / Key Management</text>
+<rect class="box" x="885" y="925" width="240" height="54" rx="6"/><text class="ct" x="1005" y="957">Security Logging / Audit</text>
+<rect class="bus" x="1170" y="825" width="210" height="205" rx="10"/>
+<text class="ct" x="1275" y="890">Middleware Bus</text><text class="ct" x="1275" y="916">API / IPC</text>
+
+<!-- HAL -->
+<rect x="20" y="1065" width="820" height="205" rx="10" fill="#e7e0f6" stroke="#6546a0" stroke-width="2"/>
+<rect x="20" y="1065" width="220" height="205" rx="10" fill="#563891"/>
+<text x="130" y="1110" class="lt" text-anchor="middle">5. Hardware</text><text x="130" y="1140" class="lt" text-anchor="middle">Abstraction Layer</text>
+<rect class="box" x="285" y="1095" width="150" height="44" rx="6"/><text class="ct" x="360" y="1122">Camera HAL</text><rect class="box" x="455" y="1095" width="150" height="44" rx="6"/><text class="ct" x="530" y="1122">AI / NPU HAL</text><rect class="box" x="625" y="1095" width="150" height="44" rx="6"/><text class="ct" x="700" y="1122">Audio HAL</text><rect class="box" x="285" y="1165" width="150" height="44" rx="6"/><text class="ct" x="360" y="1192">Display HAL</text><rect class="box" x="455" y="1165" width="150" height="44" rx="6"/><text class="ct" x="530" y="1192">Storage HAL</text><rect class="box" x="625" y="1165" width="150" height="44" rx="6"/><text class="ct" x="700" y="1192">Network HAL</text>
+<rect class="sec" x="855" y="1065" width="300" height="205" rx="10"/>
+<rect class="box" x="885" y="1095" width="240" height="54" rx="6"/><text class="ct" x="1005" y="1127">Secure HAL Interface</text>
+<rect class="box" x="885" y="1165" width="240" height="54" rx="6"/><text class="ct" x="1005" y="1197">Device Identity</text>
+<rect class="bus" x="1170" y="1065" width="210" height="205" rx="10"/>
+<text class="ct" x="1275" y="1130">HAL Bus</text><text class="ct" x="1275" y="1156">Standard Interfaces</text>
+
+<!-- Kernel -->
+<rect x="20" y="1305" width="820" height="205" rx="10" fill="#e0e9f0" stroke="#385a75" stroke-width="2"/>
+<rect x="20" y="1305" width="220" height="205" rx="10" fill="#31536f"/>
+<text x="130" y="1350" class="lt" text-anchor="middle">6. Linux Kernel</text>
+<rect class="box" x="285" y="1335" width="150" height="38" rx="6"/><text class="ct" x="360" y="1359">Camera Driver</text><rect class="box" x="455" y="1335" width="150" height="38" rx="6"/><text class="ct" x="530" y="1359">NPU Driver</text><rect class="box" x="625" y="1335" width="150" height="38" rx="6"/><text class="ct" x="700" y="1359">Display Driver</text><rect class="box" x="285" y="1387" width="150" height="38" rx="6"/><text class="ct" x="360" y="1411">USB Driver</text><rect class="box" x="455" y="1387" width="150" height="38" rx="6"/><text class="ct" x="530" y="1411">Storage Driver</text><rect class="box" x="625" y="1387" width="150" height="38" rx="6"/><text class="ct" x="700" y="1411">Network Driver</text><rect class="box" x="285" y="1439" width="150" height="38" rx="6"/><text class="ct" x="360" y="1463">Audio Driver</text><rect class="box" x="455" y="1439" width="150" height="38" rx="6"/><text class="ct" x="530" y="1463">Wi-Fi / BT</text><rect class="box" x="625" y="1439" width="150" height="38" rx="6"/><text class="ct" x="700" y="1463">Power Management</text>
+<rect class="sec" x="855" y="1305" width="300" height="205" rx="10"/>
+<rect class="box" x="885" y="1325" width="240" height="46" rx="6"/><text class="ct" x="1005" y="1353">Secure Boot</text>
+<rect class="box" x="885" y="1380" width="240" height="46" rx="6"/><text class="ct" x="1005" y="1408">Kernel Hardening</text>
+<rect class="box" x="885" y="1435" width="240" height="46" rx="6"/><text class="ct" x="1005" y="1463">Hardware Root of Trust</text>
+<rect class="bus" x="1170" y="1305" width="210" height="205" rx="10"/>
+<text class="ct" x="1275" y="1370">Kernel Bus</text><text class="ct" x="1275" y="1396">Internal Interfaces</text>
+
+<!-- Hardware -->
+<rect x="20" y="1545" width="820" height="205" rx="10" fill="#e6eaed" stroke="#4a5c69" stroke-width="2"/>
+<rect x="20" y="1545" width="220" height="205" rx="10" fill="#42515d"/>
+<text x="130" y="1590" class="lt" text-anchor="middle">7. Hardware</text><text x="130" y="1620" class="lt" text-anchor="middle">Platform</text>
+<rect class="box" x="285" y="1575" width="150" height="38" rx="6"/><text class="ct" x="360" y="1599">SoC / CPU</text><rect class="box" x="455" y="1575" width="150" height="38" rx="6"/><text class="ct" x="530" y="1599">NPU / AI</text><rect class="box" x="625" y="1575" width="150" height="38" rx="6"/><text class="ct" x="700" y="1599">Camera Sensor</text><rect class="box" x="285" y="1627" width="150" height="38" rx="6"/><text class="ct" x="360" y="1651">Display</text><rect class="box" x="455" y="1627" width="150" height="38" rx="6"/><text class="ct" x="530" y="1651">Storage</text><rect class="box" x="625" y="1627" width="150" height="38" rx="6"/><text class="ct" x="700" y="1651">Ethernet / Wi-Fi</text><rect class="box" x="285" y="1679" width="150" height="38" rx="6"/><text class="ct" x="360" y="1703">Audio</text><rect class="box" x="455" y="1679" width="150" height="38" rx="6"/><text class="ct" x="530" y="1703">Security Chip</text><rect class="box" x="625" y="1679" width="150" height="38" rx="6"/><text class="ct" x="700" y="1703">Other Peripherals</text>
+<rect class="sec" x="855" y="1545" width="300" height="205" rx="10"/>
+<rect class="box" x="885" y="1570" width="240" height="46" rx="6"/><text class="ct" x="1005" y="1598">Hardware Root of Trust</text>
+<rect class="box" x="885" y="1625" width="240" height="46" rx="6"/><text class="ct" x="1005" y="1653">Device Provisioning</text>
+<rect class="box" x="885" y="1680" width="240" height="46" rx="6"/><text class="ct" x="1005" y="1708">Secure Boot</text>
+<rect class="bus" x="1170" y="1545" width="210" height="205" rx="10"/>
+<text class="ct" x="1275" y="1610">Hardware Bus</text><text class="ct" x="1275" y="1636">SoC / Peripheral</text>
+
+<!-- Inter-layer communication -->
+<line class="arrow" x1="260" y1="328" x2="790" y2="328"/><text x="525" y="320" class="ct">approved layer communication boundary</text><line class="arrow" x1="260" y1="568" x2="790" y2="568"/><text x="525" y="560" class="ct">approved layer communication boundary</text><line class="arrow" x1="260" y1="808" x2="790" y2="808"/><text x="525" y="800" class="ct">approved layer communication boundary</text><line class="arrow" x1="260" y1="1048" x2="790" y2="1048"/><text x="525" y="1040" class="ct">approved layer communication boundary</text><line class="arrow" x1="260" y1="1288" x2="790" y2="1288"/><text x="525" y="1280" class="ct">approved layer communication boundary</text><line class="arrow" x1="260" y1="1528" x2="790" y2="1528"/><text x="525" y="1520" class="ct">approved layer communication boundary</text>
+<text x="700" y="1815" class="ct">Proposal v1 — high-level modular architecture. Detailed APIs, requirements, source, tests, build configuration and security checks follow per component.</text>
+</svg>

@@ -1,26 +1,28 @@
-# Camera Sensor Requirements
-
-## Component
-`camera_sensor`
+# Camera Sensor Hardware Requirements — Platform Baseline v2
 
 ## Functional requirements
-- CS-FR-001: The hardware component shall produce supported image streams.
-- CS-FR-002: The hardware component shall support declared sensor modes.
-- CS-FR-003: The hardware component shall expose required control/status signals.
-- CS-FR-004: The hardware component shall report sensor fault state.
+- CAMERA_SENSOR-FR-001: Product Profile shall declare whether the hardware capability is required or optional.
+- CAMERA_SENSOR-FR-002: Hardware shall satisfy measurable qualification constraints.
+- CAMERA_SENSOR-FR-003: Unsupported/incompatible hardware shall fail qualification before release.
 
 ## Interface requirements
-- CS-IR-001: Interact through approved hardware, driver, and HAL interfaces.
-- CS-IR-002: Advertise only supported capabilities and status.
+- CAMERA_SENSOR-IR-001: Supplier-specific interfaces shall remain behind the platform adapter/driver.
+- CAMERA_SENSOR-IR-002: Capability and health/status exposed upward shall be provider-neutral.
+- CAMERA_SENSOR-IR-003: Compatible board/driver/adapter versions shall be recorded.
 
 ## Security requirements
-- CS-SR-001: Participate in approved boot, trust, and protection mechanisms where applicable.
-- CS-SR-002: Surface security-relevant status and failures to the owning driver/service.
+- CAMERA_SENSOR-SR-001: Hardware security/privacy obligations shall follow the selected security profile.
+- CAMERA_SENSOR-SR-002: Relevant integrity/security faults shall be surfaced for audit/recovery.
 
 ## Reliability requirements
-- CS-RR-001: Provide defined behavior for sensor not detected.
-- CS-RR-002: Provide defined behavior for invalid mode.
-- CS-RR-003: Provide defined behavior for streaming fault.
+- CAMERA_SENSOR-RR-001: Reset/power-loss/fault behavior shall be documented and testable.
+- CAMERA_SENSOR-RR-002: Replacement hardware shall preserve the upper portable contract after qualification.
+
+## Design acceptance criteria
+- CAMERA_SENSOR-AC-001: Replacement sensor preserves required capture modes after qualification.
+- CAMERA_SENSOR-AC-002: Unsupported electrical/timing combinations fail qualification.
+- CAMERA_SENSOR-AC-003: Calibration assets/process have an explicit owner.
+- CAMERA_SENSOR-AC-004: Requirement IDs use CAMERA_SENSOR prefix.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

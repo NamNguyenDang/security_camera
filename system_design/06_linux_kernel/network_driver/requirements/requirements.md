@@ -1,26 +1,28 @@
-# Network Driver Requirements
-
-## Component
-`network_driver`
+# Network Driver / Platform Integration Requirements — Platform Baseline v2
 
 ## Functional requirements
-- ND-FR-001: The driver shall initialize supported network interfaces.
-- ND-FR-002: The driver shall transmit and receive frames.
-- ND-FR-003: The driver shall report link/interface state.
-- ND-FR-004: The driver shall surface hardware/driver errors.
+- NETWORK_DRIVER-FR-001: Platform integration shall satisfy the portable contract above it.
+- NETWORK_DRIVER-FR-002: Product Profile shall declare supported capability and compatible driver/firmware.
+- NETWORK_DRIVER-FR-003: Unavailable or incompatible hardware shall be reported deterministically.
 
 ## Interface requirements
-- ND-IR-001: Expose only approved kernel interfaces to the corresponding HAL.
-- ND-IR-002: Do not expose raw hardware control to upper layers.
+- NETWORK_DRIVER-IR-001: Driver-specific controls/types shall not escape the platform integration boundary.
+- NETWORK_DRIVER-IR-002: Reset, resource, timing, and stable error mapping shall be defined.
+- NETWORK_DRIVER-IR-003: Product services shall consume portable capabilities rather than raw device APIs.
 
 ## Security requirements
-- ND-SR-001: Operate under approved kernel hardening and boot trust controls.
-- ND-SR-002: Report security-relevant hardware/driver faults for audit.
+- NETWORK_DRIVER-SR-001: Privileged device access shall follow platform security policy.
+- NETWORK_DRIVER-SR-002: Security-relevant radio/device state changes shall be auditable where applicable.
 
 ## Reliability requirements
-- ND-RR-001: Provide defined recovery or failure behavior for link down.
-- ND-RR-002: Provide defined recovery or failure behavior for driver reset.
-- ND-RR-003: Provide defined recovery or failure behavior for packet-ring/resource exhaustion.
+- NETWORK_DRIVER-RR-001: Reset/reconnect/restart behavior shall be defined.
+- NETWORK_DRIVER-RR-002: Firmware/driver incompatibility shall fail safely.
+
+## Design acceptance criteria
+- NETWORK_DRIVER-AC-001: Network Service does not depend on driver-specific APIs.
+- NETWORK_DRIVER-AC-002: Link/reset failure maps to stable connectivity state.
+- NETWORK_DRIVER-AC-003: Ethernet driver can change without cloud/media protocol changes.
+- NETWORK_DRIVER-AC-004: Wi-Fi/Bluetooth-specific radio lifecycle remains in its own integration.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

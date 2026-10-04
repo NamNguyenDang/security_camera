@@ -1,48 +1,49 @@
-# Network Driver Detailed Design
+# Network Driver / Platform Integration Detailed Design — Platform Baseline v2
 
-## Component
-`network_driver`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides kernel support for Ethernet and other supported network interfaces consumed by the Network HAL.
+## Deployment placement
+**Camera OS/board network integration**
+
+## Purpose and ownership
+Scope to the selected operating-system/board network implementation, separate from portable connectivity and transport-security policy.
+
+## Integration contract
+Platform network-driver guarantees for link state, reset, resource pressure, capability reporting, and stable errors beneath Network Interface/Service contracts.
 
 ## Relationship overview
-![Network Driver relationship](./network_driver_relationship.svg)
+![Network Driver / Platform Integration relationship](./network_driver_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Driver-specific controls are not exposed to product services.
+- Overlap with Wi-Fi/Bluetooth integration is explicitly split.
+- Link/reset/resource-error behavior is stable.
+- Portable sockets/connectivity remain above the driver.
+- Requirement IDs use NETWORK_DRIVER prefix.
 
-### Application Layer
-- Live View
-- Playback
-### System Services
-- Network Service
-### HAL
-- Network HAL
-### Linux Kernel
-- Network Driver
-### Hardware Platform
-- Ethernet / Wi-Fi
-- SoC / CPU
+## Product Profile inputs
+- optionality and supported interfaces/radios/devices;
+- OS/vendor/board and compatible firmware/driver versions;
+- reset, resource, power, and security constraints.
 
-## Security context
-- Kernel Hardening
-- Device Identity
-- Audit
+## Platform qualification
+The selected driver/integration must satisfy stable upper adapter/service semantics. Product code must not depend on driver-specific controls.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Security
+- privileged device access remains behind OS/platform isolation;
+- radio/pairing/security policy is enforced above raw driver mechanics;
+- relevant faults and state changes are auditable.
 
-## Dependency rules
-- Expose only approved kernel interfaces upward.
-- Keep hardware-specific implementation private to the driver.
-- Do not allow user/application layers to bypass HAL/service ownership.
+## Open decisions
+- concrete driver/firmware selections;
+- numerical queue/resource/reset limits.
 
-## Failure behavior
-- link down
-- driver reset
-- packet-ring/resource exhaustion
+## Design acceptance criteria
+1. Network Service does not depend on driver-specific APIs.
+2. Link/reset failure maps to stable connectivity state.
+3. Ethernet driver can change without cloud/media protocol changes.
+4. Wi-Fi/Bluetooth-specific radio lifecycle remains in its own integration.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped as OS/vendor integration for Platform Architecture Baseline v2.

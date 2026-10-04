@@ -1,26 +1,27 @@
-# View System Requirements
-
-## Component
-`view_system`
+# Presentation State / Media Surface Contract Requirements — Platform Baseline v2
 
 ## Functional requirements
-- VS-FR-001: The component shall construct supported UI views.
-- VS-FR-002: The component shall bind views to managed surfaces.
-- VS-FR-003: The component shall render state updates.
-- VS-FR-004: The component shall propagate user interaction events.
+- VIEW_SYSTEM-FR-001: Product Profile shall explicitly declare capability availability.
+- VIEW_SYSTEM-FR-002: Capability absence shall have supported deterministic behavior.
+- VIEW_SYSTEM-FR-003: Portable behavior shall remain independent of selected native/provider implementation.
 
 ## Interface requirements
-- VS-IR-001: Use approved architecture interfaces and buses.
-- VS-IR-002: Do not depend on private implementation of other components.
+- VIEW_SYSTEM-IR-001: Expose a versioned portable contract.
+- VIEW_SYSTEM-IR-002: Keep native/provider-specific types behind adapters.
 
 ## Security requirements
-- VS-SR-001: Apply approved identity, authorization, and policy controls where applicable.
-- VS-SR-002: Audit security-relevant actions and failures.
+- VIEW_SYSTEM-SR-001: Access to sensitive capability/data shall follow approved authorization/privacy policy.
+- VIEW_SYSTEM-SR-002: Security-relevant changes and failures shall be auditable where applicable.
 
 ## Reliability requirements
-- VS-RR-001: Provide defined behavior for rendering failure.
-- VS-RR-002: Provide defined behavior for surface unavailable.
-- VS-RR-003: Provide defined behavior for resource load failure.
+- VIEW_SYSTEM-RR-001: Provider/device absence or loss shall map to stable product-level state.
+- VIEW_SYSTEM-RR-002: Recovery behavior shall be bounded by Product Profile.
+
+## Design acceptance criteria
+- VIEW_SYSTEM-AC-001: Android/iOS/Web map presentation state to native UI frameworks.
+- VIEW_SYSTEM-AC-002: Headless camera profile has no presentation dependency.
+- VIEW_SYSTEM-AC-003: Graphics backend can change without changing shared product behavior.
+- VIEW_SYSTEM-AC-004: Media surface lifecycle is deterministic.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

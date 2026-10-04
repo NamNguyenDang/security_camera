@@ -1,51 +1,45 @@
-# System Service Bus Detailed Design
+# Service Contract Boundary Detailed Design — Platform Baseline v2
 
-## Component
-`system_service_bus`
+## Status
+Revised against PR #77.
 
-## Purpose
-Defines the approved **Service / IPC** communication boundary between **Application Framework** and **System Services**.
+## Deployment placement
+**In-process, local process, or remote deployment according to each service contract**
+
+## Purpose and ownership
+Re-scope the former System Service Bus into explicit service contracts independent of a mandatory application-framework hop or universal bus.
+
+## Portable boundary
+ServiceContract boundary with call style, discovery/binding, ownership, compatibility, authorization context, timeout, unavailable-service behavior, and selected transport.
 
 ## Relationship overview
-![System Service Bus relationship](./system_service_bus_relationship.svg)
+![Service Contract Boundary relationship](./system_service_bus_relationship.svg)
 
-## Upper-side participants
-- Activity Manager
-- Content Providers
-- Notification Manager
-- Package Manager
+## Review-driven decisions
+- Service interactions may be direct function calls, local IPC, or network calls.
+- Application Framework is not a mandatory hop.
+- Discovery/binding semantics are explicit where needed.
+- Compatibility and ownership are defined per service.
+- Authorization context and unavailable-service behavior are explicit.
 
-## Lower-side participants
-- Media Service
-- Camera Service
-- AI Inference Service
-- Storage Service
-- Network Service
-- Device Management
+## Product Profile inputs
+- deployment/process placement;
+- transport/channel/provider selection;
+- compatible contract versions;
+- queue/timeout/performance/security policy.
 
-## Boundary responsibilities
-- Define stable request, response, event, message, or stream contracts appropriate to Service / IPC.
-- Validate input crossing the boundary.
-- Preserve ownership and lifecycle rules for transferred resources.
-- Return stable errors without leaking implementation-specific details.
-- Prevent uncontrolled direct dependencies that bypass this boundary.
+## Communication rule
+Transport/process choice is independent of product semantics. Different delivery classes are not forced through one generic bus.
 
-## Security controls
-- Security Policy Enforcement
-- Device Identity
-- Secrets / Key Management
-- Security Logging / Audit
+## Open decisions
+- exact local/remote transport selections;
+- numerical queue, timeout, backpressure, and compatibility limits.
 
-## Failure behavior
-- service unavailable
-- interface version mismatch
-- authorization failure
-
-## Open design items
-- exact interface definition language and versioning policy
-- timeout, retry, flow-control, and backpressure behavior
-- observability and tracing identifiers
-- compatibility rules during rolling software updates
+## Design acceptance criteria
+1. A service can move process/deployment without changing portable service semantics.
+2. No universal bus implementation is required.
+3. Unavailable service returns defined status/timeouts.
+4. Transport changes preserve authorization and compatibility semantics.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary design and relationship diagram.
+- 2026-10-04: Re-scoped from generic bus to explicit contract/data-plane model for Platform Architecture Baseline v2.

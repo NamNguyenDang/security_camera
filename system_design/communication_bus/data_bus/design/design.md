@@ -1,51 +1,46 @@
-# Data Bus Detailed Design
+# Control / Event / Media Data Planes Detailed Design — Platform Baseline v2
 
-## Component
-`data_bus`
+## Status
+Revised against PR #77.
 
-## Purpose
-Defines the approved **Message / Stream** communication boundary between **System Services** and **Middleware**.
+## Deployment placement
+**Across Camera services/middleware and optional Gateway/Backend paths**
+
+## Purpose and ownership
+Replace the generic Data Bus concept with separate control commands, state/events, durable events, and media/high-bandwidth paths.
+
+## Portable boundary
+Channel contracts defining ownership, timing, ordering, queue bounds, backpressure/drop policy, recovery, and delivery semantics for each data plane.
 
 ## Relationship overview
-![Data Bus relationship](./data_bus_relationship.svg)
+![Control / Event / Media Data Planes relationship](./data_bus_relationship.svg)
 
-## Upper-side participants
-- Media Service
-- Camera Service
-- AI Inference Service
-- Storage Service
-- Network Service
+## Review-driven decisions
+- Control commands are not media payloads.
+- Durable events differ from transient state events.
+- Media buffers/streams have explicit high-bandwidth ownership/timing.
+- Queues are bounded.
+- Backpressure/drop policy is explicit.
+- Large video payloads are not forced through a generic message bus.
 
-## Lower-side participants
-- Media Framework
-- AI Runtime
-- Database
-- SSL / TLS
-- Codec Libraries
+## Product Profile inputs
+- deployment/process placement;
+- transport/channel/provider selection;
+- compatible contract versions;
+- queue/timeout/performance/security policy.
 
-## Boundary responsibilities
-- Define stable request, response, event, message, or stream contracts appropriate to Message / Stream.
-- Validate input crossing the boundary.
-- Preserve ownership and lifecycle rules for transferred resources.
-- Return stable errors without leaking implementation-specific details.
-- Prevent uncontrolled direct dependencies that bypass this boundary.
+## Communication rule
+Transport/process choice is independent of product semantics. Different delivery classes are not forced through one generic bus.
 
-## Security controls
-- TLS / mTLS
-- Encryption Services
-- Secrets / Key Management
-- Security Logging / Audit
+## Open decisions
+- exact local/remote transport selections;
+- numerical queue, timeout, backpressure, and compatibility limits.
 
-## Failure behavior
-- producer unavailable
-- consumer backpressure overflow
-- stream integrity failure
-
-## Open design items
-- exact interface definition language and versioning policy
-- timeout, retry, flow-control, and backpressure behavior
-- observability and tracing identifiers
-- compatibility rules during rolling software updates
+## Design acceptance criteria
+1. Media overload follows defined buffer/drop/backpressure policy.
+2. Durable event loss/retry semantics are explicit.
+3. Control commands cannot be starved by an unbounded video queue.
+4. Channel ordering guarantees are documented per data plane.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary design and relationship diagram.
+- 2026-10-04: Re-scoped from generic bus to explicit contract/data-plane model for Platform Architecture Baseline v2.

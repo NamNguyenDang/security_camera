@@ -1,26 +1,28 @@
-# Storage HAL Requirements
-
-## Component
-`storage_hal`
+# Platform Storage Adapter / HAL Requirements — Platform Baseline v2
 
 ## Functional requirements
-- SH-FR-001: The component shall enumerate storage capabilities.
-- SH-FR-002: The component shall perform approved storage operations.
-- SH-FR-003: The component shall report health/capacity status.
-- SH-FR-004: The component shall translate vendor/device errors.
+- STORAGE_HAL-FR-001: Product Profile shall declare capability presence and selected provider.
+- STORAGE_HAL-FR-002: The adapter shall expose portable capability/lifecycle semantics.
+- STORAGE_HAL-FR-003: Unsupported capability shall fail deterministically.
 
 ## Interface requirements
-- SH-IR-001: Expose only the approved HAL/driver interface.
-- SH-IR-002: Hide vendor/private implementation from upper layers.
+- STORAGE_HAL-IR-001: Buffer/resource/device ownership shall be explicit where applicable.
+- STORAGE_HAL-IR-002: Provider/OS-specific types shall remain behind the adapter.
+- STORAGE_HAL-IR-003: Reset/error/capability mapping shall be stable.
 
 ## Security requirements
-- SH-SR-001: Respect approved secure HAL/kernel policy.
-- SH-SR-002: Surface security-relevant device failures for audit.
+- STORAGE_HAL-SR-001: Raw privileged device operations shall not be exposed to untrusted upper layers.
+- STORAGE_HAL-SR-002: Security-relevant provider faults shall be auditable.
 
 ## Reliability requirements
-- SH-RR-001: Provide defined behavior for device unavailable.
-- SH-RR-002: Provide defined behavior for media error.
-- SH-RR-003: Provide defined behavior for capacity exhausted.
+- STORAGE_HAL-RR-001: Provider/device failure shall map to stable product-level status.
+- STORAGE_HAL-RR-002: Optional capability absence shall be a supported state.
+
+## Design acceptance criteria
+- STORAGE_HAL-AC-001: Recording Service does not depend on raw block/storage handles.
+- STORAGE_HAL-AC-002: Platform storage provider can change without changing recording identity semantics.
+- STORAGE_HAL-AC-003: Power-loss durability capability is explicitly reported.
+- STORAGE_HAL-AC-004: Health/error status maps to stable upper-layer states.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

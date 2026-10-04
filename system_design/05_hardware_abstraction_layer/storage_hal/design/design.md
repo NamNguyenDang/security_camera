@@ -1,53 +1,50 @@
-# Storage HAL Detailed Design
+# Platform Storage Adapter / HAL Detailed Design — Platform Baseline v2
 
-## Component
-`storage_hal`
+## Status
+Revised against PR #77.
 
-## Purpose
-Abstracts physical storage devices and vendor-specific storage behavior behind a stable storage interface.
+## Deployment placement
+**Camera platform adapter**
+
+## Purpose and ownership
+Limit this component to platform storage access/control and health, separate from filesystem semantics and recording/metadata persistence.
+
+## Portable contract
+PlatformStorage contract with durability capability, health, power-loss/error semantics, lifecycle, and approved low-level operations.
 
 ## Relationship overview
-![Storage HAL relationship](./storage_hal_relationship.svg)
+![Platform Storage Adapter / HAL relationship](./storage_hal_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Recording Repository owns recording semantics.
+- Metadata Repository owns structured data semantics.
+- Filesystem/OS storage services may satisfy most operations.
+- Raw storage is never exposed to applications.
+- Power-loss and health capabilities are explicit.
 
-### Application Layer
-- Playback
-- Event Search
-- Settings
-### System Services
-- Storage Service
-- Device Management
-### Middleware
-- Database
-- Media Framework
-### HAL
-- Storage HAL
-### Linux Kernel
-- Storage Driver
-### Hardware Platform
-- Storage eMMC / SSD
-- SoC / CPU
+## Product Profile inputs
+- capability present/absent;
+- selected provider and compatible version;
+- performance/resource/power constraints;
+- recovery and security profile.
 
-## Security context
-- Secure HAL Interface
-- Encryption
-- Audit
+## Supplier qualification
+Provider replacement is qualified against ownership, lifecycle, timing/durability, reset/error, and capability scenarios.
 
-## Communication boundaries
-- Middleware Bus
-- HAL Bus
-- Kernel Bus
+## Security
+- raw device/provider controls are not exposed to applications;
+- access is mediated by owning platform/service boundaries;
+- security-relevant failures are auditable.
 
-## Dependency rules
-- Preserve the stable HAL/driver boundary.
-- Keep vendor-specific behavior private to the owning lower layer.
-- Do not expose direct hardware access to upper layers.
+## Open decisions
+- selected OS/vendor provider;
+- numerical capability and recovery constraints.
 
-## Failure behavior
-- device unavailable
-- media error
-- capacity exhausted
+## Design acceptance criteria
+1. Recording Service does not depend on raw block/storage handles.
+2. Platform storage provider can change without changing recording identity semantics.
+3. Power-loss durability capability is explicitly reported.
+4. Health/error status maps to stable upper-layer states.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and supplier-replacement review feedback.

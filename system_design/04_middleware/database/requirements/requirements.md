@@ -1,26 +1,28 @@
-# Database Requirements
-
-## Component
-`database`
+# Database Adapter Requirements — Platform Baseline v2
 
 ## Functional requirements
-- D-FR-001: The component shall persist structured records.
-- D-FR-002: The component shall query indexed records.
-- D-FR-003: The component shall enforce schema and transaction integrity.
-- D-FR-004: The component shall recover from supported restart scenarios.
+- DATABASE-FR-001: The adapter shall preserve portable product semantics across qualified providers.
+- DATABASE-FR-002: Product Profile shall select compatible provider capabilities and versions.
+- DATABASE-FR-003: Unsupported capability shall return deterministic status.
 
 ## Interface requirements
-- D-IR-001: Use approved upper and lower layer interfaces.
-- D-IR-002: Hide private/vendor-specific implementation details.
+- DATABASE-IR-001: Provider-specific types shall not escape the adapter boundary.
+- DATABASE-IR-002: Ownership, lifecycle, error, and compatibility semantics shall be documented.
+- DATABASE-IR-003: Replacement providers shall satisfy the same conformance scenarios.
 
 ## Security requirements
-- D-SR-001: Use approved security services for protected data or operations.
-- D-SR-002: Emit audit/diagnostic events for relevant failures.
+- DATABASE-SR-001: Protected operations/data shall use approved security policy and key/identity references.
+- DATABASE-SR-002: Security-relevant provider failures shall be auditable.
 
 ## Reliability requirements
-- D-RR-001: Provide defined behavior for database corruption.
-- D-RR-002: Provide defined behavior for storage full.
-- D-RR-003: Provide defined behavior for transaction failure.
+- DATABASE-RR-001: Provider initialization/runtime failure shall map to stable status.
+- DATABASE-RR-002: Recovery/fallback shall follow Product Profile.
+
+## Design acceptance criteria
+- DATABASE-AC-001: A database engine can be replaced without changing repository query semantics.
+- DATABASE-AC-002: Migration failure leaves a defined recoverable state.
+- DATABASE-AC-003: Local and backend adapters satisfy the same repository acceptance scenarios.
+- DATABASE-AC-004: Requirement IDs use DATABASE prefix semantics.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

@@ -1,26 +1,29 @@
-# Device Provisioning Requirements
-
-## Component
-`device_provisioning`
+# Device Provisioning Requirements — Platform Baseline v2
 
 ## Functional requirements
-- DP-FR-001: The security control shall establish unique device identity.
-- DP-FR-002: The security control shall install approved credentials and trust anchors.
-- DP-FR-003: The security control shall record provisioning state.
-- DP-FR-004: The security control shall prevent unauthorized reprovisioning.
+- DEVICE_PROVISIONING-FR-001: Product/Security Profile shall declare required capability/transport and placement.
+- DEVICE_PROVISIONING-FR-002: Portable semantics shall remain independent of selected provider/transport.
+- DEVICE_PROVISIONING-FR-003: Invalid or unsupported state/capability/version shall fail deterministically.
 
 ## Interface requirements
-- DP-IR-001: Expose security/trust status through approved interfaces only.
-- DP-IR-002: Keep protected trust state, credentials, and privileged controls inaccessible to unauthorized consumers.
+- DEVICE_PROVISIONING-IR-001: Portable contracts shall be versioned.
+- DEVICE_PROVISIONING-IR-002: Provider/transport-specific details shall remain behind adapters.
+- DEVICE_PROVISIONING-IR-003: Identity/ownership/error semantics shall be explicit where applicable.
 
 ## Security requirements
-- DP-SR-001: Fail safely when required trust, provisioning, or hardening controls cannot be established.
-- DP-SR-002: Generate audit evidence for security-relevant operations and failures.
+- DEVICE_PROVISIONING-SR-001: Protected operations/transitions shall require approved authorization/trust.
+- DEVICE_PROVISIONING-SR-002: Security-relevant state/failures shall be auditable.
+- DEVICE_PROVISIONING-SR-003: Provider/transport choice shall not weaken mandatory security obligations.
 
 ## Reliability requirements
-- DP-RR-001: Provide defined safe behavior for credential injection failure.
-- DP-RR-002: Provide defined safe behavior for trust anchor unavailable.
-- DP-RR-003: Provide defined safe behavior for provisioning state conflict.
+- DEVICE_PROVISIONING-RR-001: Provider/transport interruption shall have defined recovery/failure behavior.
+- DEVICE_PROVISIONING-RR-002: Compatibility mismatch shall be detected before unsafe operation.
+
+## Design acceptance criteria
+- DEVICE_PROVISIONING-AC-001: Interrupted provisioning cannot leave an ambiguously owned device.
+- DEVICE_PROVISIONING-AC-002: Duplicate/cloned identity is detected before trusted enrollment.
+- DEVICE_PROVISIONING-AC-003: Ownership transfer changes authorization without silently replacing device identity.
+- DEVICE_PROVISIONING-AC-004: Decommissioned device cannot rejoin using retired credentials.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

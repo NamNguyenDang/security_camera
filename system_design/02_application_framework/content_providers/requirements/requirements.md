@@ -1,32 +1,28 @@
-# Content Providers Requirements
-
-## Component
-
-`content_providers`
+# Repository / Query Access Contract Requirements — Platform Baseline v2
 
 ## Functional requirements
-
-- CP-FR-001: The component shall expose approved structured content.
-- CP-FR-002: The component shall enforce access checks on content operations.
-- CP-FR-003: The component shall validate writes before forwarding.
-- CP-FR-004: The component shall isolate callers from persistence implementation.
+- CONTENT_PROVIDERS-FR-001: The component shall expose portable product semantics independent of native platform implementation.
+- CONTENT_PROVIDERS-FR-002: The Product Profile shall declare whether and where the capability is used.
+- CONTENT_PROVIDERS-FR-003: Unsupported capability shall have deterministic behavior.
 
 ## Interface requirements
-
-- CP-IR-001: The component shall use approved interfaces and buses.
-- CP-IR-002: The component shall not depend on another component's private implementation.
+- CONTENT_PROVIDERS-IR-001: The portable contract shall be versioned and smaller than provider/native APIs.
+- CONTENT_PROVIDERS-IR-002: Platform/provider-specific types shall stay behind adapters.
+- CONTENT_PROVIDERS-IR-003: Cross-deployment calls shall not assume local IPC.
 
 ## Security requirements
-
-- CP-SR-001: Security-relevant access shall use approved identity, authorization, and policy services where applicable.
-- CP-SR-002: Security-relevant actions and failures shall be auditable.
+- CONTENT_PROVIDERS-SR-001: Protected operations shall validate caller authorization.
+- CONTENT_PROVIDERS-SR-002: Security-relevant failures shall be auditable.
 
 ## Reliability requirements
+- CONTENT_PROVIDERS-RR-001: Native/platform unavailability shall map to stable product-level failure.
+- CONTENT_PROVIDERS-RR-002: Restart/recovery behavior shall be defined where applicable.
 
-- CP-RR-001: Defined behavior shall exist for database unavailable.
-- CP-RR-002: Defined behavior shall exist for authorization failure.
-- CP-RR-003: Defined behavior shall exist for schema mismatch.
+## Design acceptance criteria
+- CONTENT_PROVIDERS-AC-001: Replacing the database/provider does not change repository semantics.
+- CONTENT_PROVIDERS-AC-002: The same query contract can target local camera or backend repository.
+- CONTENT_PROVIDERS-AC-003: Unauthorized fields/resources are not exposed.
+- CONTENT_PROVIDERS-AC-004: Schema incompatibility is detected explicitly.
 
 ## Changelog
-
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

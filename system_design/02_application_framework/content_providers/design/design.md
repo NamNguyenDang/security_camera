@@ -1,74 +1,53 @@
-# Content Providers Detailed Design
+# Repository / Query Access Contract Detailed Design — Platform Baseline v2
 
-## Component
+## Status
+Revised against PR #77.
 
-`content_providers`
+## Deployment placement
+**Client, Camera, Gateway, or Backend depending repository placement**
 
-## Purpose
+## Purpose and ownership
+Preserve controlled data access but re-scope Android-style Content Provider into product-owned repository/query contracts.
 
-Provides controlled structured-data access between application components and owning services without exposing private persistence details.
+## Product-owned contract
+RepositoryAccess and Query contracts with authorization scope, schema/version compatibility, and local/remote deployment adapters.
 
 ## Relationship overview
+![Repository / Query Access Contract relationship](./content_providers_relationship.svg)
 
-![Content Providers relationship](./content_providers_relationship.svg)
+## Review-driven decisions
+- Storage Service owns persistence orchestration; Database is an implementation adapter, not the product contract.
+- Authorization scope is enforced before data exposure.
+- Schema/version compatibility is explicit.
+- Local and remote repository access preserve the same product semantics.
+- Provider-specific APIs remain in adapters.
 
-## Relevant system path
+## Product Profile inputs
+- whether this capability exists in the product;
+- deployment placement and compatible contract version;
+- selected native/platform adapter;
+- security and offline behavior.
 
-### Application Layer
-- Event Search
-- Settings
-- User Management
+## Design rules
+- platform/framework names do not imply a mandatory Android implementation;
+- portable contracts remain smaller than native platform APIs;
+- client and camera platform concerns are separated;
+- private/provider implementation is not exposed upward.
 
-### Application Framework
-- Content Providers
+## Security
+- caller identity and authorization are enforced at protected operations;
+- security-relevant lifecycle/data actions are auditable;
+- standalone camera behavior does not depend on backend availability.
 
-### System Services
-- Storage Service
-- Device Management
+## Open decisions
+- native adapter choices per supported platform;
+- exact compatibility/versioning and resource limits.
 
-### Middleware
-- Database
-
-### HAL
-- Storage HAL
-
-### Linux Kernel
-- Storage Driver
-
-### Hardware Platform
-- Storage eMMC / SSD
-
-## Security context
-
-- IAM / RBAC
-- Security Policy
-- Encryption
-- Audit
-
-## Communication boundaries
-
-- Application Bus
-- System Service Bus
-- Data Bus
-
-## Dependency rules
-
-- Use approved interfaces and buses; do not bypass owning layers.
-- Keep lower-layer and vendor implementation details outside this component.
-- Another component's private `src/` directory is not a dependency surface.
-
-## Failure behavior
-
-- database unavailable
-- authorization failure
-- schema mismatch
-
-## Open design items
-
-- final API and data contract
-- lifecycle and concurrency behavior
-- performance and observability limits
+## Design acceptance criteria
+1. Replacing the database/provider does not change repository semantics.
+2. The same query contract can target local camera or backend repository.
+3. Unauthorized fields/resources are not exposed.
+4. Schema incompatibility is detected explicitly.
 
 ## Changelog
-
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped for Platform Architecture Baseline v2 and review feedback.

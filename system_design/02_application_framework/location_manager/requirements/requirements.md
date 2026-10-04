@@ -1,26 +1,27 @@
-# Location Manager Requirements
-
-## Component
-`location_manager`
+# Location Context Requirements — Platform Baseline v2
 
 ## Functional requirements
-- LM-FR-001: The component shall expose approved location context.
-- LM-FR-002: The component shall enforce access policy for location data.
-- LM-FR-003: The component shall report location availability and freshness.
-- LM-FR-004: The component shall support configured static location where sensors are absent.
+- LOCATION_MANAGER-FR-001: Product Profile shall explicitly declare capability availability.
+- LOCATION_MANAGER-FR-002: Capability absence shall have supported deterministic behavior.
+- LOCATION_MANAGER-FR-003: Portable behavior shall remain independent of selected native/provider implementation.
 
 ## Interface requirements
-- LM-IR-001: Use approved architecture interfaces and buses.
-- LM-IR-002: Do not depend on private implementation of other components.
+- LOCATION_MANAGER-IR-001: Expose a versioned portable contract.
+- LOCATION_MANAGER-IR-002: Keep native/provider-specific types behind adapters.
 
 ## Security requirements
-- LM-SR-001: Apply approved identity, authorization, and policy controls where applicable.
-- LM-SR-002: Audit security-relevant actions and failures.
+- LOCATION_MANAGER-SR-001: Access to sensitive capability/data shall follow approved authorization/privacy policy.
+- LOCATION_MANAGER-SR-002: Security-relevant changes and failures shall be auditable where applicable.
 
 ## Reliability requirements
-- LM-RR-001: Provide defined behavior for location unavailable.
-- LM-RR-002: Provide defined behavior for stale location.
-- LM-RR-003: Provide defined behavior for permission denied.
+- LOCATION_MANAGER-RR-001: Provider/device absence or loss shall map to stable product-level state.
+- LOCATION_MANAGER-RR-002: Recovery behavior shall be bounded by Product Profile.
+
+## Design acceptance criteria
+- LOCATION_MANAGER-AC-001: A product without GPS/location hardware can use static configured location.
+- LOCATION_MANAGER-AC-002: Site/area access control does not depend on coordinates.
+- LOCATION_MANAGER-AC-003: Stale location is reported explicitly.
+- LOCATION_MANAGER-AC-004: Changing location provider does not change product grouping semantics.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

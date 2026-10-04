@@ -1,57 +1,47 @@
-# Security Policy Enforcement Detailed Design
+# Security Policy Enforcement Detailed Design — Platform Baseline v2
 
-## Component
-`security_policy_enforcement`
+## Status
+Revised against PR #77.
 
-## Purpose
-Applies centrally defined security policy at approved enforcement points so components do not invent conflicting local security behavior.
+## Deployment placement
+**Cross-cutting enforcement on Client/Camera/Gateway/Backend trust boundaries**
+
+## Purpose and ownership
+Define a mandatory platform security baseline plus approved per-product security profiles, with explicit enforcement ownership at each trust boundary.
+
+## Security contract
+SecurityPolicy contract with policy version, required protections, enforcement point, stale/unavailable behavior, and release-compliance status.
 
 ## Relationship overview
 ![Security Policy Enforcement relationship](./security_policy_enforcement_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Mandatory baseline is separate from optional mechanisms.
+- Per-product security profile may select mechanisms but not remove obligations.
+- Policy versioning/distribution is explicit.
+- Stale or unavailable policy behavior is defined.
+- Release is rejected when required protections are missing.
+- Enforcement ownership is assigned per trust boundary.
 
-### Application Layer
-- Live View
-- Playback
-- Settings
-- User Management
-### Application Framework
-- Security Policy Enforcement
-- Package Manager
-### System Services
-- Device Management
-- Network Service
-- Storage Service
-### Middleware
-- Database
-- SSL / TLS
-### HAL
-- Secure HAL Interface
-### Linux Kernel
-- Kernel Hardening
+## Product / Security Profile inputs
+- required protections and enforcement placement;
+- compatible policy/provider versions;
+- offline/stale/revocation behavior;
+- selected mechanism/provider where implementation choice is allowed.
 
-## Related security services
-- IAM
-- RBAC
-- Device Identity
-- Audit
+## Enforcement model
+Security obligations are mandatory where selected by the baseline/profile. Replaceable providers implement those obligations but do not redefine them.
 
-## Communication / enforcement boundaries
-- Application Bus
-- System Service Bus
-- Data Bus
-- Middleware Bus
+## Open decisions
+- exact mechanism/provider selections;
+- numerical TTL/renewal/propagation limits;
+- profile-specific endpoint classifications.
 
-## Design rules
-- Security behavior shall be centralized through this approved service/control rather than reimplemented independently.
-- Consumers shall use stable interfaces and avoid direct access to protected implementation or key material.
-- Policy, identity, key, and audit dependencies shall fail safely.
-
-## Failure behavior
-- policy unavailable
-- conflicting policy
-- enforcement point failure
+## Design acceptance criteria
+1. A product cannot ship with a required protection missing.
+2. Offline camera has defined locally enforceable security policy.
+3. Mechanism/provider changes do not weaken policy outcomes.
+4. Stale policy state is visible and handled according to profile.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and security-design review feedback.

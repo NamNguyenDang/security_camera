@@ -1,26 +1,29 @@
-# Security Policy Enforcement Requirements
-
-## Component
-`security_policy_enforcement`
+# Security Policy Enforcement Requirements — Platform Baseline v2
 
 ## Functional requirements
-- SPE-FR-001: The security service shall evaluate applicable security policy.
-- SPE-FR-002: The security service shall enforce allow or deny outcomes at approved boundaries.
-- SPE-FR-003: The security service shall version and expose policy state.
-- SPE-FR-004: The security service shall report enforcement failures.
+- SECURITY_POLICY-FR-001: The security control shall preserve mandatory product protection outcomes independently of provider choice.
+- SECURITY_POLICY-FR-002: Product/Security Profile shall declare enforcement placement and compatible policy/provider versions.
+- SECURITY_POLICY-FR-003: Offline/stale/unavailable state shall have defined safe behavior.
 
 ## Interface requirements
-- SPE-IR-001: Expose stable security interfaces to approved consumers only.
-- SPE-IR-002: Keep protected implementation details and key material outside consumer control.
+- SECURITY_POLICY-IR-001: Security contracts shall use provider-neutral identity/policy/credential references.
+- SECURITY_POLICY-IR-002: Provider-specific SDK/hardware details shall remain behind adapters.
+- SECURITY_POLICY-IR-003: Policy/identity/transport state shall be versioned where applicable.
 
 ## Security requirements
-- SPE-SR-001: Fail closed or fail safely for authorization, identity, policy, or trust failures as applicable.
-- SPE-SR-002: Generate audit evidence for security-relevant operations and failures.
+- SECURITY_POLICY-SR-001: Required protections shall fail closed or fail safely according to Security Profile.
+- SECURITY_POLICY-SR-002: Insecure fallback shall not bypass mandatory protection.
+- SECURITY_POLICY-SR-003: Security-relevant decisions/failures shall be auditable.
 
 ## Reliability requirements
-- SPE-RR-001: Provide defined safe behavior for policy unavailable.
-- SPE-RR-002: Provide defined safe behavior for conflicting policy.
-- SPE-RR-003: Provide defined safe behavior for enforcement point failure.
+- SECURITY_POLICY-RR-001: Provider/backend outage shall not create undefined security state.
+- SECURITY_POLICY-RR-002: Renewal/recovery/revocation behavior shall be deterministic.
+
+## Design acceptance criteria
+- SECURITY_POLICY-AC-001: A product cannot ship with a required protection missing.
+- SECURITY_POLICY-AC-002: Offline camera has defined locally enforceable security policy.
+- SECURITY_POLICY-AC-003: Mechanism/provider changes do not weaken policy outcomes.
+- SECURITY_POLICY-AC-004: Stale policy state is visible and handled according to profile.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

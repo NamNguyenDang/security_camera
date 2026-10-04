@@ -1,26 +1,29 @@
-# Device Management Requirements
-
-## Component
-`device_management`
+# Device Management Requirements — Platform Baseline v2
 
 ## Functional requirements
-- DM-FR-001: The component shall report device health and lifecycle state.
-- DM-FR-002: The component shall apply approved management actions.
-- DM-FR-003: The component shall coordinate provisioning and configuration state.
-- DM-FR-004: The component shall expose restart/update-required state.
+- DEVICE_MANAGEMENT-FR-001: The service shall preserve product semantics across local, gateway, and backend/provider selections where applicable.
+- DEVICE_MANAGEMENT-FR-002: Product Profile shall declare placement, provider, compatible version, and offline policy.
+- DEVICE_MANAGEMENT-FR-003: Lifecycle and recovery states shall be explicit.
 
 ## Interface requirements
-- DM-IR-001: Use approved upper and lower layer interfaces.
-- DM-IR-002: Hide private/vendor-specific implementation details.
+- DEVICE_MANAGEMENT-IR-001: Product contracts shall not expose provider paths, SDK types, or hardware-specific details.
+- DEVICE_MANAGEMENT-IR-002: Contract versions shall be validated before use.
+- DEVICE_MANAGEMENT-IR-003: Local and remote implementations shall map errors to stable product-level status.
 
 ## Security requirements
-- DM-SR-001: Use approved security services for protected data or operations.
-- DM-SR-002: Emit audit/diagnostic events for relevant failures.
+- DEVICE_MANAGEMENT-SR-001: Protected operations shall enforce local authorization at the executing deployment.
+- DEVICE_MANAGEMENT-SR-002: Credentials/keys shall be obtained through approved security contracts.
+- DEVICE_MANAGEMENT-SR-003: Security-relevant state changes shall be auditable.
 
 ## Reliability requirements
-- DM-RR-001: Provide defined behavior for device subsystem unavailable.
-- DM-RR-002: Provide defined behavior for configuration conflict.
-- DM-RR-003: Provide defined behavior for management action timeout.
+- DEVICE_MANAGEMENT-RR-001: Offline behavior shall be explicitly defined.
+- DEVICE_MANAGEMENT-RR-002: Recovery after restart/provider failure shall be deterministic.
+
+## Design acceptance criteria
+- DEVICE_MANAGEMENT-AC-001: Standalone camera can manage its local lifecycle without backend.
+- DEVICE_MANAGEMENT-AC-002: Desired/reported state converges predictably after offline periods.
+- DEVICE_MANAGEMENT-AC-003: Ownership transfer does not leave stale authorization.
+- DEVICE_MANAGEMENT-AC-004: Retired device behavior is explicit and auditable.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

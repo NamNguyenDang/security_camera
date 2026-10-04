@@ -1,66 +1,53 @@
-# Media Service Detailed Design
+# Media Service Detailed Design — Platform Baseline v2
 
-## Component
-`media_service`
+## Status
+Revised against PR #77.
 
-## Purpose
-Coordinates media pipeline lifecycle and exposes stable media capabilities to higher layers while delegating codecs, buffers, and hardware control downward.
+## Deployment placement
+**Camera product service; optional equivalent modules may run on Gateway/Backend**
+
+## Purpose and ownership
+Own media/recording orchestration while keeping capture control, reusable media primitives, persistence, and transport providers behind separate contracts.
+
+## Product-owned contract
+MediaPipeline + RecordingOrchestration contracts with explicit control, state/event, and high-bandwidth data paths.
 
 ## Relationship overview
 ![Media Service relationship](./media_service_relationship.svg)
 
-## Relevant system path
+## Interaction/data planes
+- **Control:** commands and lifecycle operations.
+- **State/events:** operational state and durable product events.
+- **Media/data:** bounded high-bandwidth buffers/streams where applicable.
+- Provider transports are selected behind adapters.
 
-### Application Layer
-- Live View
-- Playback
-### Application Framework
-- View System
-### System Services
-- Media Service
-- Camera Service
-- Storage Service
-- Network Service
-### Middleware
-- Media Framework
-- Codec Libraries
-- SSL / TLS
-### HAL
-- Camera HAL
-- Display HAL
-- Storage HAL
-- Network HAL
-### Linux Kernel
-- Camera Driver
-- Display Driver
-- Storage Driver
-- Network Driver
-### Hardware Platform
-- Camera Sensor
-- Display
-- Storage eMMC / SSD
-- Ethernet / Wi-Fi
-- SoC / CPU
+## Review-driven decisions
+- Camera Service owns capture sessions; Media Framework owns reusable buffer/timing primitives; Storage Service owns persistence contracts.
+- Recording orchestration owns trigger/schedule, segment lifecycle, durable completion, metadata consistency, interrupted recording, and retention coordination.
+- Control/state/media paths are separate.
+- Deployment placement is explicit and does not change portable semantics.
 
-## Security context
-- TLS / mTLS
-- Encryption
-- Audit
+## Product Profile inputs
+- placement and optional capabilities;
+- compatible contract versions;
+- adapter/backend selection;
+- performance/resource/security budgets.
 
-## Communication boundaries
-- System Service Bus
-- Data Bus
-- Middleware Bus
+## Security
+- authorization is enforced at protected service operations;
+- standalone camera operation retains required local enforcement;
+- protected models/recordings/credentials use approved security services.
 
-## Dependency rules
-- Use approved interfaces and buses.
-- Keep vendor and lower-layer implementation behind owning boundaries.
-- Do not depend on another component's private `src/`.
+## Open decisions
+- exact provider technologies;
+- numerical product-profile budgets;
+- deployment-specific scaling and retry limits.
 
-## Failure behavior
-- pipeline initialization failure
-- codec failure
-- source or sink unavailable
+## Design acceptance criteria
+1. Recording completion is not acknowledged until selected repository durability criteria are satisfied.
+2. Interrupted recording has a recoverable segment/metadata state.
+3. Capture provider replacement does not change recording orchestration behavior.
+4. Media buffers do not travel through a generic durable-event channel.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

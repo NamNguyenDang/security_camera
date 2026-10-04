@@ -1,110 +1,78 @@
-# Live View Detailed Design
+# Live View Detailed Design — Platform Baseline v2
 
-## Component
+## Status
 
-`live_view`
+Revised against the deployment-first platform architecture proposed in PR #77.
 
-## Purpose
+## Deployment placement
 
-The Live View component provides authorized users with a real-time video viewing experience while keeping application logic separated from media, platform, kernel, and hardware implementation details.
+**Client + Camera; optional Site Gateway and Backend**
+
+## Purpose and ownership
+
+Own the user-facing live-view session contract while keeping client presentation, camera streaming, optional relay/backend signaling, and optional local display separate.
+
+## Product-owned contract
+
+LiveViewSession contract: session ownership, capability negotiation, authorization/revocation, reconnect state, and explicit control/media channels.
 
 ## Relationship overview
 
 ![Live View relationship](./live_view_relationship.svg)
 
-## End-to-end relationship
+## Interaction model
 
-### Application Layer
-- `live_view` owns live-view session state, user actions, and presentation behavior.
-- `mobile_web_ui` presents the video surface and user controls.
+- **Command / control:** session and lifecycle operations use stable product contracts.
+- **State / events:** state changes and durable domain events are separate from media payloads.
+- **Media / high-bandwidth data:** video/audio data uses an explicit bounded media path where applicable.
+- **Deployment transport:** in-process, local IPC, direct network, gateway relay, or backend relay is selected by the Product Profile and must not change product semantics.
 
-### Application Framework
-- `view_system` provides the rendering/view primitives.
-- `window_manager` provides display surface and lifecycle coordination.
-- `resource_manager` provides managed access to UI resources.
+## Review-driven design decisions
 
-### System Services
-- `camera_service` owns camera capture-session control.
-- `media_service` coordinates the live media pipeline.
-- `network_service` supports remote live-stream transport.
-- `device_management` provides device state and health context.
-- `storage_service` is optional for buffering/cache behavior and must not become a hard dependency of the normal low-latency path.
+- Remote client does not depend on camera Window Manager/View System.
+- Control signaling and video/media path are separate.
+- Direct client↔camera and relayed client↔gateway/backend↔camera paths are product-profile selections.
+- Local camera display is optional and never required for remote live view.
+- Latency and buffering budgets are selected by product profile and exposed as acceptance criteria.
 
-### Middleware
-- `media_framework` provides media buffers and pipeline primitives.
-- `ssl_tls` provides secured transport primitives where the viewing path crosses a protected network boundary.
-- `codec_libraries` provide codec support where encode/decode support is needed.
+## Product Profile inputs
 
-### Hardware Abstraction Layer
-- `camera_hal` abstracts camera and image-pipeline vendor details.
-- `display_hal` abstracts local display behavior where applicable.
-- `network_hal` abstracts vendor network interfaces.
+- deployment placement and optional gateway/backend participation;
+- capability availability;
+- compatible contract versions;
+- adapter/provider selection;
+- security profile;
+- offline behavior;
+- latency, buffering, storage, and resource budgets where applicable.
 
-### Linux Kernel
-- `camera_driver` provides low-level camera device access.
-- `display_driver` provides low-level local display access where applicable.
-- `network_driver` provides low-level network device access.
+## Security
 
-### Hardware Platform
-- `camera_sensor` is the image source.
-- `soc_cpu` executes the capture and media software path.
-- `display` is used for local rendering when the product includes a display.
-- `network_ethernet_wifi` provides remote transport.
-- `security_chip_tpm_hsm` provides hardware-backed trust material where required.
+- device-side authentication and authorization remain defined for standalone profiles;
+- backend identity/policy may be authoritative for connected profiles, but camera enforcement and offline behavior remain explicit;
+- credentials, keys, and recording protection are accessed through approved security contracts;
+- security-relevant actions are auditable.
 
-## Communication boundaries
+## Decisions
 
-Live View must use the approved boundaries rather than bypassing layers:
+- Product behavior is independent of operating-system, database, cloud, media, and hardware suppliers.
+- Client hardware/OS is separate from camera hardware/OS.
+- Optional capabilities are enabled only by Product Profile.
+- No component may bypass a product contract to depend on another component's private implementation.
 
-- `application_bus`
-- `system_service_bus`
-- `data_bus`
-- `middleware_bus`
-- `hal_bus`
-- `kernel_bus`
-- `hardware_bus`
+## Open decisions
 
-## Security context
+- exact transport/provider selections for each product profile;
+- product-specific numerical performance budgets;
+- provider qualification evidence and compatibility matrix.
 
-Relevant security services include:
+## Design acceptance criteria
 
-- `iam`
-- `rbac`
-- `device_identity`
-- `tls_mtls`
-- `encryption_services`
-- `security_logging_audit`
-- `secure_hal_interface`
-- `secure_boot_measured_boot`
-- `kernel_hardening`
-- `hardware_root_of_trust`
-
-## Dependency rules
-
-- Live View must not directly call HAL, kernel drivers, or hardware.
-- Application code depends on approved framework/service APIs.
-- Vendor-specific implementation remains behind HAL/service abstraction boundaries.
-- Another component's private `src/` directory is never a supported dependency surface.
-
-## Failure behavior
-
-The component must handle:
-- camera capture unavailable
-- media pipeline initialization failure
-- network interruption and reconnect
-- authorization failure
-- display surface loss
-- device shutdown/restart during an active session
-
-## Open design items
-
-- final live-stream transport protocol and negotiation flow
-- latency target and buffer sizing
-- reconnect and backoff policy
-- local-display versus remote-streaming specialization
-- multi-client session limits
-- telemetry and performance metrics
+1. A headless standalone camera can serve an authorized remote client without backend/gateway.
+2. Revocation terminates or blocks the session according to the selected security profile.
+3. Reconnect behavior is deterministic after transient camera/network loss.
+4. Media path meets the selected profile latency/buffering budget.
+5. Replacing the camera capture/media provider does not change the client contract.
 
 ## Changelog
 
-- 2026-10-03: Added detailed end-to-end Live View relationship, dependency boundaries, security context, and failure behavior.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and design-review feedback.

@@ -1,47 +1,44 @@
-# Live View Requirements
+# Live View Requirements — Platform Baseline v2
 
-## Component
+## Requirement ID policy
 
-`live_view`
+Requirement IDs use the globally unique prefix `LIVE_VIEW`.
 
 ## Functional requirements
 
-- LV-FR-001: The component shall allow an authorized user to start a live-view session.
-- LV-FR-002: The component shall allow an authorized user to stop a live-view session.
-- LV-FR-003: The component shall present the current live video stream through the approved UI path.
-- LV-FR-004: The component shall expose live-view session state to the user interface.
-- LV-FR-005: The component shall report initialization and runtime failures to the user-facing layer.
-- LV-FR-006: The component shall support recovery from transient stream interruption where the lower layers support recovery.
+- LIVE_VIEW-FR-001: The component shall implement its product-owned behavior independently of selected operating-system, vendor, database, cloud, or hardware providers.
+- LIVE_VIEW-FR-002: The component shall support the deployment placements enabled by the selected Product Profile.
+- LIVE_VIEW-FR-003: The component shall expose deterministic lifecycle and failure states.
+- LIVE_VIEW-FR-004: Optional capabilities shall have defined unavailable behavior.
 
 ## Interface requirements
 
-- LV-IR-001: The component shall use the approved Application Bus to reach framework capabilities.
-- LV-IR-002: The component shall use System Service interfaces for camera, media, network, and device-state capabilities.
-- LV-IR-003: The component shall not access HAL, kernel drivers, or hardware directly.
-- LV-IR-004: The component shall not depend on another component's private implementation directory.
-
-## Performance requirements
-
-- LV-PR-001: The design shall minimize end-to-end live-view latency.
-- LV-PR-002: The normal live path shall avoid unnecessary persistent-storage dependencies.
-- LV-PR-003: The implementation shall minimize avoidable media-buffer copies.
-- LV-PR-004: The component shall expose sufficient metrics to measure session startup time and runtime stream health.
+- LIVE_VIEW-IR-001: Cross-component dependencies shall use documented product contracts.
+- LIVE_VIEW-IR-002: Control/state/event contracts shall be separated from high-bandwidth media paths where applicable.
+- LIVE_VIEW-IR-003: Provider-specific paths, handles, SDK types, and private implementation details shall not appear in portable product contracts.
+- LIVE_VIEW-IR-004: Contract version compatibility shall be selected and validated by Product Profile.
 
 ## Security requirements
 
-- LV-SR-001: Live-view access shall be authorized using approved IAM and RBAC services.
-- LV-SR-002: Remote viewing shall use approved transport protection where applicable.
-- LV-SR-003: Security-relevant session actions shall be auditable.
-- LV-SR-004: Secrets or keys shall not be stored directly by the Live View component.
-- LV-SR-005: The component shall reject unauthorized session-start requests.
+- LIVE_VIEW-SR-001: Authorization shall be enforced at the deployment that performs the protected action.
+- LIVE_VIEW-SR-002: Standalone camera operation shall retain required local authentication/authorization behavior.
+- LIVE_VIEW-SR-003: Security-relevant operations and failures shall be auditable.
+- LIVE_VIEW-SR-004: Ordinary user configuration shall not disable mandatory security obligations.
 
 ## Reliability requirements
 
-- LV-RR-001: The component shall provide a defined failure state if capture initialization fails.
-- LV-RR-002: The component shall handle loss of network connectivity without crashing the application.
-- LV-RR-003: The component shall release resources when a live-view session terminates.
-- LV-RR-004: Repeated start/stop operations shall not leak session resources.
+- LIVE_VIEW-RR-001: Offline or unavailable gateway/backend behavior shall be defined.
+- LIVE_VIEW-RR-002: Provider failure shall map to stable product-level status.
+- LIVE_VIEW-RR-003: Recovery/reconnect behavior shall be bounded by the selected Product Profile.
+
+## Design acceptance criteria
+
+- LIVE_VIEW-AC-001: A headless standalone camera can serve an authorized remote client without backend/gateway.
+- LIVE_VIEW-AC-002: Revocation terminates or blocks the session according to the selected security profile.
+- LIVE_VIEW-AC-003: Reconnect behavior is deterministic after transient camera/network loss.
+- LIVE_VIEW-AC-004: Media path meets the selected profile latency/buffering budget.
+- LIVE_VIEW-AC-005: Replacing the camera capture/media provider does not change the client contract.
 
 ## Changelog
 
-- 2026-10-03: Added initial detailed and traceable Live View requirements.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and globally unique requirement IDs.

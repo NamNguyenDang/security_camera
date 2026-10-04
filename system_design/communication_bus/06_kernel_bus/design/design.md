@@ -1,53 +1,45 @@
-# Kernel Bus Detailed Design
+# Driver / Device Integration Boundary Detailed Design — Platform Baseline v2
 
-## Component
-`kernel_bus`
+## Status
+Revised against PR #77.
 
-## Purpose
-Defines the approved **Internal Interfaces** communication boundary between **Linux Kernel** and **Hardware Platform**.
+## Deployment placement
+**Operating-System / Vendor Integration on Camera**
+
+## Purpose and ownership
+Clarify driver/device integration as an implementation boundary distinct from physical interconnects and not as another mandatory product service.
+
+## Boundary contract
+DriverDeviceIntegration boundary defining register/device ownership, reset/error handling, power/lifecycle coordination, and stable guarantees exposed upward.
 
 ## Relationship overview
-![Kernel Bus relationship](./kernel_bus_relationship.svg)
+![Driver / Device Integration Boundary relationship](./kernel_bus_relationship.svg)
 
-## Upper-side participants
-- Camera Driver
-- NPU Driver
-- Display Driver
-- USB Driver
-- Storage Driver
-- Network Driver
-- Power Management
+## Review-driven decisions
+- Physical protocols belong to Hardware Bus qualification.
+- Driver/device integration owns raw register/bus access.
+- Reset/error handling stays within platform integration.
+- Linux-specific interfaces remain below common contracts.
+- No generic kernel bus service is introduced.
 
-## Lower-side participants
-- Camera Sensor
-- NPU / AI Accelerator
-- Display
-- Storage eMMC / SSD
-- Ethernet / Wi-Fi
-- Other Peripherals
+## Product Profile inputs
+- selected OS/board/protocol/provider;
+- compatible versions/capabilities;
+- reset/power/error ownership;
+- security and qualification constraints.
 
-## Boundary responsibilities
-- Define stable operations and ownership rules appropriate to Internal Interfaces.
-- Validate capabilities, parameters, lifecycle state, and resource ownership.
-- Return stable status/errors without leaking uncontrolled implementation details upward.
-- Prevent direct bypass of the owning kernel, HAL, or hardware boundary.
+## Boundary rule
+Implementation and physical boundaries expose stable guarantees upward but are not modeled as mandatory product services unless a concrete deployment requires one.
 
-## Security controls
-- Secure Boot / Measured Boot
-- Hardware Root of Trust
-- Kernel Hardening
-- Security Logging / Audit
+## Open decisions
+- concrete OS/board/protocol selections;
+- numerical electrical/timing/reset limits.
 
-## Failure behavior
-- hardware device unavailable
-- bus transaction failure
-- device reset or timeout
-
-## Open design items
-- exact interface/protocol versioning and compatibility rules
-- timeout, reset, and recovery behavior
-- observability and fault-correlation identifiers
-- power/lifecycle interaction across the boundary
+## Design acceptance criteria
+1. Upper product services never depend on raw registers or kernel APIs.
+2. Physical bus protocol changes remain below this boundary.
+3. Reset/error mapping is deterministic.
+4. A different OS can preserve the same portable upper guarantees.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary design and relationship diagram.
+- 2026-10-04: Re-scoped from generic bus model to Platform Architecture Baseline v2 boundary/qualification model.

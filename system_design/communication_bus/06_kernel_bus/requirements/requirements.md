@@ -1,27 +1,29 @@
-# Kernel Bus Requirements
-
-## Component
-`kernel_bus`
+# Driver / Device Integration Boundary Requirements — Platform Baseline v2
 
 ## Functional requirements
-- KB-FR-001: The bus shall carry approved kernel-to-device operations.
-- KB-FR-002: The bus shall isolate hardware register/bus details from upper software.
-- KB-FR-003: The bus shall coordinate device lifecycle and error propagation.
-- KB-FR-004: The bus shall enforce kernel ownership of raw hardware access.
+- DRIVER_DEVICE_BOUNDARY-FR-001: The boundary shall expose stable guarantees appropriate to its integration/physical role.
+- DRIVER_DEVICE_BOUNDARY-FR-002: Product Profile shall declare selected OS/board/protocol/provider and compatible versions.
+- DRIVER_DEVICE_BOUNDARY-FR-003: Unsupported/incompatible configuration shall fail qualification or initialization deterministically.
 
 ## Interface requirements
-- KB-IR-001: All cross-boundary communication shall use the approved interface or physical protocol contract.
-- KB-IR-002: Upper layers shall not bypass the owning boundary to access lower implementation details directly.
-- KB-IR-003: Unsupported capabilities or invalid parameters shall be rejected deterministically.
+- DRIVER_DEVICE_BOUNDARY-IR-001: Upper product contracts shall not expose raw driver/register/electrical implementation details.
+- DRIVER_DEVICE_BOUNDARY-IR-002: Ownership of reset, errors, lifecycle, and capability translation shall be explicit.
+- DRIVER_DEVICE_BOUNDARY-IR-003: Physical protocol and software service semantics shall not be conflated.
 
 ## Security requirements
-- KB-SR-001: The boundary shall preserve approved trust, identity, hardening, or secure-boot assumptions where applicable.
-- KB-SR-002: Security-relevant boundary failures shall be auditable through the owning software layer.
+- DRIVER_DEVICE_BOUNDARY-SR-001: Security assumptions and isolation ownership shall be documented.
+- DRIVER_DEVICE_BOUNDARY-SR-002: Mandatory protection shall be enforced by actual security boundaries, not fictional bus features.
+- DRIVER_DEVICE_BOUNDARY-SR-003: Security-relevant faults shall be surfaced for audit/recovery where applicable.
 
 ## Reliability requirements
-- KB-RR-001: The bus shall provide defined behavior for hardware device unavailable.
-- KB-RR-002: The bus shall provide defined behavior for bus transaction failure.
-- KB-RR-003: The bus shall provide defined behavior for device reset or timeout.
+- DRIVER_DEVICE_BOUNDARY-RR-001: Reset/power/error behavior shall be documented and testable.
+- DRIVER_DEVICE_BOUNDARY-RR-002: Replacement platform/board implementation shall preserve portable upper guarantees after qualification.
+
+## Design acceptance criteria
+- DRIVER_DEVICE_BOUNDARY-AC-001: Upper product services never depend on raw registers or kernel APIs.
+- DRIVER_DEVICE_BOUNDARY-AC-002: Physical bus protocol changes remain below this boundary.
+- DRIVER_DEVICE_BOUNDARY-AC-003: Reset/error mapping is deterministic.
+- DRIVER_DEVICE_BOUNDARY-AC-004: A different OS can preserve the same portable upper guarantees.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary requirements.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

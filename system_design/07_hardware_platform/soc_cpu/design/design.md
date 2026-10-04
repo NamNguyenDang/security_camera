@@ -1,51 +1,50 @@
-# SoC / CPU Detailed Design
+# SoC / CPU Platform Target Detailed Design — Platform Baseline v2
 
-## Component
-`soc_cpu`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides the primary compute platform executing boot software, operating system, services, middleware, and application workloads.
+## Deployment placement
+**Qualified hardware platform target selected by Product Profile**
+
+## Purpose and ownership
+Treat processor/board selection as a qualified target independent of shared product logic and separately from operating-system choice.
+
+## Qualification contract
+PlatformTarget qualification constraints for compute/memory, media acceleration, trust capabilities, power/thermal budgets, toolchain, and driver compatibility.
 
 ## Relationship overview
-![SoC / CPU relationship](./soc_cpu_relationship.svg)
+![SoC / CPU Platform Target relationship](./soc_cpu_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- SoC selection is not embedded in product-service contracts.
+- OS choice is separate.
+- Required compute/memory/media capabilities are measurable.
+- Trust capabilities and power/thermal budgets are explicit.
+- Toolchain/driver compatibility is part of qualification.
 
-### Application Layer
-- All Applications
-### System Services
-- Core Services
-### Middleware
-- Media Framework
-- AI Runtime
-- Database
-### HAL
-- Hardware Abstraction Layer
-### Linux Kernel
-- Kernel
-- Power Management
-- Drivers
-### Hardware Platform
-- SoC / CPU
+## Product Profile inputs
+- hardware capability required/optional;
+- operating envelope and resource budgets;
+- compatible OS/driver/runtime/toolchain;
+- security and fallback policy.
 
-## Security context
-- Secure Boot
-- Hardware Root of Trust
-- Kernel Hardening
+## Qualification model
+Hardware is selected by measurable capability and compatibility criteria. Supplier replacement is permitted after qualification while preserving upper product contracts.
 
-## Communication boundaries
-- Kernel Bus
-- Hardware Bus
+## Security
+- hardware trust/isolation capabilities are declared, not assumed;
+- mandatory protection requirements come from the security profile;
+- security-relevant hardware faults are auditable.
 
-## Dependency rules
-- Hardware is consumed only through approved kernel/HAL/service abstractions.
-- Platform-specific behavior shall not leak into upper-layer application APIs.
-- Security and lifecycle controls remain active across reset and power transitions.
+## Open decisions
+- concrete supplier targets;
+- numerical compute/thermal/power/resource thresholds.
 
-## Failure behavior
-- boot failure
-- thermal throttling
-- fatal platform error
+## Design acceptance criteria
+1. A new qualified SoC can run the same shared product contracts.
+2. Insufficient compute/memory capability fails qualification before release.
+3. OS/toolchain compatibility is recorded independently from product logic.
+4. Thermal/power limits have profile-defined operating envelopes.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked as Product Profile / hardware qualification design for Platform Architecture Baseline v2.

@@ -1,48 +1,50 @@
-# Display Driver Detailed Design
+# Display Driver / Platform Integration Detailed Design — Platform Baseline v2
 
-## Component
-`display_driver`
+## Status
+Revised against PR #77.
 
-## Purpose
-Controls display hardware and exposes kernel rendering/display interfaces to the Display HAL.
+## Deployment placement
+**Optional camera-local display platform integration only**
+
+## Purpose and ownership
+Limit this driver integration to product profiles with a camera-local display; remote client displays use their own operating-system integration.
+
+## Integration contract
+Local display driver guarantees for modes, surface/buffer handoff, reset/power behavior, and stable errors beneath Display Adapter.
 
 ## Relationship overview
-![Display Driver relationship](./display_driver_relationship.svg)
+![Display Driver / Platform Integration relationship](./display_driver_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Camera-local and client displays are separate.
+- Headless profiles omit the dependency.
+- Graphics/display ownership and surface-buffer handling are explicit.
+- Supported modes and reset behavior are qualified.
+- Linux/driver details stay below portability boundary.
 
-### Application Framework
-- Window Manager
-- View System
-### Middleware
-- OpenGL ES
-- Vulkan
-### HAL
-- Display HAL
-### Linux Kernel
-- Display Driver
-### Hardware Platform
-- Display
-- SoC / CPU
+## Product Profile inputs
+- capability optionality and permitted devices/modes;
+- OS/vendor/board selection;
+- compatible driver/firmware versions;
+- reset, resource, power, and security limits.
 
-## Security context
-- Secure Boot
-- Kernel Hardening
+## Platform qualification
+The integration is qualified against the portable adapter above it. Generic OS/upstream facilities are reused when they satisfy required behavior.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Security
+- raw device access remains below OS isolation;
+- attached/peripheral resources follow explicit trust/resource policy where applicable;
+- security-relevant device faults are auditable.
 
-## Dependency rules
-- Expose only approved kernel interfaces upward.
-- Keep hardware-specific implementation private to the driver.
-- Do not allow user/application layers to bypass HAL/service ownership.
+## Design acceptance criteria
+1. Headless camera builds without this integration.
+2. Client rendering has no dependency on camera display driver.
+3. Buffer handoff ownership is deterministic.
+4. Driver reset maps to stable Display Adapter state.
 
-## Failure behavior
-- display probe failure
-- mode set failure
-- buffer submission failure
+## Open decisions
+- selected OS/vendor driver;
+- board-specific numerical limits.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped as OS/vendor integration for Platform Architecture Baseline v2.

@@ -1,26 +1,28 @@
-# Display Driver Requirements
-
-## Component
-`display_driver`
+# Display Driver / Platform Integration Requirements — Platform Baseline v2
 
 ## Functional requirements
-- DD-FR-001: The driver shall initialize display hardware.
-- DD-FR-002: The driver shall configure supported display modes.
-- DD-FR-003: The driver shall present approved buffers.
-- DD-FR-004: The driver shall report display errors.
+- DISPLAY_DRIVER-FR-001: Platform integration shall satisfy the portable contract above it.
+- DISPLAY_DRIVER-FR-002: Product Profile shall declare capability/device/mode support.
+- DISPLAY_DRIVER-FR-003: Unsupported or unavailable hardware shall be reported deterministically.
 
 ## Interface requirements
-- DD-IR-001: Expose only approved kernel interfaces to the corresponding HAL.
-- DD-IR-002: Do not expose raw hardware control to upper layers.
+- DISPLAY_DRIVER-IR-001: Driver/controller-specific types shall remain below the portability boundary.
+- DISPLAY_DRIVER-IR-002: Ownership, reset, and error mapping shall be documented.
+- DISPLAY_DRIVER-IR-003: Upper product services shall not access raw device controls directly.
 
 ## Security requirements
-- DD-SR-001: Operate under approved kernel hardening and boot trust controls.
-- DD-SR-002: Report security-relevant hardware/driver faults for audit.
+- DISPLAY_DRIVER-SR-001: Privileged device access shall follow OS/platform security policy.
+- DISPLAY_DRIVER-SR-002: Security-relevant faults/attachments shall be auditable as applicable.
 
 ## Reliability requirements
-- DD-RR-001: Provide defined recovery or failure behavior for display probe failure.
-- DD-RR-002: Provide defined recovery or failure behavior for mode set failure.
-- DD-RR-003: Provide defined recovery or failure behavior for buffer submission failure.
+- DISPLAY_DRIVER-RR-001: Reset/disconnect/power-loss states shall have defined outcomes.
+- DISPLAY_DRIVER-RR-002: Compatibility mismatch shall fail before unsafe operation.
+
+## Design acceptance criteria
+- DISPLAY_DRIVER-AC-001: Headless camera builds without this integration.
+- DISPLAY_DRIVER-AC-002: Client rendering has no dependency on camera display driver.
+- DISPLAY_DRIVER-AC-003: Buffer handoff ownership is deterministic.
+- DISPLAY_DRIVER-AC-004: Driver reset maps to stable Display Adapter state.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

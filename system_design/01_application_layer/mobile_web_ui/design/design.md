@@ -1,76 +1,53 @@
-# Mobile / Web UI Detailed Design
+# Mobile / Web UI Detailed Design — Platform Baseline v2
 
-## Component
+## Status
+Revised against PR #77.
 
-`mobile_web_ui`
+## Deployment placement
+**Client only; Android/iOS/Web implementations with shared client contracts**
 
-## Purpose
+## Purpose and ownership
+Re-scope as client presentation plus shared client contracts; camera-side display/windowing is not a dependency.
 
-Provides the presentation shell for supported camera workflows without owning service or hardware logic.
+## Product-owned contract
+ClientPresentation contract with platform adapters for lifecycle, media surface, notifications, secure credential storage, and native navigation.
 
 ## Relationship overview
-
 ![Mobile / Web UI relationship](./mobile_web_ui_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Android, iOS, and Web are separate client platforms sharing product contracts.
+- Client hardware is distinct from camera hardware.
+- Lifecycle/media-surface/notification/credential-storage behavior is implemented by client platform adapters.
+- Camera Window Manager/View System are not remote-client dependencies.
+- Headless cameras remain valid products.
 
-### Application Layer
-- Mobile / Web UI
-- Live View
-- Playback
-- Alarm
-- Settings
+## Interaction model
+- product commands use versioned contracts;
+- state and durable events are explicit;
+- provider/platform details remain behind adapters;
+- deployment transport is selected by Product Profile.
 
-### Application Framework
-- View System
-- Window Manager
-- Resource Manager
-- Notification Manager
+## Security
+- authorization is enforced where the protected action occurs;
+- standalone camera security remains explicit;
+- credentials are held through approved client/device security providers;
+- security-relevant actions are auditable.
 
-### System Services
-- Media Service
-- Network Service
-- Device Management
+## Decisions
+- Client OS/hardware and camera OS/hardware are separate deployment concerns.
+- Product Profile selects optional capabilities and placement.
+- Private implementation directories are not dependency surfaces.
 
-### Middleware
-- SSL / TLS
-- Media Framework
+## Open decisions
+- exact platform adapter technologies;
+- product-specific retry, timeout, and resource budgets.
 
-### Hardware Platform
-- SoC / CPU
-- Display
-- Ethernet / Wi-Fi
-
-## Security context
-
-- IAM / RBAC
-- TLS / mTLS
-- Security Policy
-- Audit
-
-## Communication boundaries
-
-- Application Bus
-- System Service Bus
-
-## Dependency rules
-
-- Use approved interfaces and buses; do not bypass owning layers.
-- Keep lower-layer and vendor implementation details outside this component.
-- Another component's private `src/` directory is not a dependency surface.
-
-## Failure behavior
-
-- session expiry
-- network loss
-- rendering failure
-
-## Open design items
-
-- final API and data contract
-- lifecycle and concurrency behavior
-- performance and observability limits
+## Design acceptance criteria
+1. The same product workflow can be implemented on Android, iOS, and Web without camera OS dependencies.
+2. Remote client live view renders through native client media surfaces.
+3. A headless camera works with remote clients.
+4. Replacing client platform adapters does not change camera product contracts.
 
 ## Changelog
-
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

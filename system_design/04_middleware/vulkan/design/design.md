@@ -1,50 +1,51 @@
-# Vulkan Detailed Design
+# Vulkan Adapter Detailed Design — Platform Baseline v2
 
-## Component
-`vulkan`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides explicit low-level graphics and compute primitives where high-performance rendering or compute control is required.
+## Deployment placement
+**Optional client, camera-local display, or compute adapter selected by Product Profile**
+
+## Purpose and ownership
+Classify Vulkan as an optional rendering/compute adapter beneath portable capability contracts rather than a shared product dependency.
+
+## Portable contract
+Rendering/Compute Capability contract independent of Vulkan handles/types and compatible with alternative backends.
 
 ## Relationship overview
-![Vulkan relationship](./vulkan_relationship.svg)
+![Vulkan Adapter relationship](./vulkan_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Ownership relative to View System/Presentation State is explicit.
+- OpenGL ES and Vulkan are alternative/provider choices, not mandatory parallel dependencies.
+- Deployment using Vulkan is profile-selected.
+- Unsupported features have stable behavior.
+- Shared product code never depends directly on Vulkan API types.
 
-### Application Layer
-- Live View
-- Playback
-### Application Framework
-- View System
-- Window Manager
-### Middleware
-- Vulkan
-### HAL
-- Display HAL
-### Linux Kernel
-- Display Driver
-### Hardware Platform
-- Display
-- SoC / CPU
+## Product Profile inputs
+- enable/omit decision;
+- deployment placement;
+- provider/backend and compatible version;
+- security/capability profile;
+- resource limits.
 
-## Security context
-- Kernel Hardening
-- Security Policy
+## Provider qualification
+Providers are qualified against the portable contract; provider-specific API types remain below the adapter.
 
-## Communication boundaries
-- Middleware Bus
-- HAL Bus
-- Kernel Bus
+## Security
+- mandatory security outcomes are defined outside optional convenience APIs;
+- insecure fallback is not permitted where protection is required;
+- provider failures are auditable.
 
-## Dependency rules
-- Keep the public contract stable and implementation private.
-- Keep vendor-specific behavior behind the abstraction boundary.
-- Do not depend on another component's private `src/`.
+## Open decisions
+- exact provider/API selection per profile;
+- numerical resource and performance constraints.
 
-## Failure behavior
-- device lost
-- resource allocation failure
-- unsupported feature
+## Design acceptance criteria
+1. Product logic runs with Vulkan absent.
+2. Rendering backend can switch between Vulkan and another qualified backend.
+3. Unsupported extension/capability is reported before use.
+4. Client and camera-local graphics remain separately qualified.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped for Platform Architecture Baseline v2 and review feedback.

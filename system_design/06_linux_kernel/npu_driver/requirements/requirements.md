@@ -1,26 +1,29 @@
-# NPU Driver Requirements
-
-## Component
-`npu_driver`
+# NPU Driver / Platform Integration Requirements — Platform Baseline v2
 
 ## Functional requirements
-- ND-FR-001: The driver shall initialize supported accelerator hardware.
-- ND-FR-002: The driver shall manage kernel-level execution resources.
-- ND-FR-003: The driver shall submit approved workloads to hardware.
-- ND-FR-004: The driver shall report device errors.
+- NPU_DRIVER-FR-001: Platform integration shall satisfy the portable contract required above it.
+- NPU_DRIVER-FR-002: Product Profile shall select OS/vendor/board compatibility.
+- NPU_DRIVER-FR-003: Unsupported hardware/capability shall be detected deterministically.
 
 ## Interface requirements
-- ND-IR-001: Expose only approved kernel interfaces to the corresponding HAL.
-- ND-IR-002: Do not expose raw hardware control to upper layers.
+- NPU_DRIVER-IR-001: Kernel/vendor-specific interfaces shall remain below the portability boundary.
+- NPU_DRIVER-IR-002: Resource ownership, reset, and stable error mapping shall be defined.
+- NPU_DRIVER-IR-003: Upper product services shall not access raw device controls directly.
 
 ## Security requirements
-- ND-SR-001: Operate under approved kernel hardening and boot trust controls.
-- ND-SR-002: Report security-relevant hardware/driver faults for audit.
+- NPU_DRIVER-SR-001: Privileged device access shall follow OS/platform isolation policy.
+- NPU_DRIVER-SR-002: Required firmware/driver trust checks shall follow security profile.
+- NPU_DRIVER-SR-003: Security-relevant faults shall be auditable.
 
 ## Reliability requirements
-- ND-RR-001: Provide defined recovery or failure behavior for accelerator probe failure.
-- ND-RR-002: Provide defined recovery or failure behavior for execution timeout.
-- ND-RR-003: Provide defined recovery or failure behavior for memory mapping failure.
+- NPU_DRIVER-RR-001: Device/driver reset and unavailable states shall be defined.
+- NPU_DRIVER-RR-002: Compatibility mismatch shall fail before unsafe operation.
+
+## Design acceptance criteria
+- NPU_DRIVER-AC-001: Product runs without NPU driver when fallback profile permits.
+- NPU_DRIVER-AC-002: Changing NPU driver/vendor preserves the upper acceleration contract.
+- NPU_DRIVER-AC-003: Firmware incompatibility is detected before workload execution.
+- NPU_DRIVER-AC-004: Requirement IDs are globally unique using NPU_DRIVER prefix.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

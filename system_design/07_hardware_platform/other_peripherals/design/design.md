@@ -1,46 +1,45 @@
-# Other Peripherals Detailed Design
+# Qualified Peripheral Extensions Detailed Design — Platform Baseline v2
 
-## Component
-`other_peripherals`
+## Status
+Revised against PR #77.
 
-## Purpose
-Represents additional board-level peripherals integrated through controlled drivers and HAL boundaries without leaking device-specific details into upper layers.
+## Deployment placement
+**Optional camera hardware extensions selected by Product Profile**
+
+## Purpose and ownership
+Keep this as an extension/qualification category rather than an unrestricted generic peripheral API.
+
+## Portable contract
+Per-peripheral qualification record declaring capability, adapter owner, lifecycle, resource/security constraints, interfaces, and product applicability.
 
 ## Relationship overview
-![Other Peripherals relationship](./other_peripherals_relationship.svg)
+![Qualified Peripheral Extensions relationship](./other_peripherals_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Every actual peripheral is named and qualified separately.
+- Register/bus details remain below adapter/driver boundary.
+- Resource and security limits are explicit.
+- Lifecycle and fault behavior are declared.
+- Product Profile states applicability.
 
-### System Services
-- Device Management
-### HAL
-- Device-specific HAL
-### Linux Kernel
-- USB Driver
-- Peripheral Drivers
-### Hardware Platform
-- Other Peripherals
-- SoC / CPU
+## Product / Security Profile inputs
+- placement and provider selection;
+- compatible contract/policy version;
+- offline and revocation behavior;
+- mandatory/optional capability and trust requirements.
 
-## Security context
-- Secure Boot
-- Kernel Hardening
-- Device Provisioning
+## Security model
+Security outcomes remain product obligations even when providers are replaceable. Enforcement occurs at the deployment performing the protected action.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Open decisions
+- concrete identity/policy/provider technologies;
+- profile-specific TTL, propagation, and qualification limits.
 
-## Dependency rules
-- Hardware shall be accessed only through approved driver, HAL, and service ownership.
-- Platform-specific behavior shall remain below the appropriate abstraction boundary.
-- Upper layers shall consume declared capabilities rather than raw device details.
-
-## Failure behavior
-- peripheral absent
-- bus communication failure
-- unsupported device revision
+## Design acceptance criteria
+1. Unknown/unqualified peripherals do not become implicit product dependencies.
+2. Each peripheral has a named adapter owner.
+3. Supplier bus/register details are absent from shared middleware.
+4. Removing an optional peripheral leaves common product behavior valid.
 
 ## Changelog
-- 2026-10-04: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

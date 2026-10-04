@@ -1,26 +1,29 @@
-# Kernel Hardening Requirements
-
-## Component
-`kernel_hardening`
+# Kernel / OS Hardening Requirements — Platform Baseline v2
 
 ## Functional requirements
-- KH-FR-001: The security control shall enforce approved kernel security configuration.
-- KH-FR-002: The security control shall restrict privileged device and memory access.
-- KH-FR-003: The security control shall enable supported exploit mitigations.
-- KH-FR-004: The security control shall report security-relevant kernel violations.
+- KERNEL_HARDENING-FR-001: Security Profile shall declare required capabilities and enforcement/isolation mechanism.
+- KERNEL_HARDENING-FR-002: Protection semantics shall remain stable across qualified provider/OS implementations.
+- KERNEL_HARDENING-FR-003: Unsupported required capability shall have explicit release/failure behavior.
 
 ## Interface requirements
-- KH-IR-001: Expose security/trust status through approved interfaces only.
-- KH-IR-002: Keep protected trust state, credentials, and privileged controls inaccessible to unauthorized consumers.
+- KERNEL_HARDENING-IR-001: Trust/isolation boundaries shall be documented explicitly.
+- KERNEL_HARDENING-IR-002: Provider/OS-specific controls shall remain behind platform security adapters.
+- KERNEL_HARDENING-IR-003: Evidence/state exposed upward shall be provider-neutral where possible.
 
 ## Security requirements
-- KH-SR-001: Fail safely when required trust, provisioning, or hardening controls cannot be established.
-- KH-SR-002: Generate audit evidence for security-relevant operations and failures.
+- KERNEL_HARDENING-SR-001: Required protected operations shall be enforced by an actual isolation boundary.
+- KERNEL_HARDENING-SR-002: Required boot/hardening/security failures shall fail safely.
+- KERNEL_HARDENING-SR-003: Security-relevant state and failures shall be auditable/evidenced.
 
 ## Reliability requirements
-- KH-RR-001: Provide defined safe behavior for required hardening control unavailable.
-- KH-RR-002: Provide defined safe behavior for policy/configuration mismatch.
-- KH-RR-003: Provide defined safe behavior for security violation detected.
+- KERNEL_HARDENING-RR-001: Provider/measurement/control unavailability shall have defined behavior.
+- KERNEL_HARDENING-RR-002: Recovery/rollback/reset behavior shall be explicit where applicable.
+
+## Design acceptance criteria
+- KERNEL_HARDENING-AC-001: A non-Linux platform can satisfy the same common protection outcomes with different mechanisms.
+- KERNEL_HARDENING-AC-002: Missing required hardening control blocks qualification unless approved alternative exists.
+- KERNEL_HARDENING-AC-003: Configuration evidence is reviewable per product build.
+- KERNEL_HARDENING-AC-004: Applications do not depend on Linux-specific hardening settings.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

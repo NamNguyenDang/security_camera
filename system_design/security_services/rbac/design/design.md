@@ -1,48 +1,46 @@
-# RBAC — Role-Based Access Control Detailed Design
+# Role-Based Access Control (RBAC) Detailed Design — Platform Baseline v2
 
-## Component
-`rbac`
+## Status
+Revised against PR #77.
 
-## Purpose
-Maps approved roles to permissions so access decisions are consistent, reviewable, and not implemented ad hoc by individual applications.
+## Deployment placement
+**Policy evaluation may occur on Camera, Gateway, Backend, or Client-facing service; enforcement occurs where action executes**
+
+## Purpose and ownership
+Extend role-to-permission mapping with resource scope and stable policy-evaluation semantics independent of policy source.
+
+## Portable contract
+AuthorizationDecision contract including principal, role/permission, customer/site/area/device/recording scope, inheritance, explicit deny, policy version, and offline state.
 
 ## Relationship overview
-![RBAC — Role-Based Access Control relationship](./rbac_relationship.svg)
+![Role-Based Access Control (RBAC) relationship](./rbac_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Resource scope is first-class.
+- Permission inheritance and explicit deny precedence are defined.
+- Ownership transfer changes effective scope.
+- Revocation propagation is explicit.
+- Offline policy semantics are explicit.
+- Policy source is replaceable while evaluation contract remains stable.
 
-### Application Layer
-- User Management
-- Live View
-- Playback
-- Device Config
-### Application Framework
-- Security Policy Enforcement
-### System Services
-- Device Management
-- Storage Service
-- Camera Service
-### Middleware
-- Database
+## Product / Security Profile inputs
+- placement and provider selection;
+- compatible contract/policy version;
+- offline and revocation behavior;
+- mandatory/optional capability and trust requirements.
 
-## Related security services
-- IAM
-- Security Policy
-- Audit
+## Security model
+Security outcomes remain product obligations even when providers are replaceable. Enforcement occurs at the deployment performing the protected action.
 
-## Communication / enforcement boundaries
-- Application Bus
-- System Service Bus
+## Open decisions
+- concrete identity/policy/provider technologies;
+- profile-specific TTL, propagation, and qualification limits.
 
-## Design rules
-- Security behavior shall be centralized through this approved service/control rather than reimplemented independently.
-- Consumers shall use stable interfaces and avoid direct access to protected implementation or key material.
-- Policy, identity, key, and audit dependencies shall fail safely.
-
-## Failure behavior
-- role data unavailable
-- unknown role
-- policy conflict
+## Design acceptance criteria
+1. A permission on one site does not implicitly authorize another.
+2. Explicit deny precedence is deterministic.
+3. Ownership transfer removes stale inherited access.
+4. Offline authorization behavior is defined and auditable.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

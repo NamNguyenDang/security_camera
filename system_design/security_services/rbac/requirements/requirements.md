@@ -1,26 +1,29 @@
-# RBAC — Role-Based Access Control Requirements
-
-## Component
-`rbac`
+# Role-Based Access Control (RBAC) Requirements — Platform Baseline v2
 
 ## Functional requirements
-- R-FR-001: The security service shall evaluate role-based permissions.
-- R-FR-002: The security service shall support approved role assignment data.
-- R-FR-003: The security service shall deny unauthorized operations by default.
-- R-FR-004: The security service shall expose decision results to policy enforcement.
+- RBAC-FR-001: Product/Security Profile shall declare capability, placement, and provider selection.
+- RBAC-FR-002: Portable semantics shall remain independent of provider implementation.
+- RBAC-FR-003: Offline/unavailable-provider behavior shall be defined.
 
 ## Interface requirements
-- R-IR-001: Expose stable security interfaces to approved consumers only.
-- R-IR-002: Keep protected implementation details and key material outside consumer control.
+- RBAC-IR-001: Contracts shall use provider-neutral identity/resource/capability references.
+- RBAC-IR-002: Policy/contract versions shall be explicit.
+- RBAC-IR-003: Provider-specific SDK/hardware details shall remain behind adapters.
 
 ## Security requirements
-- R-SR-001: Fail closed or fail safely for authorization, identity, policy, or trust failures as applicable.
-- R-SR-002: Generate audit evidence for security-relevant operations and failures.
+- RBAC-SR-001: Protected actions shall be enforced at the execution boundary.
+- RBAC-SR-002: Revocation/failure/stale-policy behavior shall fail safely according to Security Profile.
+- RBAC-SR-003: Security-relevant decisions and failures shall be auditable.
 
 ## Reliability requirements
-- R-RR-001: Provide defined safe behavior for role data unavailable.
-- R-RR-002: Provide defined safe behavior for unknown role.
-- R-RR-003: Provide defined safe behavior for policy conflict.
+- RBAC-RR-001: Backend/provider outage shall not create undefined authorization/security state.
+- RBAC-RR-002: Recovery/synchronization shall preserve stable product semantics.
+
+## Design acceptance criteria
+- RBAC-AC-001: A permission on one site does not implicitly authorize another.
+- RBAC-AC-002: Explicit deny precedence is deterministic.
+- RBAC-AC-003: Ownership transfer removes stale inherited access.
+- RBAC-AC-004: Offline authorization behavior is defined and auditable.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

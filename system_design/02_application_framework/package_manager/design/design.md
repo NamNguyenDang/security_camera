@@ -1,73 +1,47 @@
-# Package Manager Detailed Design
+# Package / Update Adapter Detailed Design — Platform Baseline v2
 
-## Component
+## Status
+Revised against PR #77.
 
-`package_manager`
+## Deployment placement
+**Client package platform adapter and/or Camera update integration, selected separately**
 
-## Purpose
+## Purpose and ownership
+Separate client package lifecycle from camera firmware/application update orchestration. A generic package manager is not mandatory shared product logic.
 
-Manages installed software package metadata, lifecycle, and package-level permissions using controlled storage and security policy.
+## Product-owned contract
+PackageLifecycle adapter for clients; DeviceUpdate contract for camera firmware/application updates owned with Device Management and Secure Boot.
 
 ## Relationship overview
+![Package / Update Adapter relationship](./package_manager_relationship.svg)
 
-![Package Manager relationship](./package_manager_relationship.svg)
+## Review-driven decisions
+- Client package lifecycle and device update lifecycle are separate.
+- Update authenticity and compatibility are product/security obligations.
+- Interrupted update recovery and approved rollback are explicit.
+- Platform package mechanisms remain replaceable.
+- Device Management owns orchestration; Secure Boot/verification owns trust enforcement.
 
-## Relevant system path
+## Product Profile inputs
+- capability optionality and placement;
+- compatible contract version;
+- selected platform/provider adapter;
+- security, rollback/retry, and offline policy.
 
-### Application Layer
-- Applications
+## Design rules
+- portable product behavior is separated from native package/resource/notification mechanisms;
+- client and camera lifecycles are distinct;
+- mandatory security policy is not delegated to a convenience framework component.
 
-### Application Framework
-- Package Manager
-- Activity Manager
+## Open decisions
+- provider/platform selection per profile;
+- numerical retry, cache, retention, and compatibility limits.
 
-### System Services
-- Storage Service
-- Device Management
-
-### Middleware
-- Database
-
-### HAL
-- Storage HAL
-
-### Linux Kernel
-- Storage Driver
-
-### Hardware Platform
-- Storage eMMC / SSD
-- SoC / CPU
-
-## Security context
-
-- Security Policy
-- IAM / RBAC
-- Secure Boot
-- Audit
-
-## Communication boundaries
-
-- Application Bus
-- System Service Bus
-
-## Dependency rules
-
-- Use approved interfaces and buses; do not bypass owning layers.
-- Keep lower-layer and vendor implementation details outside this component.
-- Another component's private `src/` directory is not a dependency surface.
-
-## Failure behavior
-
-- invalid package
-- storage failure
-- policy rejection
-
-## Open design items
-
-- final API and data contract
-- lifecycle and concurrency behavior
-- performance and observability limits
+## Design acceptance criteria
+1. A product can use native client package mechanisms without camera dependency.
+2. Camera update remains valid without Android-style Package Manager.
+3. Interrupted update has a deterministic recovery state.
+4. Unauthorized or incompatible update is rejected before activation.
 
 ## Changelog
-
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped for Platform Architecture Baseline v2 and review feedback.

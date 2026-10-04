@@ -1,26 +1,28 @@
-# Display Requirements
-
-## Component
-`display`
+# Local Display Hardware Requirements — Platform Baseline v2
 
 ## Functional requirements
-- D-FR-001: The hardware component shall accept supported display output.
-- D-FR-002: The hardware component shall support declared modes.
-- D-FR-003: The hardware component shall provide required status signals.
-- D-FR-004: The hardware component shall recover according to supported reset behavior.
+- DISPLAY-FR-001: Product Profile shall declare whether the hardware capability is required or optional.
+- DISPLAY-FR-002: Hardware shall satisfy measurable qualification constraints.
+- DISPLAY-FR-003: Unsupported/incompatible hardware shall fail qualification before release.
 
 ## Interface requirements
-- D-IR-001: Interact through approved hardware, driver, and HAL interfaces.
-- D-IR-002: Advertise only supported capabilities and status.
+- DISPLAY-IR-001: Supplier-specific interfaces shall remain behind the platform adapter/driver.
+- DISPLAY-IR-002: Capability and health/status exposed upward shall be provider-neutral.
+- DISPLAY-IR-003: Compatible board/driver/adapter versions shall be recorded.
 
 ## Security requirements
-- D-SR-001: Participate in approved boot, trust, and protection mechanisms where applicable.
-- D-SR-002: Surface security-relevant status and failures to the owning driver/service.
+- DISPLAY-SR-001: Hardware security/privacy obligations shall follow the selected security profile.
+- DISPLAY-SR-002: Relevant integrity/security faults shall be surfaced for audit/recovery.
 
 ## Reliability requirements
-- D-RR-001: Provide defined behavior for display absent.
-- D-RR-002: Provide defined behavior for mode unsupported.
-- D-RR-003: Provide defined behavior for link or panel failure.
+- DISPLAY-RR-001: Reset/power-loss/fault behavior shall be documented and testable.
+- DISPLAY-RR-002: Replacement hardware shall preserve the upper portable contract after qualification.
+
+## Design acceptance criteria
+- DISPLAY-AC-001: Headless profile has no display hardware dependency.
+- DISPLAY-AC-002: Replacement panel/display preserves required local modes after qualification.
+- DISPLAY-AC-003: Power/reset behavior satisfies declared profile.
+- DISPLAY-AC-004: Requirement IDs use globally unique DISPLAY_HW semantics via DISPLAY component prefix.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

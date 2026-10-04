@@ -1,57 +1,47 @@
-# Encryption Services Detailed Design
+# Data / Recording Protection Detailed Design — Platform Baseline v2
 
-## Component
-`encryption_services`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides approved encryption capabilities for data at rest and in transit so individual components do not implement incompatible cryptography.
+## Deployment placement
+**Camera mandatory where protected local data exists; Gateway/Backend equivalents selected by Security Profile**
+
+## Purpose and ownership
+Define recording/data protection outcomes separately from transport security and from the selected cryptographic provider.
+
+## Security contract
+DataProtection contract declaring protected data classes, confidentiality/integrity expectations, key references/separation, authorization, rotation, retention/deletion, and recovery behavior.
 
 ## Relationship overview
-![Encryption Services relationship](./encryption_services_relationship.svg)
+![Data / Recording Protection relationship](./encryption_services_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Recording/data protection is not a generic encrypt/decrypt API.
+- Protected data classes are explicit.
+- Integrity expectations are explicit.
+- Key purpose/separation and authorization are defined.
+- Rotation and retention/deletion behavior are explicit.
+- Recovery behavior is defined independently of cryptographic provider.
 
-### Application Layer
-- Playback
-- Event Search
-- User Management
-### System Services
-- Storage Service
-- Network Service
-- Device Management
-### Middleware
-- Database
-- Media Framework
-- SSL / TLS
-### HAL
-- Storage HAL
-- Network HAL
-### Linux Kernel
-- Storage Driver
-- Network Driver
-### Hardware Platform
-- Storage eMMC / SSD
-- Security Chip / TPM
+## Security Profile inputs
+- required protection/audit/key outcomes;
+- placement/provider selection;
+- lifecycle/rotation/retention/recovery policy;
+- offline/buffering behavior;
+- compatible contract/provider versions.
 
-## Related security services
-- Secrets / Key Management
-- Hardware Root of Trust
-- Audit
+## Provider separation
+Product protection requirements remain stable while cryptographic, key-store, hardware, and audit providers are replaceable through qualified adapters.
 
-## Communication / enforcement boundaries
-- Data Bus
-- Middleware Bus
-- HAL Bus
+## Open decisions
+- concrete cryptographic/key/audit providers;
+- numerical retention, buffer, rotation, and recovery limits.
 
-## Design rules
-- Consumers shall use approved security interfaces rather than implement private alternatives.
-- Protected keys, measurements, or trust state shall remain behind the owning secure boundary.
-- Security failures shall fail safely and preserve auditability.
-
-## Failure behavior
-- key unavailable
-- unsupported algorithm policy
-- cryptographic operation failure
+## Design acceptance criteria
+1. Changing cryptographic provider does not change which data must be protected.
+2. Recording deletion handles associated key/reference lifecycle according to policy.
+3. Transport-security provider changes do not alter at-rest protection requirements.
+4. Recovery does not require exposing raw protected keys to application components.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and security-review feedback.

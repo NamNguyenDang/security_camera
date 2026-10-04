@@ -1,32 +1,28 @@
-# Activity Manager Requirements
-
-## Component
-
-`activity_manager`
+# Activity Manager / Lifecycle Adapter Requirements — Platform Baseline v2
 
 ## Functional requirements
-
-- AM-FR-001: The component shall track application lifecycle state.
-- AM-FR-002: The component shall coordinate start/stop transitions.
-- AM-FR-003: The component shall recover defined state after restart.
-- AM-FR-004: The component shall prevent invalid lifecycle transitions.
+- ACTIVITY_MANAGER-FR-001: The component shall expose portable product semantics independent of native platform implementation.
+- ACTIVITY_MANAGER-FR-002: The Product Profile shall declare whether and where the capability is used.
+- ACTIVITY_MANAGER-FR-003: Unsupported capability shall have deterministic behavior.
 
 ## Interface requirements
-
-- AM-IR-001: The component shall use approved interfaces and buses.
-- AM-IR-002: The component shall not depend on another component's private implementation.
+- ACTIVITY_MANAGER-IR-001: The portable contract shall be versioned and smaller than provider/native APIs.
+- ACTIVITY_MANAGER-IR-002: Platform/provider-specific types shall stay behind adapters.
+- ACTIVITY_MANAGER-IR-003: Cross-deployment calls shall not assume local IPC.
 
 ## Security requirements
-
-- AM-SR-001: Security-relevant access shall use approved identity, authorization, and policy services where applicable.
-- AM-SR-002: Security-relevant actions and failures shall be auditable.
+- ACTIVITY_MANAGER-SR-001: Protected operations shall validate caller authorization.
+- ACTIVITY_MANAGER-SR-002: Security-relevant failures shall be auditable.
 
 ## Reliability requirements
+- ACTIVITY_MANAGER-RR-001: Native/platform unavailability shall map to stable product-level failure.
+- ACTIVITY_MANAGER-RR-002: Restart/recovery behavior shall be defined where applicable.
 
-- AM-RR-001: Defined behavior shall exist for application crash.
-- AM-RR-002: Defined behavior shall exist for resource exhaustion.
-- AM-RR-003: Defined behavior shall exist for invalid lifecycle request.
+## Design acceptance criteria
+- ACTIVITY_MANAGER-AC-001: A headless camera does not require an Activity Manager.
+- ACTIVITY_MANAGER-AC-002: Android/iOS/Web can map lifecycle semantics to native mechanisms.
+- ACTIVITY_MANAGER-AC-003: Camera services continue independently of client navigation lifecycle.
+- ACTIVITY_MANAGER-AC-004: Restart recovery has deterministic portable states.
 
 ## Changelog
-
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

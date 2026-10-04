@@ -1,26 +1,29 @@
-# OpenGL ES Requirements
-
-## Component
-`opengl_es`
+# OpenGL ES Adapter Requirements — Platform Baseline v2
 
 ## Functional requirements
-- OE-FR-001: The component shall provide supported graphics contexts.
-- OE-FR-002: The component shall render approved surfaces.
-- OE-FR-003: The component shall manage graphics resources.
-- OE-FR-004: The component shall report context/device loss.
+- OPENGL_ES-FR-001: Product Profile shall declare whether this adapter is present.
+- OPENGL_ES-FR-002: Portable behavior shall remain independent of selected provider implementation.
+- OPENGL_ES-FR-003: Unsupported capability shall be reported deterministically.
 
 ## Interface requirements
-- OE-IR-001: Use approved upper and lower layer interfaces.
-- OE-IR-002: Hide private/vendor-specific implementation details.
+- OPENGL_ES-IR-001: Provider-specific API types shall not escape the adapter boundary.
+- OPENGL_ES-IR-002: Portable contracts shall be versioned and capability-aware.
+- OPENGL_ES-IR-003: Provider replacement shall preserve defined product semantics.
 
 ## Security requirements
-- OE-SR-001: Use approved security services for protected data or operations.
-- OE-SR-002: Emit audit/diagnostic events for relevant failures.
+- OPENGL_ES-SR-001: Security-sensitive behavior shall follow the owning security profile/policy.
+- OPENGL_ES-SR-002: Required protections shall not fall back to insecure modes.
+- OPENGL_ES-SR-003: Security-relevant failures shall be auditable.
 
 ## Reliability requirements
-- OE-RR-001: Provide defined behavior for graphics context loss.
-- OE-RR-002: Provide defined behavior for resource allocation failure.
-- OE-RR-003: Provide defined behavior for display unavailable.
+- OPENGL_ES-RR-001: Provider loss or initialization failure shall map to stable product state.
+- OPENGL_ES-RR-002: Optional capability absence shall remain a supported state.
+
+## Design acceptance criteria
+- OPENGL_ES-AC-001: Headless camera profile omits OpenGL ES.
+- OPENGL_ES-AC-002: A client can use a different native graphics API without product contract changes.
+- OPENGL_ES-AC-003: Local camera display can use OpenGL ES only when profile selects it.
+- OPENGL_ES-AC-004: Unsupported rendering features produce stable capability status.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

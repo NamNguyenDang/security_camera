@@ -1,26 +1,29 @@
-# Hardware Root of Trust Requirements
-
-## Component
-`hardware_root_of_trust`
+# Hardware Root of Trust Requirements — Platform Baseline v2
 
 ## Functional requirements
-- HROT-FR-001: The security control shall provide hardware-backed trust anchors.
-- HROT-FR-002: The security control shall protect root key material.
-- HROT-FR-003: The security control shall support approved measurements or attestations.
-- HROT-FR-004: The security control shall expose trust status through controlled interfaces.
+- HARDWARE_ROOT_OF_TRUST-FR-001: Product/Security Profile shall declare required capability/transport and placement.
+- HARDWARE_ROOT_OF_TRUST-FR-002: Portable semantics shall remain independent of selected provider/transport.
+- HARDWARE_ROOT_OF_TRUST-FR-003: Invalid or unsupported state/capability/version shall fail deterministically.
 
 ## Interface requirements
-- HROT-IR-001: Expose security/trust status through approved interfaces only.
-- HROT-IR-002: Keep protected trust state, credentials, and privileged controls inaccessible to unauthorized consumers.
+- HARDWARE_ROOT_OF_TRUST-IR-001: Portable contracts shall be versioned.
+- HARDWARE_ROOT_OF_TRUST-IR-002: Provider/transport-specific details shall remain behind adapters.
+- HARDWARE_ROOT_OF_TRUST-IR-003: Identity/ownership/error semantics shall be explicit where applicable.
 
 ## Security requirements
-- HROT-SR-001: Fail safely when required trust, provisioning, or hardening controls cannot be established.
-- HROT-SR-002: Generate audit evidence for security-relevant operations and failures.
+- HARDWARE_ROOT_OF_TRUST-SR-001: Protected operations/transitions shall require approved authorization/trust.
+- HARDWARE_ROOT_OF_TRUST-SR-002: Security-relevant state/failures shall be auditable.
+- HARDWARE_ROOT_OF_TRUST-SR-003: Provider/transport choice shall not weaken mandatory security obligations.
 
 ## Reliability requirements
-- HROT-RR-001: Provide defined safe behavior for root-of-trust unavailable.
-- HROT-RR-002: Provide defined safe behavior for protected operation failure.
-- HROT-RR-003: Provide defined safe behavior for trust measurement invalid.
+- HARDWARE_ROOT_OF_TRUST-RR-001: Provider/transport interruption shall have defined recovery/failure behavior.
+- HARDWARE_ROOT_OF_TRUST-RR-002: Compatibility mismatch shall be detected before unsafe operation.
+
+## Design acceptance criteria
+- HARDWARE_ROOT_OF_TRUST-AC-001: Provider lacking attestation can qualify for a profile that does not require attestation.
+- HARDWARE_ROOT_OF_TRUST-AC-002: Required protected-key/boot-anchor guarantees are verified.
+- HARDWARE_ROOT_OF_TRUST-AC-003: Provider replacement does not alter upper security-service contracts.
+- HARDWARE_ROOT_OF_TRUST-AC-004: Provider failure produces explicit safe degradation/failure.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

@@ -1,51 +1,45 @@
-# Hardware Root of Trust Detailed Design
+# Hardware Root of Trust Detailed Design — Platform Baseline v2
 
-## Component
-`hardware_root_of_trust`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides the immutable or hardware-backed trust anchor used for secure boot, protected keys, device identity, measurements, and trusted security decisions.
+## Deployment placement
+**Camera security-provider capability selected by Security Profile**
+
+## Purpose and ownership
+Treat hardware root of trust as a capability/provider contract with explicit assurance expectations, not an assumption that every provider supplies every function.
+
+## Portable contract
+RootOfTrustProvider contract covering boot anchors, protected key operations, optional measurements, optional attestation, provisioning, failure, replacement, and qualification evidence.
 
 ## Relationship overview
 ![Hardware Root of Trust relationship](./hardware_root_of_trust_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Boot trust anchor, key protection, measurement, and attestation are separate capabilities.
+- Security Profile selects required subset.
+- Provider may qualify without optional functions.
+- Provisioning and replacement lifecycle are explicit.
+- Qualification evidence is required.
 
-### System Services
-- Device Management
-- Network Service
-### Middleware
-- Secrets / Key Management
-- SSL / TLS
-### HAL
-- Secure HAL Interface
-### Linux Kernel
-- Secure Boot
-- Kernel Security Interfaces
-### Hardware Platform
-- Security Chip / TPM
-- SoC / CPU
+## Product / Security Profile inputs
+- required capability/transport and placement;
+- compatible contract/provider versions;
+- trust, offline, and failure policy;
+- qualification evidence where applicable.
 
-## Related security services
-- Secure Boot / Measured Boot
-- Device Identity
-- Device Provisioning
-- Audit
+## Design rule
+Portable product semantics are defined independently of specific transports, operating systems, hardware providers, or manufacturing mechanisms.
 
-## Communication / enforcement boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Open decisions
+- concrete transport/provider mechanisms;
+- profile-specific TTL, version, and qualification limits.
 
-## Design rules
-- Security controls shall be enforced at the owning trust or kernel boundary.
-- Protected trust state and credentials shall not be exposed directly to applications.
-- Security failures shall fail safely and remain auditable.
-
-## Failure behavior
-- root-of-trust unavailable
-- protected operation failure
-- trust measurement invalid
+## Design acceptance criteria
+1. Provider lacking attestation can qualify for a profile that does not require attestation.
+2. Required protected-key/boot-anchor guarantees are verified.
+3. Provider replacement does not alter upper security-service contracts.
+4. Provider failure produces explicit safe degradation/failure.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

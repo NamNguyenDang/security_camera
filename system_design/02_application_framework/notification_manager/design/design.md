@@ -1,58 +1,47 @@
-# Notification Manager Detailed Design
+# Notification Policy / Delivery Routing Detailed Design — Platform Baseline v2
 
-## Component
-`notification_manager`
+## Status
+Revised against PR #77.
 
-## Purpose
-Coordinates system and application notifications and routes them to approved presentation or alert channels.
+## Deployment placement
+**Client + optional Gateway/Backend + optional local Camera output**
+
+## Purpose and ownership
+Separate notification policy/routing from Android/iOS/Web delivery adapters and optional camera-local audio/display outputs.
+
+## Product-owned contract
+NotificationDelivery contract with delivery state, retry, deduplication, acknowledgement, sensitivity classification, and provider adapter.
 
 ## Relationship overview
-![Notification Manager relationship](./notification_manager_relationship.svg)
+![Notification Policy / Delivery Routing relationship](./notification_manager_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Alarm domain owns alarm semantics; notification component owns delivery policy/state.
+- Platform delivery adapters are replaceable.
+- Local camera outputs are optional capabilities.
+- Offline behavior and retry bounds are explicit.
+- Sensitive content handling is defined per security/profile policy.
 
-### Application Layer
-- Alarm
-- Settings
-- Mobile / Web UI
-### Application Framework
-- Notification Manager
-- View System
-### System Services
-- Device Management
-- Network Service
-### Middleware
-- Database
-- SSL / TLS
-### HAL
-- Audio HAL
-- Display HAL
-### Linux Kernel
-- Audio Driver
-- Display Driver
-### Hardware Platform
-- Audio
-- Display
-- SoC / CPU
+## Product Profile inputs
+- capability optionality and placement;
+- compatible contract version;
+- selected platform/provider adapter;
+- security, rollback/retry, and offline policy.
 
-## Security context
-- IAM / RBAC
-- Security Policy
-- Audit
+## Design rules
+- portable product behavior is separated from native package/resource/notification mechanisms;
+- client and camera lifecycles are distinct;
+- mandatory security policy is not delegated to a convenience framework component.
 
-## Communication boundaries
-- Application Bus
-- System Service Bus
+## Open decisions
+- provider/platform selection per profile;
+- numerical retry, cache, retention, and compatibility limits.
 
-## Dependency rules
-- Use approved interfaces and buses.
-- Keep lower-layer implementation details outside this component.
-- Do not depend on another component's private `src/`.
-
-## Failure behavior
-- channel unavailable
-- duplicate notification
-- policy suppression
+## Design acceptance criteria
+1. Alarm semantics remain unchanged when notification provider changes.
+2. Remote-only products work without camera audio/display.
+3. Duplicate notifications are bounded by deduplication policy.
+4. Offline delivery transitions through defined pending/failed/expired states.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped for Platform Architecture Baseline v2 and review feedback.

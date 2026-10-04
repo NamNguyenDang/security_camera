@@ -1,27 +1,29 @@
-# HAL Bus Requirements
-
-## Component
-`hal_bus`
+# Platform HAL / OS Integration Boundary Requirements — Platform Baseline v2
 
 ## Functional requirements
-- HB-FR-001: The bus shall carry approved HAL-to-kernel operations.
-- HB-FR-002: The bus shall preserve a stable hardware abstraction contract.
-- HB-FR-003: The bus shall validate supported capabilities and parameters.
-- HB-FR-004: The bus shall translate kernel/driver failures into stable HAL status.
+- HAL_BOUNDARY-FR-001: The boundary shall expose stable guarantees appropriate to its integration/physical role.
+- HAL_BOUNDARY-FR-002: Product Profile shall declare selected OS/board/protocol/provider and compatible versions.
+- HAL_BOUNDARY-FR-003: Unsupported/incompatible configuration shall fail qualification or initialization deterministically.
 
 ## Interface requirements
-- HB-IR-001: All cross-boundary communication shall use the approved interface or physical protocol contract.
-- HB-IR-002: Upper layers shall not bypass the owning boundary to access lower implementation details directly.
-- HB-IR-003: Unsupported capabilities or invalid parameters shall be rejected deterministically.
+- HAL_BOUNDARY-IR-001: Upper product contracts shall not expose raw driver/register/electrical implementation details.
+- HAL_BOUNDARY-IR-002: Ownership of reset, errors, lifecycle, and capability translation shall be explicit.
+- HAL_BOUNDARY-IR-003: Physical protocol and software service semantics shall not be conflated.
 
 ## Security requirements
-- HB-SR-001: The boundary shall preserve approved trust, identity, hardening, or secure-boot assumptions where applicable.
-- HB-SR-002: Security-relevant boundary failures shall be auditable through the owning software layer.
+- HAL_BOUNDARY-SR-001: Security assumptions and isolation ownership shall be documented.
+- HAL_BOUNDARY-SR-002: Mandatory protection shall be enforced by actual security boundaries, not fictional bus features.
+- HAL_BOUNDARY-SR-003: Security-relevant faults shall be surfaced for audit/recovery where applicable.
 
 ## Reliability requirements
-- HB-RR-001: The bus shall provide defined behavior for driver unavailable.
-- HB-RR-002: The bus shall provide defined behavior for unsupported capability.
-- HB-RR-003: The bus shall provide defined behavior for kernel interface mismatch.
+- HAL_BOUNDARY-RR-001: Reset/power/error behavior shall be documented and testable.
+- HAL_BOUNDARY-RR-002: Replacement platform/board implementation shall preserve portable upper guarantees after qualification.
+
+## Design acceptance criteria
+- HAL_BOUNDARY-AC-001: A non-Linux platform can implement the same portable hardware contracts.
+- HAL_BOUNDARY-AC-002: No separately deployed HAL bus is required by default.
+- HAL_BOUNDARY-AC-003: Driver/HAL error translation has one owner.
+- HAL_BOUNDARY-AC-004: Incompatible capability/version fails before operation.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary requirements.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

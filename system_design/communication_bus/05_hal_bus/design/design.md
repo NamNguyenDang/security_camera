@@ -1,52 +1,46 @@
-# HAL Bus Detailed Design
+# Platform HAL / OS Integration Boundary Detailed Design — Platform Baseline v2
 
-## Component
-`hal_bus`
+## Status
+Revised against PR #77.
 
-## Purpose
-Defines the approved **Standard Interfaces** communication boundary between **Hardware Abstraction Layer** and **Linux Kernel**.
+## Deployment placement
+**Camera platform integration; selected OS implementation such as Linux**
+
+## Purpose and ownership
+Re-scope the former HAL Bus as platform-specific HAL-to-operating-system integration beneath portable hardware contracts, not a separately deployed generic bus.
+
+## Boundary contract
+PlatformIntegration boundary defining capability/version compatibility, ownership, error translation, reset/power behavior, and driver-adapter responsibility.
 
 ## Relationship overview
-![HAL Bus relationship](./hal_bus_relationship.svg)
+![Platform HAL / OS Integration Boundary relationship](./hal_bus_relationship.svg)
 
-## Upper-side participants
-- Camera HAL
-- AI / NPU HAL
-- Audio HAL
-- Display HAL
-- Storage HAL
-- Network HAL
+## Review-driven decisions
+- Linux is one implementation, not the product contract.
+- Portable hardware contracts stay above this boundary.
+- Overlap with driver adapters is explicit.
+- Error translation ownership is assigned.
+- Capability/version and reset/power behavior are defined.
+- No generic HAL bus process/service is required unless justified by a product.
 
-## Lower-side participants
-- Camera Driver
-- NPU Driver
-- Audio Driver
-- Display Driver
-- Storage Driver
-- Network Driver
+## Product Profile inputs
+- selected OS/board/protocol/provider;
+- compatible versions/capabilities;
+- reset/power/error ownership;
+- security and qualification constraints.
 
-## Boundary responsibilities
-- Define stable operations and ownership rules appropriate to Standard Interfaces.
-- Validate capabilities, parameters, lifecycle state, and resource ownership.
-- Return stable status/errors without leaking uncontrolled implementation details upward.
-- Prevent direct bypass of the owning kernel, HAL, or hardware boundary.
+## Boundary rule
+Implementation and physical boundaries expose stable guarantees upward but are not modeled as mandatory product services unless a concrete deployment requires one.
 
-## Security controls
-- Secure HAL Interface
-- Device Identity
-- Secure Boot / Measured Boot
-- Secrets / Key Management
+## Open decisions
+- concrete OS/board/protocol selections;
+- numerical electrical/timing/reset limits.
 
-## Failure behavior
-- driver unavailable
-- unsupported capability
-- kernel interface mismatch
-
-## Open design items
-- exact interface/protocol versioning and compatibility rules
-- timeout, reset, and recovery behavior
-- observability and fault-correlation identifiers
-- power/lifecycle interaction across the boundary
+## Design acceptance criteria
+1. A non-Linux platform can implement the same portable hardware contracts.
+2. No separately deployed HAL bus is required by default.
+3. Driver/HAL error translation has one owner.
+4. Incompatible capability/version fails before operation.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary design and relationship diagram.
+- 2026-10-04: Re-scoped from generic bus model to Platform Architecture Baseline v2 boundary/qualification model.

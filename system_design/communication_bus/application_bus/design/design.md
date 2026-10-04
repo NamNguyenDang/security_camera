@@ -1,55 +1,45 @@
-# Application Bus Detailed Design
+# Application Contract Boundary Detailed Design — Platform Baseline v2
 
-## Component
-`application_bus`
+## Status
+Revised against PR #77.
 
-## Purpose
-Defines the approved **IPC / Binder** communication boundary between **Application Layer** and **Application Framework**.
+## Deployment placement
+**Across Client/Camera/Gateway/Backend as required; transport selected per deployment**
+
+## Purpose and ownership
+Re-scope the former Application Bus from mandatory IPC/Binder into transport-independent application/service contracts.
+
+## Portable contract
+ApplicationContract boundary with versioning, caller identity propagation, ownership/lifecycle, stable errors, and transport selection for in-process, local IPC, or remote communication.
 
 ## Relationship overview
-![Application Bus relationship](./application_bus_relationship.svg)
+![Application Contract Boundary relationship](./application_bus_relationship.svg)
 
-## Upper-side participants
-- Live View
-- Playback
-- Alarm
-- Settings
-- User Management
-- Event Search
-- Device Config
-- Mobile / Web UI
+## Review-driven decisions
+- Binder is an Android-specific adapter, not the product contract.
+- In-process, local IPC, and remote network calls are distinct transport selections.
+- Identity/authorization context propagation is explicit.
+- Ownership and error semantics are transport-independent.
+- Product Profile selects deployment transport.
 
-## Lower-side participants
-- Activity Manager
-- Window Manager
-- Content Providers
-- Resource Manager
-- Notification Manager
-- View System
+## Product / Security Profile inputs
+- required capability/transport and placement;
+- compatible contract/provider versions;
+- trust, offline, and failure policy;
+- qualification evidence where applicable.
 
-## Boundary responsibilities
-- Define stable request, response, event, message, or stream contracts appropriate to IPC / Binder.
-- Validate input crossing the boundary.
-- Preserve ownership and lifecycle rules for transferred resources.
-- Return stable errors without leaking implementation-specific details.
-- Prevent uncontrolled direct dependencies that bypass this boundary.
+## Design rule
+Portable product semantics are defined independently of specific transports, operating systems, hardware providers, or manufacturing mechanisms.
 
-## Security controls
-- IAM
-- RBAC
-- Device Identity
-- Security Logging / Audit
+## Open decisions
+- concrete transport/provider mechanisms;
+- profile-specific TTL, version, and qualification limits.
 
-## Failure behavior
-- endpoint unavailable
-- message validation failure
-- permission denied
-
-## Open design items
-- exact interface definition language and versioning policy
-- timeout, retry, flow-control, and backpressure behavior
-- observability and tracing identifiers
-- compatibility rules during rolling software updates
+## Design acceptance criteria
+1. The same application contract can run in-process, over local IPC, or remotely where allowed.
+2. Remote client does not require Binder.
+3. Transport replacement does not change service semantics.
+4. Incompatible contract versions fail explicitly.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary design and relationship diagram.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

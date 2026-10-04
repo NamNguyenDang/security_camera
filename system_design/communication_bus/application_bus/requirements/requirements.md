@@ -1,27 +1,29 @@
-# Application Bus Requirements
-
-## Component
-`application_bus`
+# Application Contract Boundary Requirements — Platform Baseline v2
 
 ## Functional requirements
-- AB-FR-001: The bus shall carry approved application-to-framework requests and events.
-- AB-FR-002: The bus shall preserve caller identity and authorization context where required.
-- AB-FR-003: The bus shall support stable interface/version contracts.
-- AB-FR-004: The bus shall report transport and endpoint failures.
+- APPLICATION_CONTRACT-FR-001: Product/Security Profile shall declare required capability/transport and placement.
+- APPLICATION_CONTRACT-FR-002: Portable semantics shall remain independent of selected provider/transport.
+- APPLICATION_CONTRACT-FR-003: Invalid or unsupported state/capability/version shall fail deterministically.
 
 ## Interface requirements
-- AB-IR-001: All cross-boundary communication shall use a documented, versioned contract.
-- AB-IR-002: Callers shall not depend on private implementation details behind the boundary.
-- AB-IR-003: Invalid or unsupported input shall be rejected deterministically.
+- APPLICATION_CONTRACT-IR-001: Portable contracts shall be versioned.
+- APPLICATION_CONTRACT-IR-002: Provider/transport-specific details shall remain behind adapters.
+- APPLICATION_CONTRACT-IR-003: Identity/ownership/error semantics shall be explicit where applicable.
 
 ## Security requirements
-- AB-SR-001: The boundary shall carry or enforce approved identity, authorization, integrity, or encryption context where applicable.
-- AB-SR-002: Security-relevant boundary failures shall be auditable.
+- APPLICATION_CONTRACT-SR-001: Protected operations/transitions shall require approved authorization/trust.
+- APPLICATION_CONTRACT-SR-002: Security-relevant state/failures shall be auditable.
+- APPLICATION_CONTRACT-SR-003: Provider/transport choice shall not weaken mandatory security obligations.
 
 ## Reliability requirements
-- AB-RR-001: The bus shall provide defined behavior for endpoint unavailable.
-- AB-RR-002: The bus shall provide defined behavior for message validation failure.
-- AB-RR-003: The bus shall provide defined behavior for permission denied.
+- APPLICATION_CONTRACT-RR-001: Provider/transport interruption shall have defined recovery/failure behavior.
+- APPLICATION_CONTRACT-RR-002: Compatibility mismatch shall be detected before unsafe operation.
+
+## Design acceptance criteria
+- APPLICATION_CONTRACT-AC-001: The same application contract can run in-process, over local IPC, or remotely where allowed.
+- APPLICATION_CONTRACT-AC-002: Remote client does not require Binder.
+- APPLICATION_CONTRACT-AC-003: Transport replacement does not change service semantics.
+- APPLICATION_CONTRACT-AC-004: Incompatible contract versions fail explicitly.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary requirements.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

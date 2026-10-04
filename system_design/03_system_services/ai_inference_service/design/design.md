@@ -1,53 +1,54 @@
-# AI Inference Service Detailed Design
+# AI Inference Service Detailed Design — Platform Baseline v2
 
-## Component
-`ai_inference_service`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides a common service boundary for executing approved AI models and returning inference results without exposing accelerator-specific details.
+## Deployment placement
+**Camera product service; optional Gateway/Backend inference placement by Product Profile**
+
+## Purpose and ownership
+Own inference orchestration independently of selected runtime and accelerator; AI features may be mandatory or optional per Product Profile.
+
+## Product-owned contract
+InferenceRequest/Result contract with model/version, preprocessing, frame/timestamp association, resource budget, result schema, integrity state, and fallback policy.
 
 ## Relationship overview
 ![AI Inference Service relationship](./ai_inference_service_relationship.svg)
 
-## Relevant system path
+## Interaction/data planes
+- **Control:** commands and lifecycle operations.
+- **State/events:** operational state and durable product events.
+- **Media/data:** bounded high-bandwidth buffers/streams where applicable.
+- Provider transports are selected behind adapters.
 
-### Application Layer
-- Alarm
-- Event Search
-### System Services
-- AI Inference Service
-- Media Service
-### Middleware
-- AI Runtime
-- Database
-### HAL
-- AI / NPU HAL
-### Linux Kernel
-- NPU Driver
-### Hardware Platform
-- NPU / AI Accelerator
-- SoC / CPU
+## Review-driven decisions
+- Runtime/backend and accelerator are replaceable.
+- Unsupported capability follows explicit fallback/unavailable behavior.
+- Model/version and preprocessing are product contracts.
+- Frame/timestamp association is preserved.
+- Resource budgets and result integrity checks are explicit.
 
-## Security context
-- Security Policy
-- Model Integrity
-- Audit
+## Product Profile inputs
+- placement and optional capabilities;
+- compatible contract versions;
+- adapter/backend selection;
+- performance/resource/security budgets.
 
-## Communication boundaries
-- System Service Bus
-- Data Bus
-- Middleware Bus
-- HAL Bus
+## Security
+- authorization is enforced at protected service operations;
+- standalone camera operation retains required local enforcement;
+- protected models/recordings/credentials use approved security services.
 
-## Dependency rules
-- Use approved interfaces and buses.
-- Keep vendor and lower-layer implementation behind owning boundaries.
-- Do not depend on another component's private `src/`.
+## Open decisions
+- exact provider technologies;
+- numerical product-profile budgets;
+- deployment-specific scaling and retry limits.
 
-## Failure behavior
-- model unavailable
-- accelerator unavailable
-- inference timeout
+## Design acceptance criteria
+1. A CPU/software backend can satisfy the contract when profile allows fallback.
+2. NPU absence produces profile-defined behavior.
+3. Result references preserve source frame/timestamp identity.
+4. Invalid/unapproved model fails before execution.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

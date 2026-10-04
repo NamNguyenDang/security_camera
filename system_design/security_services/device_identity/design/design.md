@@ -1,54 +1,46 @@
-# Device Identity Detailed Design
+# Device Identity Detailed Design — Platform Baseline v2
 
-## Component
-`device_identity`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides a unique cryptographic device identity rooted in protected certificates and keys for authentication, provisioning, and trusted communication.
+## Deployment placement
+**Camera mandatory; Gateway/Backend consume identity proofs; provider selected by Security Profile**
+
+## Purpose and ownership
+Keep unique authenticated device identity mandatory while making the contract independent of certificate-only or specific security-chip implementations.
+
+## Security contract
+DeviceIdentity contract with provider-neutral identity reference, proof/authentication operations, enrollment, renewal, revocation, transfer, and retirement state.
 
 ## Relationship overview
 ![Device Identity relationship](./device_identity_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Identity proof is separate from boot attestation.
+- Identity is separate from recording encryption keys.
+- Provider selection is profile-driven.
+- Enrollment/renewal/revocation/ownership transfer/retirement are explicit.
+- Certificate is one possible mechanism, not the contract.
 
-### Application Layer
-- Device Config
-- User Management
-### System Services
-- Device Management
-- Network Service
-### Middleware
-- SSL / TLS
-- Secrets / Key Management
-### HAL
-- Secure HAL Interface
-### Linux Kernel
-- Kernel Security Interfaces
-### Hardware Platform
-- Security Chip / TPM
-- SoC / CPU
+## Product / Security Profile inputs
+- required protections and enforcement placement;
+- compatible policy/provider versions;
+- offline/stale/revocation behavior;
+- selected mechanism/provider where implementation choice is allowed.
 
-## Related security services
-- Hardware Root of Trust
-- Device Provisioning
-- TLS / mTLS
-- Audit
+## Enforcement model
+Security obligations are mandatory where selected by the baseline/profile. Replaceable providers implement those obligations but do not redefine them.
 
-## Communication / enforcement boundaries
-- System Service Bus
-- Data Bus
-- Middleware Bus
-- HAL Bus
+## Open decisions
+- exact mechanism/provider selections;
+- numerical TTL/renewal/propagation limits;
+- profile-specific endpoint classifications.
 
-## Design rules
-- Security behavior shall be centralized through this approved service/control rather than reimplemented independently.
-- Consumers shall use stable interfaces and avoid direct access to protected implementation or key material.
-- Policy, identity, key, and audit dependencies shall fail safely.
-
-## Failure behavior
-- certificate invalid
-- protected key unavailable
-- identity provisioning incomplete
+## Design acceptance criteria
+1. A device can change identity provider without changing Device Management semantics.
+2. Revoked identity cannot authenticate after defined propagation boundary.
+3. Ownership transfer preserves device identity while changing authorization ownership as designed.
+4. Standalone camera can prove identity without backend always online.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and security-design review feedback.

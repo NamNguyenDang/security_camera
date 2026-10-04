@@ -1,26 +1,29 @@
-# Device Identity Requirements
-
-## Component
-`device_identity`
+# Device Identity Requirements — Platform Baseline v2
 
 ## Functional requirements
-- DI-FR-001: The security service shall provide device identity references.
-- DI-FR-002: The security service shall support approved signing/authentication operations.
-- DI-FR-003: The security service shall bind identity to protected key material.
-- DI-FR-004: The security service shall report identity validity and lifecycle state.
+- DEVICE_IDENTITY-FR-001: The security control shall preserve mandatory product protection outcomes independently of provider choice.
+- DEVICE_IDENTITY-FR-002: Product/Security Profile shall declare enforcement placement and compatible policy/provider versions.
+- DEVICE_IDENTITY-FR-003: Offline/stale/unavailable state shall have defined safe behavior.
 
 ## Interface requirements
-- DI-IR-001: Expose stable security interfaces to approved consumers only.
-- DI-IR-002: Keep protected implementation details and key material outside consumer control.
+- DEVICE_IDENTITY-IR-001: Security contracts shall use provider-neutral identity/policy/credential references.
+- DEVICE_IDENTITY-IR-002: Provider-specific SDK/hardware details shall remain behind adapters.
+- DEVICE_IDENTITY-IR-003: Policy/identity/transport state shall be versioned where applicable.
 
 ## Security requirements
-- DI-SR-001: Fail closed or fail safely for authorization, identity, policy, or trust failures as applicable.
-- DI-SR-002: Generate audit evidence for security-relevant operations and failures.
+- DEVICE_IDENTITY-SR-001: Required protections shall fail closed or fail safely according to Security Profile.
+- DEVICE_IDENTITY-SR-002: Insecure fallback shall not bypass mandatory protection.
+- DEVICE_IDENTITY-SR-003: Security-relevant decisions/failures shall be auditable.
 
 ## Reliability requirements
-- DI-RR-001: Provide defined safe behavior for certificate invalid.
-- DI-RR-002: Provide defined safe behavior for protected key unavailable.
-- DI-RR-003: Provide defined safe behavior for identity provisioning incomplete.
+- DEVICE_IDENTITY-RR-001: Provider/backend outage shall not create undefined security state.
+- DEVICE_IDENTITY-RR-002: Renewal/recovery/revocation behavior shall be deterministic.
+
+## Design acceptance criteria
+- DEVICE_IDENTITY-AC-001: A device can change identity provider without changing Device Management semantics.
+- DEVICE_IDENTITY-AC-002: Revoked identity cannot authenticate after defined propagation boundary.
+- DEVICE_IDENTITY-AC-003: Ownership transfer preserves device identity while changing authorization ownership as designed.
+- DEVICE_IDENTITY-AC-004: Standalone camera can prove identity without backend always online.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

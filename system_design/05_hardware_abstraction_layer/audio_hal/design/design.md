@@ -1,49 +1,50 @@
-# Audio HAL Detailed Design
+# Audio Adapter / HAL Detailed Design — Platform Baseline v2
 
-## Component
-`audio_hal`
+## Status
+Revised against PR #77.
 
-## Purpose
-Abstracts audio capture and playback hardware behind a stable product-owned interface.
+## Deployment placement
+**Optional Camera platform adapter; client audio is separate**
+
+## Purpose and ownership
+Treat camera-side audio as an explicitly selected product capability and isolate OS/vendor audio implementation behind a portable camera-audio contract.
+
+## Portable contract
+CameraAudio contract with capture/playback formats, timestamps, buffer ownership, duplex capability, lifecycle, and stable errors.
 
 ## Relationship overview
-![Audio HAL relationship](./audio_hal_relationship.svg)
+![Audio Adapter / HAL relationship](./audio_hal_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Camera audio and client playback audio are separate deployments.
+- Audio capability is optional by Product Profile.
+- Formats/timing/buffer ownership are explicit.
+- Duplex behavior and lifecycle are declared.
+- OS/vendor details remain behind adapters.
 
-### Application Layer
-- Alarm
-- Mobile / Web UI
-### System Services
-- Media Service
-### Middleware
-- Media Framework
-### HAL
-- Audio HAL
-### Linux Kernel
-- Audio Driver
-### Hardware Platform
-- Audio
-- SoC / CPU
+## Product Profile inputs
+- capability present/absent;
+- selected provider and compatible version;
+- performance/resource/power constraints;
+- recovery and security profile.
 
-## Security context
-- Secure HAL Interface
-- Audit
+## Supplier qualification
+Provider replacement is qualified against ownership, lifecycle, timing/durability, reset/error, and capability scenarios.
 
-## Communication boundaries
-- Middleware Bus
-- HAL Bus
-- Kernel Bus
+## Security
+- raw device/provider controls are not exposed to applications;
+- access is mediated by owning platform/service boundaries;
+- security-relevant failures are auditable.
 
-## Dependency rules
-- Preserve the stable HAL/driver boundary.
-- Keep vendor-specific behavior private to the owning lower layer.
-- Do not expose direct hardware access to upper layers.
+## Open decisions
+- selected OS/vendor provider;
+- numerical capability and recovery constraints.
 
-## Failure behavior
-- audio device unavailable
-- unsupported format
-- driver error
+## Design acceptance criteria
+1. A no-audio camera profile omits this adapter.
+2. Changing camera audio supplier does not change upper media contracts.
+3. Buffer overrun/underrun maps to stable status.
+4. Client audio implementation is not constrained by camera Audio HAL.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and supplier-replacement review feedback.

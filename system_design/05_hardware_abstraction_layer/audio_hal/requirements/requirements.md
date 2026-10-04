@@ -1,26 +1,28 @@
-# Audio HAL Requirements
-
-## Component
-`audio_hal`
+# Audio Adapter / HAL Requirements — Platform Baseline v2
 
 ## Functional requirements
-- AH-FR-001: The component shall enumerate audio capabilities.
-- AH-FR-002: The component shall configure supported audio paths.
-- AH-FR-003: The component shall start and stop audio streams.
-- AH-FR-004: The component shall translate vendor errors to stable status.
+- AUDIO_HAL-FR-001: Product Profile shall declare capability presence and selected provider.
+- AUDIO_HAL-FR-002: The adapter shall expose portable capability/lifecycle semantics.
+- AUDIO_HAL-FR-003: Unsupported capability shall fail deterministically.
 
 ## Interface requirements
-- AH-IR-001: Expose only the approved HAL/driver interface.
-- AH-IR-002: Hide vendor/private implementation from upper layers.
+- AUDIO_HAL-IR-001: Buffer/resource/device ownership shall be explicit where applicable.
+- AUDIO_HAL-IR-002: Provider/OS-specific types shall remain behind the adapter.
+- AUDIO_HAL-IR-003: Reset/error/capability mapping shall be stable.
 
 ## Security requirements
-- AH-SR-001: Respect approved secure HAL/kernel policy.
-- AH-SR-002: Surface security-relevant device failures for audit.
+- AUDIO_HAL-SR-001: Raw privileged device operations shall not be exposed to untrusted upper layers.
+- AUDIO_HAL-SR-002: Security-relevant provider faults shall be auditable.
 
 ## Reliability requirements
-- AH-RR-001: Provide defined behavior for audio device unavailable.
-- AH-RR-002: Provide defined behavior for unsupported format.
-- AH-RR-003: Provide defined behavior for driver error.
+- AUDIO_HAL-RR-001: Provider/device failure shall map to stable product-level status.
+- AUDIO_HAL-RR-002: Optional capability absence shall be a supported state.
+
+## Design acceptance criteria
+- AUDIO_HAL-AC-001: A no-audio camera profile omits this adapter.
+- AUDIO_HAL-AC-002: Changing camera audio supplier does not change upper media contracts.
+- AUDIO_HAL-AC-003: Buffer overrun/underrun maps to stable status.
+- AUDIO_HAL-AC-004: Client audio implementation is not constrained by camera Audio HAL.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

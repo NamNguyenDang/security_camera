@@ -1,49 +1,50 @@
-# Codec Libraries Detailed Design
+# Codec Backend Adapter Detailed Design — Platform Baseline v2
 
-## Component
-`codec_libraries`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides reusable video and audio encode/decode capabilities for media pipelines without exposing codec implementation to applications.
+## Deployment placement
+**Camera/Gateway/Client media adapter selected by Product Profile**
+
+## Purpose and ownership
+Replace the incorrect NPU inference path with a portable encoder/decoder backend interface supporting qualified software codecs or dedicated video-codec hardware.
+
+## Portable contract
+CodecBackend contract with formats, buffer ownership, timestamps, capability negotiation, resource limits, errors, and malformed-stream behavior.
 
 ## Relationship overview
-![Codec Libraries relationship](./codec_libraries_relationship.svg)
+![Codec Backend Adapter relationship](./codec_libraries_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Neural inference acceleration is not a generic codec contract.
+- Software and dedicated video hardware are alternate qualified backends.
+- Buffer ownership and timing are explicit.
+- Resource limits and capability negotiation are explicit.
+- Malformed streams fail safely and deterministically.
 
-### Application Layer
-- Live View
-- Playback
-### System Services
-- Media Service
-### Middleware
-- Codec Libraries
-- Media Framework
-### HAL
-- AI / NPU HAL
-### Linux Kernel
-- NPU Driver
-### Hardware Platform
-- SoC / CPU
-- NPU / AI Accelerator
+## Product Profile inputs
+- capability presence and provider selection;
+- compatible contract/provider versions;
+- resource, timing, and reset budgets;
+- fallback policy.
 
-## Security context
-- Security Logging
-- Input Validation
+## Supplier qualification
+A replacement adapter/provider must satisfy the same ownership, timing, lifecycle, cancellation/reset, and stable-error scenarios.
 
-## Communication boundaries
-- Data Bus
-- Middleware Bus
+## Security
+- untrusted input is validated at the boundary;
+- protected resources remain behind OS/vendor isolation;
+- security-relevant provider faults are auditable.
 
-## Dependency rules
-- Keep the public contract stable and implementation private.
-- Keep vendor-specific behavior behind the abstraction boundary.
-- Do not depend on another component's private `src/`.
+## Open decisions
+- supplier/provider selections;
+- exact numerical performance/resource limits.
 
-## Failure behavior
-- unsupported codec
-- malformed bitstream
-- resource exhaustion
+## Design acceptance criteria
+1. Codec operation does not require AI/NPU HAL.
+2. Software and hardware codec backends preserve the same portable contract.
+3. Malformed input cannot escape validation/error handling.
+4. Unsupported formats are rejected during capability negotiation.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and supplier-replacement review feedback.

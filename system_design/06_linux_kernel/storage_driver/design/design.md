@@ -1,48 +1,50 @@
-# Storage Driver Detailed Design
+# Storage Driver / Platform Integration Detailed Design — Platform Baseline v2
 
-## Component
-`storage_driver`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides kernel access to supported persistent-storage hardware for the Storage HAL and filesystem layers.
+## Deployment placement
+**Camera OS/vendor storage integration**
+
+## Purpose and ownership
+Retain as platform storage integration while clearly separating block-driver guarantees from filesystem behavior and recording-repository semantics.
+
+## Integration contract
+Platform storage driver guarantees for write completion, power-loss behavior, error/health reporting, reset, and recovery signals.
 
 ## Relationship overview
-![Storage Driver relationship](./storage_driver_relationship.svg)
+![Storage Driver / Platform Integration relationship](./storage_driver_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Recording Repository stays independent of Linux/block driver.
+- Filesystem responsibilities are separate from block driver.
+- Write durability/power-loss semantics are explicit.
+- Health information and recovery ownership are defined.
+- Upper storage contract does not expose driver details.
 
-### System Services
-- Storage Service
-### Middleware
-- Database
-- Media Framework
-### HAL
-- Storage HAL
-### Linux Kernel
-- Storage Driver
-### Hardware Platform
-- Storage eMMC / SSD
-- SoC / CPU
+## Product Profile inputs
+- capability optionality and permitted devices/modes;
+- OS/vendor/board selection;
+- compatible driver/firmware versions;
+- reset, resource, power, and security limits.
 
-## Security context
-- Secure Boot
-- Kernel Hardening
-- Encryption
+## Platform qualification
+The integration is qualified against the portable adapter above it. Generic OS/upstream facilities are reused when they satisfy required behavior.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Security
+- raw device access remains below OS isolation;
+- attached/peripheral resources follow explicit trust/resource policy where applicable;
+- security-relevant device faults are auditable.
 
-## Dependency rules
-- Expose only approved kernel interfaces upward.
-- Keep hardware-specific implementation private to the driver.
-- Do not allow user/application layers to bypass HAL/service ownership.
+## Design acceptance criteria
+1. Recording repository can move to another platform storage implementation without domain changes.
+2. Power loss has documented persistence guarantees.
+3. I/O failure and health degradation map to stable Platform Storage status.
+4. Driver replacement does not alter recording object identity semantics.
 
-## Failure behavior
-- device probe failure
-- I/O error
-- media timeout
+## Open decisions
+- selected OS/vendor driver;
+- board-specific numerical limits.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped as OS/vendor integration for Platform Architecture Baseline v2.

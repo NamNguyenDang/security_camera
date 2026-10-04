@@ -1,53 +1,51 @@
-# Storage (eMMC / SSD) Detailed Design
+# Storage Hardware (eMMC / SSD) Detailed Design — Platform Baseline v2
 
-## Component
-`storage_emmc_ssd`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides non-volatile storage for software, configuration, metadata, and locally retained media.
+## Deployment placement
+**Qualified camera storage hardware target**
+
+## Purpose and ownership
+Define measurable physical-storage durability, endurance, capacity, health, and power-loss guarantees while leaving recording recovery/backup policy above the hardware layer.
+
+## Qualification contract
+Storage hardware qualification constraints exposed through Platform Storage Adapter.
 
 ## Relationship overview
-![Storage (eMMC / SSD) relationship](./storage_emmc_ssd_relationship.svg)
+![Storage Hardware (eMMC / SSD) relationship](./storage_emmc_ssd_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Durability/endurance/capacity are measurable.
+- Health reporting capability is explicit.
+- Power-loss guarantees are documented.
+- Recording recovery/backup policy remains above hardware.
+- Adapter exposes hardware guarantees without leaking supplier-specific details.
 
-### Application Layer
-- Playback
-- Event Search
-- Settings
-### System Services
-- Storage Service
-- Device Management
-### Middleware
-- Database
-- Media Framework
-### HAL
-- Storage HAL
-### Linux Kernel
-- Storage Driver
-### Hardware Platform
-- Storage eMMC / SSD
-- SoC / CPU
+## Product Profile inputs
+- required/optional capability;
+- electrical/interface compatibility;
+- measurable performance/endurance/power constraints;
+- compatible board/driver/adapter versions;
+- security/privacy requirements where applicable.
 
-## Security context
-- Encryption
-- Hardware Root of Trust
-- Secure Boot
+## Hardware qualification
+Supplier replacement is allowed only after qualification against the same portable upper contract and Product Profile constraints.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Security
+- hardware does not define application authorization semantics;
+- trust/privacy protections are supplied by the selected security profile and upper contracts;
+- hardware faults relevant to security or integrity are surfaced upward.
 
-## Dependency rules
-- Hardware is consumed only through approved kernel/HAL/service abstractions.
-- Platform-specific behavior shall not leak into upper-layer application APIs.
-- Security and lifecycle controls remain active across reset and power transitions.
+## Open decisions
+- concrete supplier and part selections;
+- numerical qualification thresholds.
 
-## Failure behavior
-- device wear or failure
-- capacity exhausted
-- I/O error
+## Design acceptance criteria
+1. Storage device meets profile capacity/endurance targets.
+2. Power-loss guarantee is documented and testable.
+3. Hardware health degradation is observable through Platform Storage contract.
+4. Changing storage supplier does not alter Recording Repository semantics.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked as hardware qualification design for Platform Architecture Baseline v2.

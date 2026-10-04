@@ -1,53 +1,50 @@
-# Security Chip (TPM / HSM) Detailed Design
+# Security Hardware Provider Detailed Design — Platform Baseline v2
 
-## Component
-`security_chip_tpm_hsm`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides hardware-backed protection for device identity, cryptographic keys, measurements, and trusted security operations.
+## Deployment placement
+**Qualified security provider selected by Security/Product Profile**
+
+## Purpose and ownership
+Treat TPM, HSM, and Secure Element as selectable provider families for required security capabilities rather than as universally interchangeable devices.
+
+## Qualification contract
+SecureHardwareProvider qualification contract for protected key operations, root-of-trust functions, provisioning/lifecycle, optional measurement/attestation, failure behavior, and evidence.
 
 ## Relationship overview
-![Security Chip (TPM / HSM) relationship](./security_chip_tpm_hsm_relationship.svg)
+![Security Hardware Provider relationship](./security_chip_tpm_hsm_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Mandatory product protections are separated from optional measurements/attestation.
+- Provider may support only a subset of security capabilities.
+- Key protection and non-exportability requirements are explicit.
+- Provisioning/lifecycle/replacement behavior is defined.
+- Qualification evidence is required before provider selection.
 
-### Application Layer
-- User Management
-- Device Config
-### System Services
-- Device Management
-- Network Service
-### Middleware
-- SSL / TLS
-- Secrets / Key Management
-### HAL
-- Secure HAL Interface
-### Linux Kernel
-- Kernel Security Interfaces
-### Hardware Platform
-- Security Chip / TPM / HSM
-- SoC / CPU
+## Product / Security Profile inputs
+- required and optional capabilities;
+- supplier/provider selection;
+- compatible board/driver/firmware versions;
+- measurable power/performance/security constraints.
 
-## Security context
-- Hardware Root of Trust
-- Device Identity
-- Secure Boot
-- Key Management
+## Qualification model
+Supplier/provider replacement is permitted only when the selected implementation satisfies the same portable upper contracts and profile obligations.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Security
+- security outcomes are defined by the security profile, not by vendor marketing categories;
+- hardware details remain below provider contracts;
+- relevant faults and lifecycle events are auditable.
 
-## Dependency rules
-- Hardware shall be accessed only through approved driver, HAL, and service ownership.
-- Platform-specific behavior shall remain below the appropriate abstraction boundary.
-- Upper layers shall consume declared capabilities rather than raw device details.
+## Open decisions
+- concrete supplier/provider selection;
+- profile-specific measurable thresholds and evidence.
 
-## Failure behavior
-- security chip unavailable
-- key operation failure
-- measurement or attestation failure
+## Design acceptance criteria
+1. A provider lacking optional attestation can qualify for a profile that does not require attestation.
+2. Mandatory protected-key operations satisfy the selected security profile.
+3. Provider failure maps to stable security-service status.
+4. Changing security hardware does not change application-facing identity/encryption contracts.
 
 ## Changelog
-- 2026-10-04: Added detailed relationship design.
+- 2026-10-04: Reworked as hardware/provider qualification design for Platform Architecture Baseline v2.

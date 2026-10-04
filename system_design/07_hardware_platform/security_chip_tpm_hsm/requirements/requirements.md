@@ -1,26 +1,28 @@
-# Security Chip (TPM / HSM) Requirements
-
-## Component
-`security_chip_tpm_hsm`
+# Security Hardware Provider Requirements — Platform Baseline v2
 
 ## Functional requirements
-- SCTH-FR-001: The hardware component shall protect hardware-backed keys.
-- SCTH-FR-002: The hardware component shall perform supported trusted cryptographic operations.
-- SCTH-FR-003: The hardware component shall provide required measurements or attestation data.
-- SCTH-FR-004: The hardware component shall report chip health and availability.
+- SECURITY_CHIP_TPM_HSM-FR-001: Product/Security Profile shall declare required and optional capabilities.
+- SECURITY_CHIP_TPM_HSM-FR-002: Hardware/provider shall satisfy documented qualification constraints.
+- SECURITY_CHIP_TPM_HSM-FR-003: Unsupported capability shall be detected before protected use.
 
 ## Interface requirements
-- SCTH-IR-001: Interact through approved hardware, driver, and HAL interfaces.
-- SCTH-IR-002: Advertise only supported capabilities and status.
+- SECURITY_CHIP_TPM_HSM-IR-001: Supplier-specific interfaces shall remain behind platform/provider adapters.
+- SECURITY_CHIP_TPM_HSM-IR-002: Capabilities and status exposed upward shall be provider-neutral.
+- SECURITY_CHIP_TPM_HSM-IR-003: Compatible driver/firmware/provider versions shall be recorded.
 
 ## Security requirements
-- SCTH-SR-001: Participate in approved boot, trust, identity, and protection mechanisms where applicable.
-- SCTH-SR-002: Surface security-relevant status and failures to the owning driver or service.
+- SECURITY_CHIP_TPM_HSM-SR-001: Required protection outcomes shall be enforced independently of supplier choice.
+- SECURITY_CHIP_TPM_HSM-SR-002: Security-relevant lifecycle/fault state shall be auditable.
 
 ## Reliability requirements
-- SCTH-RR-001: Provide defined behavior for security chip unavailable.
-- SCTH-RR-002: Provide defined behavior for key operation failure.
-- SCTH-RR-003: Provide defined behavior for measurement or attestation failure.
+- SECURITY_CHIP_TPM_HSM-RR-001: Reset/power/provider failure behavior shall be documented.
+- SECURITY_CHIP_TPM_HSM-RR-002: Optional capability absence shall follow Product/Security Profile.
+
+## Design acceptance criteria
+- SECURITY_CHIP_TPM_HSM-AC-001: A provider lacking optional attestation can qualify for a profile that does not require attestation.
+- SECURITY_CHIP_TPM_HSM-AC-002: Mandatory protected-key operations satisfy the selected security profile.
+- SECURITY_CHIP_TPM_HSM-AC-003: Provider failure maps to stable security-service status.
+- SECURITY_CHIP_TPM_HSM-AC-004: Changing security hardware does not change application-facing identity/encryption contracts.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

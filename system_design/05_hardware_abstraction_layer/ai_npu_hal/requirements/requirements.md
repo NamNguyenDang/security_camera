@@ -1,26 +1,28 @@
-# AI / NPU HAL Requirements
-
-## Component
-`ai_npu_hal`
+# Inference Acceleration Adapter / HAL Requirements — Platform Baseline v2
 
 ## Functional requirements
-- ANH-FR-001: The component shall enumerate accelerator capabilities.
-- ANH-FR-002: The component shall submit approved inference workloads.
-- ANH-FR-003: The component shall manage supported accelerator resources.
-- ANH-FR-004: The component shall translate vendor failures to stable status.
+- AI_NPU_HAL-FR-001: The adapter shall expose portable capability and lifecycle semantics independent of selected supplier.
+- AI_NPU_HAL-FR-002: Product Profile shall select provider/version and capability presence.
+- AI_NPU_HAL-FR-003: Unsupported capability shall be reported before use.
 
 ## Interface requirements
-- ANH-IR-001: Use only approved upper/lower interfaces.
-- ANH-IR-002: Hide vendor-specific implementation from consumers.
+- AI_NPU_HAL-IR-001: Buffer/resource ownership and lifecycle shall be explicit.
+- AI_NPU_HAL-IR-002: Vendor/driver-specific types shall not escape the adapter.
+- AI_NPU_HAL-IR-003: Cancellation, timeout, reset, and stable error mapping shall be defined.
 
 ## Security requirements
-- ANH-SR-001: Use approved security services and policies for protected operations.
-- ANH-SR-002: Report security-relevant failures for audit.
+- AI_NPU_HAL-SR-001: Boundary inputs shall be validated before provider execution.
+- AI_NPU_HAL-SR-002: Security-relevant faults shall be auditable.
 
 ## Reliability requirements
-- ANH-RR-001: Provide defined behavior for accelerator unavailable.
-- ANH-RR-002: Provide defined behavior for unsupported graph.
-- ANH-RR-003: Provide defined behavior for driver timeout.
+- AI_NPU_HAL-RR-001: Provider reset/unavailability shall map to stable product-level status.
+- AI_NPU_HAL-RR-002: Optional adapter absence shall follow Product Profile fallback/unavailable policy.
+
+## Design acceptance criteria
+- AI_NPU_HAL-AC-001: AI Runtime can operate without this adapter when profile allows fallback.
+- AI_NPU_HAL-AC-002: Changing NPU vendor does not change inference service contracts.
+- AI_NPU_HAL-AC-003: Timeout/reset has bounded deterministic behavior.
+- AI_NPU_HAL-AC-004: Unsupported workload capability is reported before execution.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

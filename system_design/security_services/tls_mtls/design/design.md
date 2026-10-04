@@ -1,54 +1,47 @@
-# TLS / mTLS — Transport Security Detailed Design
+# Transport Security (TLS / mTLS Policy) Detailed Design — Platform Baseline v2
 
-## Component
-`tls_mtls`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides encrypted and authenticated transport for approved remote and inter-service communication, including mutual authentication where required.
+## Deployment placement
+**Cross-deployment security policy; provider adapter implemented by secure transport provider**
+
+## Purpose and ownership
+Own transport-security requirements and policy while treating the middleware TLS provider as a replaceable implementation.
+
+## Security contract
+TransportSecurityPolicy contract defining protected endpoints, peer identity validation, authentication mode, renewal/failure behavior, and no-insecure-fallback requirement.
 
 ## Relationship overview
-![TLS / mTLS — Transport Security relationship](./tls_mtls_relationship.svg)
+![Transport Security (TLS / mTLS Policy) relationship](./tls_mtls_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Sensitive connections require protection.
+- Endpoint classes define device/user/service authentication expectations.
+- Mutual authentication applies where Security Profile requires it.
+- Provider/library is replaceable.
+- Failure/renewal behavior is explicit.
+- No insecure fallback is permitted; exact algorithms remain open until profile selection.
 
-### Application Layer
-- Live View
-- Playback
-- Mobile / Web UI
-- User Management
-### System Services
-- Network Service
-- Device Management
-### Middleware
-- SSL / TLS
-- Secrets / Key Management
-### HAL
-- Network HAL
-### Linux Kernel
-- Network Driver
-### Hardware Platform
-- Ethernet / Wi-Fi
-- Security Chip / TPM
+## Product / Security Profile inputs
+- required protections and enforcement placement;
+- compatible policy/provider versions;
+- offline/stale/revocation behavior;
+- selected mechanism/provider where implementation choice is allowed.
 
-## Related security services
-- Device Identity
-- Secrets / Key Management
-- Audit
+## Enforcement model
+Security obligations are mandatory where selected by the baseline/profile. Replaceable providers implement those obligations but do not redefine them.
 
-## Communication / enforcement boundaries
-- Data Bus
-- Middleware Bus
-- HAL Bus
+## Open decisions
+- exact mechanism/provider selections;
+- numerical TTL/renewal/propagation limits;
+- profile-specific endpoint classifications.
 
-## Design rules
-- Security behavior shall be centralized through this approved service/control rather than reimplemented independently.
-- Consumers shall use stable interfaces and avoid direct access to protected implementation or key material.
-- Policy, identity, key, and audit dependencies shall fail safely.
-
-## Failure behavior
-- certificate validation failure
-- handshake timeout
-- key unavailable
+## Design acceptance criteria
+1. Changing TLS library does not change transport-security obligations.
+2. Expired/invalid peer identity fails safely.
+3. Required protected endpoint never silently downgrades to plaintext.
+4. Credential renewal can occur without redefining product service APIs.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and security-design review feedback.

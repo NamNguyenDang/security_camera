@@ -1,26 +1,29 @@
-# TLS / mTLS — Transport Security Requirements
-
-## Component
-`tls_mtls`
+# Transport Security (TLS / mTLS Policy) Requirements — Platform Baseline v2
 
 ## Functional requirements
-- TM-FR-001: The security service shall establish approved encrypted sessions.
-- TM-FR-002: The security service shall authenticate peers according to policy.
-- TM-FR-003: The security service shall support mutual authentication where required.
-- TM-FR-004: The security service shall report certificate and handshake failures.
+- TRANSPORT_SECURITY-FR-001: The security control shall preserve mandatory product protection outcomes independently of provider choice.
+- TRANSPORT_SECURITY-FR-002: Product/Security Profile shall declare enforcement placement and compatible policy/provider versions.
+- TRANSPORT_SECURITY-FR-003: Offline/stale/unavailable state shall have defined safe behavior.
 
 ## Interface requirements
-- TM-IR-001: Expose stable security interfaces to approved consumers only.
-- TM-IR-002: Keep protected implementation details and key material outside consumer control.
+- TRANSPORT_SECURITY-IR-001: Security contracts shall use provider-neutral identity/policy/credential references.
+- TRANSPORT_SECURITY-IR-002: Provider-specific SDK/hardware details shall remain behind adapters.
+- TRANSPORT_SECURITY-IR-003: Policy/identity/transport state shall be versioned where applicable.
 
 ## Security requirements
-- TM-SR-001: Fail closed or fail safely for authorization, identity, policy, or trust failures as applicable.
-- TM-SR-002: Generate audit evidence for security-relevant operations and failures.
+- TRANSPORT_SECURITY-SR-001: Required protections shall fail closed or fail safely according to Security Profile.
+- TRANSPORT_SECURITY-SR-002: Insecure fallback shall not bypass mandatory protection.
+- TRANSPORT_SECURITY-SR-003: Security-relevant decisions/failures shall be auditable.
 
 ## Reliability requirements
-- TM-RR-001: Provide defined safe behavior for certificate validation failure.
-- TM-RR-002: Provide defined safe behavior for handshake timeout.
-- TM-RR-003: Provide defined safe behavior for key unavailable.
+- TRANSPORT_SECURITY-RR-001: Provider/backend outage shall not create undefined security state.
+- TRANSPORT_SECURITY-RR-002: Renewal/recovery/revocation behavior shall be deterministic.
+
+## Design acceptance criteria
+- TRANSPORT_SECURITY-AC-001: Changing TLS library does not change transport-security obligations.
+- TRANSPORT_SECURITY-AC-002: Expired/invalid peer identity fails safely.
+- TRANSPORT_SECURITY-AC-003: Required protected endpoint never silently downgrades to plaintext.
+- TRANSPORT_SECURITY-AC-004: Credential renewal can occur without redefining product service APIs.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

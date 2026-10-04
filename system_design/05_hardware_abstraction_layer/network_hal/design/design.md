@@ -1,53 +1,50 @@
-# Network HAL Detailed Design
+# Network Interface Adapter / HAL Detailed Design — Platform Baseline v2
 
-## Component
-`network_hal`
+## Status
+Revised against PR #77.
 
-## Purpose
-Abstracts network hardware and vendor-specific network controls behind stable product interfaces.
+## Deployment placement
+**Camera platform adapter only where vendor-specific interface control is required**
+
+## Purpose and ownership
+Separate vendor-specific interface controls from portable sockets/connectivity and from cloud/provider integration.
+
+## Integration contract
+NetworkInterfaceControl contract for hardware capabilities, link/radio state, reset, power, and stable hardware errors.
 
 ## Relationship overview
-![Network HAL relationship](./network_hal_relationship.svg)
+![Network Interface Adapter / HAL relationship](./network_hal_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Network Service owns portable connectivity semantics.
+- Ordinary socket/network operations use OS networking facilities where appropriate.
+- Cloud integration is separate.
+- Vendor-specific controls are exposed only when required.
+- Capability/state/reset/error ownership is explicit.
 
-### Application Layer
-- Live View
-- Playback
-- Device Config
-### System Services
-- Network Service
-- Device Management
-### Middleware
-- SSL / TLS
-### HAL
-- Network HAL
-### Linux Kernel
-- Network Driver
-- Wi-Fi / BT Driver
-### Hardware Platform
-- Ethernet / Wi-Fi
-- SoC / CPU
+## Product Profile inputs
+- selected OS/vendor/board target;
+- capability requirement or optionality;
+- compatible driver/firmware version;
+- reset, resource, security, and performance constraints.
 
-## Security context
-- Secure HAL Interface
-- Device Identity
-- Audit
+## Qualification
+Platform integration is qualified against the portable contract above it. Supplier/upstream drivers are preferred where they satisfy the required guarantees.
 
-## Communication boundaries
-- Middleware Bus
-- HAL Bus
-- Kernel Bus
+## Security
+- privileged/raw device access remains below OS/platform isolation;
+- required firmware/driver authenticity follows security profile;
+- security-relevant faults are auditable.
 
-## Dependency rules
-- Preserve the stable HAL/driver boundary.
-- Keep vendor-specific behavior private to the owning lower layer.
-- Do not expose direct hardware access to upper layers.
+## Open decisions
+- concrete OS/vendor driver selections;
+- board-specific numerical timing/resource limits.
 
-## Failure behavior
-- link unavailable
-- unsupported configuration
-- driver failure
+## Design acceptance criteria
+1. Network Service works using standard OS networking without this adapter when vendor control is unnecessary.
+2. Cloud/provider APIs do not appear in Network HAL.
+3. Reset/error state maps to stable Network Service status.
+4. Vendor interface replacement preserves portable connectivity behavior.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Re-scoped as OS/vendor integration for Platform Architecture Baseline v2.

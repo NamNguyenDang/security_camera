@@ -1,26 +1,29 @@
-# Camera Service Requirements
-
-## Component
-`camera_service`
+# Camera Service Requirements — Platform Baseline v2
 
 ## Functional requirements
-- CS-FR-001: The service shall enumerate supported camera capabilities.
-- CS-FR-002: The service shall create and stop capture sessions.
-- CS-FR-003: The service shall apply validated camera settings.
-- CS-FR-004: The service shall report camera health and capture errors.
+- CAMERA_SERVICE-FR-001: The service shall own product behavior independently of selected provider/runtime/hardware implementation.
+- CAMERA_SERVICE-FR-002: Product Profile shall declare placement, optionality, and resource limits.
+- CAMERA_SERVICE-FR-003: Lifecycle and failure states shall be deterministic.
 
 ## Interface requirements
-- CS-IR-001: Use approved service, middleware, HAL, and bus interfaces.
-- CS-IR-002: Do not expose vendor-specific implementation to clients.
+- CAMERA_SERVICE-IR-001: The service shall expose versioned portable contracts.
+- CAMERA_SERVICE-IR-002: Provider/vendor types shall not appear in the product contract.
+- CAMERA_SERVICE-IR-003: Control/state/media channels shall be separated where their semantics differ.
 
 ## Security requirements
-- CS-SR-001: Enforce approved security policy for protected operations.
-- CS-SR-002: Audit security-relevant operations and failures.
+- CAMERA_SERVICE-SR-001: Protected service actions shall require approved authorization.
+- CAMERA_SERVICE-SR-002: Security-relevant actions/failures shall be auditable.
+- CAMERA_SERVICE-SR-003: Standalone camera operation shall preserve mandatory local security behavior.
 
 ## Reliability requirements
-- CS-RR-001: Provide defined behavior for sensor unavailable.
-- CS-RR-002: Provide defined behavior for configuration rejected.
-- CS-RR-003: Provide defined behavior for capture timeout.
+- CAMERA_SERVICE-RR-001: Provider failure shall map to stable product-level status.
+- CAMERA_SERVICE-RR-002: Restart/recovery/reconnect behavior shall be defined.
+
+## Design acceptance criteria
+- CAMERA_SERVICE-AC-001: Two competing capture requests receive deterministic policy outcomes.
+- CAMERA_SERVICE-AC-002: Vendor adapter replacement preserves session contract behavior.
+- CAMERA_SERVICE-AC-003: Timeout/reset maps to stable errors.
+- CAMERA_SERVICE-AC-004: Requirement IDs use CAMERA_SERVICE prefix.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

@@ -1,52 +1,54 @@
-# Camera Service Detailed Design
+# Camera Service Detailed Design — Platform Baseline v2
 
-## Component
-`camera_service`
+## Status
+Revised against PR #77.
 
-## Purpose
-Owns camera capture-session control and provides a stable camera capability boundary to applications and media services.
+## Deployment placement
+**Camera product service**
+
+## Purpose and ownership
+Retain as shared product service over a platform-owned Capture Adapter contract, separating capture policy/session ownership from vendor control.
+
+## Product-owned contract
+CaptureSession contract with capability negotiation, ownership/arbitration, lifecycle, reconfiguration, cancellation, timeout/reset, and stable errors.
 
 ## Relationship overview
 ![Camera Service relationship](./camera_service_relationship.svg)
 
-## Relevant system path
+## Interaction/data planes
+- **Control:** commands and lifecycle operations.
+- **State/events:** operational state and durable product events.
+- **Media/data:** bounded high-bandwidth buffers/streams where applicable.
+- Provider transports are selected behind adapters.
 
-### Application Layer
-- Live View
-- Device Config
-### System Services
-- Camera Service
-- Media Service
-- Device Management
-### Middleware
-- Media Framework
-### HAL
-- Camera HAL
-### Linux Kernel
-- Camera Driver
-### Hardware Platform
-- Camera Sensor
-- SoC / CPU
+## Review-driven decisions
+- Competing clients are arbitrated by product policy.
+- Session lifecycle and capability negotiation are explicit.
+- Reconfiguration semantics are defined.
+- Timeout/reset and cancellation are bounded.
+- New vendor capture adapters preserve service semantics.
 
-## Security context
-- Security Policy
-- Secure HAL
-- Audit
+## Product Profile inputs
+- placement and optional capabilities;
+- compatible contract versions;
+- adapter/backend selection;
+- performance/resource/security budgets.
 
-## Communication boundaries
-- System Service Bus
-- Data Bus
-- HAL Bus
+## Security
+- authorization is enforced at protected service operations;
+- standalone camera operation retains required local enforcement;
+- protected models/recordings/credentials use approved security services.
 
-## Dependency rules
-- Use approved interfaces and buses.
-- Keep vendor and lower-layer implementation behind owning boundaries.
-- Do not depend on another component's private `src/`.
+## Open decisions
+- exact provider technologies;
+- numerical product-profile budgets;
+- deployment-specific scaling and retry limits.
 
-## Failure behavior
-- sensor unavailable
-- configuration rejected
-- capture timeout
+## Design acceptance criteria
+1. Two competing capture requests receive deterministic policy outcomes.
+2. Vendor adapter replacement preserves session contract behavior.
+3. Timeout/reset maps to stable errors.
+4. Requirement IDs use CAMERA_SERVICE prefix.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

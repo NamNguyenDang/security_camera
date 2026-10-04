@@ -1,26 +1,29 @@
-# Secure HAL Interface Requirements
-
-## Component
-`secure_hal_interface`
+# Secure Hardware Access Boundary Requirements — Platform Baseline v2
 
 ## Functional requirements
-- SHI-FR-001: The security service shall authenticate approved HAL callers.
-- SHI-FR-002: The security service shall authorize protected HAL operations.
-- SHI-FR-003: The security service shall validate parameters crossing the secure boundary.
-- SHI-FR-004: The security service shall return stable security error status.
+- SECURE_HAL-FR-001: Security Profile shall declare required capabilities and enforcement/isolation mechanism.
+- SECURE_HAL-FR-002: Protection semantics shall remain stable across qualified provider/OS implementations.
+- SECURE_HAL-FR-003: Unsupported required capability shall have explicit release/failure behavior.
 
 ## Interface requirements
-- SHI-IR-001: Expose stable security interfaces to approved consumers only.
-- SHI-IR-002: Keep protected implementation, keys, measurements, and trust state outside unauthorized consumer control.
+- SECURE_HAL-IR-001: Trust/isolation boundaries shall be documented explicitly.
+- SECURE_HAL-IR-002: Provider/OS-specific controls shall remain behind platform security adapters.
+- SECURE_HAL-IR-003: Evidence/state exposed upward shall be provider-neutral where possible.
 
 ## Security requirements
-- SHI-SR-001: Fail closed or fail safely for trust, key, authorization, integrity, or verification failures as applicable.
-- SHI-SR-002: Generate audit evidence for security-relevant operations and failures.
+- SECURE_HAL-SR-001: Required protected operations shall be enforced by an actual isolation boundary.
+- SECURE_HAL-SR-002: Required boot/hardening/security failures shall fail safely.
+- SECURE_HAL-SR-003: Security-relevant state and failures shall be auditable/evidenced.
 
 ## Reliability requirements
-- SHI-RR-001: Provide defined safe behavior for caller authentication failure.
-- SHI-RR-002: Provide defined safe behavior for authorization denial.
-- SHI-RR-003: Provide defined safe behavior for protected hardware unavailable.
+- SECURE_HAL-RR-001: Provider/measurement/control unavailability shall have defined behavior.
+- SECURE_HAL-RR-002: Recovery/rollback/reset behavior shall be explicit where applicable.
+
+## Design acceptance criteria
+- SECURE_HAL-AC-001: A deployment states its actual isolation mechanism.
+- SECURE_HAL-AC-002: Unauthorized caller cannot invoke protected operation even if it can link to a library.
+- SECURE_HAL-AC-003: Invalid input is rejected before trusted operation.
+- SECURE_HAL-AC-004: Changing secure-hardware provider does not alter caller-facing authorization semantics.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

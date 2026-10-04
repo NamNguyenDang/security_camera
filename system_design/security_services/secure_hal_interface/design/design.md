@@ -1,55 +1,45 @@
-# Secure HAL Interface Detailed Design
+# Secure Hardware Access Boundary Detailed Design — Platform Baseline v2
 
-## Component
-`secure_hal_interface`
+## Status
+Revised against PR #77.
 
-## Purpose
-Defines authenticated, authorized, and validated access to security-sensitive hardware abstraction interfaces and protected hardware operations.
+## Deployment placement
+**Camera platform/security boundary; exact isolation depends on OS/TEE/hardware profile**
+
+## Purpose and ownership
+Clarify which boundary provides actual security isolation; a library interface alone is not considered a security boundary.
+
+## Security contract
+SecureHardwareAccess contract defining caller identity source, authorization, parameter validation, protected operations, isolation mechanism, trust assumptions, and stable failures.
 
 ## Relationship overview
-![Secure HAL Interface relationship](./secure_hal_interface_relationship.svg)
+![Secure Hardware Access Boundary relationship](./secure_hal_interface_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Isolation may be process, OS privilege boundary, TEE, secure monitor, or hardware provider depending profile.
+- Caller identity source is explicit.
+- Permissions and protected operations are explicit.
+- Validation occurs before entering trusted provider.
+- Provider selection stays behind contract.
 
-### System Services
-- Device Management
-- Network Service
-- Camera Service
-### Middleware
-- Secrets / Key Management
-- Encryption Services
-### HAL
-- Secure HAL Interface
-- Camera HAL
-- Network HAL
-- Storage HAL
-### Linux Kernel
-- Kernel Security Interfaces
-- Drivers
-### Hardware Platform
-- Security Chip / TPM
-- SoC / CPU
+## Security Profile inputs
+- required protection/isolation/evidence capabilities;
+- selected OS/provider mechanism;
+- compatible versions and qualification evidence;
+- fallback/recovery/release behavior.
 
-## Related security services
-- Device Identity
-- Security Policy
-- Hardware Root of Trust
-- Audit
+## Trust boundary rule
+The design names the real isolation mechanism. A software API alone is not treated as a security boundary unless backed by process/OS/TEE/hardware enforcement.
 
-## Communication / enforcement boundaries
-- Middleware Bus
-- HAL Bus
-- Kernel Bus
+## Open decisions
+- selected platform/provider mechanisms;
+- profile-specific evidence and release thresholds.
 
-## Design rules
-- Consumers shall use approved security interfaces rather than implement private alternatives.
-- Protected keys, measurements, or trust state shall remain behind the owning secure boundary.
-- Security failures shall fail safely and preserve auditability.
-
-## Failure behavior
-- caller authentication failure
-- authorization denial
-- protected hardware unavailable
+## Design acceptance criteria
+1. A deployment states its actual isolation mechanism.
+2. Unauthorized caller cannot invoke protected operation even if it can link to a library.
+3. Invalid input is rejected before trusted operation.
+4. Changing secure-hardware provider does not alter caller-facing authorization semantics.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and security-boundary review feedback.

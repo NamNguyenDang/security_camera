@@ -1,26 +1,29 @@
-# IAM — Identity & Access Management Requirements
-
-## Component
-`iam`
+# Identity & Access Management (IAM) Requirements — Platform Baseline v2
 
 ## Functional requirements
-- I-FR-001: The security service shall provide approved identity context.
-- I-FR-002: The security service shall support authentication and identity lifecycle operations.
-- I-FR-003: The security service shall integrate with authorization policy.
-- I-FR-004: The security service shall emit auditable identity events.
+- IAM-FR-001: Product/Security Profile shall declare capability, placement, and provider selection.
+- IAM-FR-002: Portable semantics shall remain independent of provider implementation.
+- IAM-FR-003: Offline/unavailable-provider behavior shall be defined.
 
 ## Interface requirements
-- I-IR-001: Expose stable security interfaces to approved consumers only.
-- I-IR-002: Keep protected implementation details and key material outside consumer control.
+- IAM-IR-001: Contracts shall use provider-neutral identity/resource/capability references.
+- IAM-IR-002: Policy/contract versions shall be explicit.
+- IAM-IR-003: Provider-specific SDK/hardware details shall remain behind adapters.
 
 ## Security requirements
-- I-SR-001: Fail closed or fail safely for authorization, identity, policy, or trust failures as applicable.
-- I-SR-002: Generate audit evidence for security-relevant operations and failures.
+- IAM-SR-001: Protected actions shall be enforced at the execution boundary.
+- IAM-SR-002: Revocation/failure/stale-policy behavior shall fail safely according to Security Profile.
+- IAM-SR-003: Security-relevant decisions and failures shall be auditable.
 
 ## Reliability requirements
-- I-RR-001: Provide defined safe behavior for identity store unavailable.
-- I-RR-002: Provide defined safe behavior for authentication failure.
-- I-RR-003: Provide defined safe behavior for identity state conflict.
+- IAM-RR-001: Backend/provider outage shall not create undefined authorization/security state.
+- IAM-RR-002: Recovery/synchronization shall preserve stable product semantics.
+
+## Design acceptance criteria
+- IAM-AC-001: Standalone camera authenticates and authorizes according to local profile.
+- IAM-AC-002: Connected camera can consume authoritative backend identity without losing local enforcement.
+- IAM-AC-003: Revoked sessions follow defined propagation/offline policy.
+- IAM-AC-004: Changing identity provider does not change product principal/resource semantics.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

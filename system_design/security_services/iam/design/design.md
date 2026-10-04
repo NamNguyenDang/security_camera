@@ -1,53 +1,46 @@
-# IAM — Identity & Access Management Detailed Design
+# Identity & Access Management (IAM) Detailed Design — Platform Baseline v2
 
-## Component
-`iam`
+## Status
+Revised against PR #77.
 
-## Purpose
-Centralizes identity lifecycle, authentication context, and access-management decisions for users, devices, services, and administrators.
+## Deployment placement
+**Client + Camera + optional Gateway/Backend responsibilities; authoritative source depends on Product Profile**
+
+## Purpose and ownership
+Separate human, service, and device identity flows while preserving explicit local camera enforcement and offline operation.
+
+## Portable contract
+Identity contract for principals, credentials/session references, authentication result, scope, lifecycle/revocation state, and provider-independent identity references.
 
 ## Relationship overview
-![IAM — Identity & Access Management relationship](./iam_relationship.svg)
+![Identity & Access Management (IAM) relationship](./iam_relationship.svg)
 
-## Cross-layer relationship
+## Review-driven decisions
+- Human, service, and device identity are distinct.
+- Client/backend/camera responsibilities are explicit.
+- Customer/site/area scope is modeled.
+- Credential/session lifecycle and revocation are explicit.
+- Authentication/MFA policy is selected by security profile.
+- Local operations do not require always-online backend dependency.
 
-### Application Layer
-- User Management
-- Live View
-- Playback
-- Settings
-### Application Framework
-- Security Policy Enforcement
-### System Services
-- Device Management
-- Network Service
-### Middleware
-- Database
-- SSL / TLS
-### Hardware Platform
-- Security Chip / TPM
-- SoC / CPU
+## Product / Security Profile inputs
+- placement and provider selection;
+- compatible contract/policy version;
+- offline and revocation behavior;
+- mandatory/optional capability and trust requirements.
 
-## Related security services
-- RBAC
-- Device Identity
-- Secrets / Key Management
-- Audit
+## Security model
+Security outcomes remain product obligations even when providers are replaceable. Enforcement occurs at the deployment performing the protected action.
 
-## Communication / enforcement boundaries
-- Application Bus
-- System Service Bus
-- Data Bus
+## Open decisions
+- concrete identity/policy/provider technologies;
+- profile-specific TTL, propagation, and qualification limits.
 
-## Design rules
-- Security behavior shall be centralized through this approved service/control rather than reimplemented independently.
-- Consumers shall use stable interfaces and avoid direct access to protected implementation or key material.
-- Policy, identity, key, and audit dependencies shall fail safely.
-
-## Failure behavior
-- identity store unavailable
-- authentication failure
-- identity state conflict
+## Design acceptance criteria
+1. Standalone camera authenticates and authorizes according to local profile.
+2. Connected camera can consume authoritative backend identity without losing local enforcement.
+3. Revoked sessions follow defined propagation/offline policy.
+4. Changing identity provider does not change product principal/resource semantics.
 
 ## Changelog
-- 2026-10-04: Added detailed cross-layer relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

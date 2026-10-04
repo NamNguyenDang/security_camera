@@ -1,47 +1,44 @@
-# Playback Requirements
+# Playback Requirements — Platform Baseline v2
 
-## Component
+## Requirement ID policy
 
-`playback`
+Requirement IDs use the globally unique prefix `PLAYBACK`.
 
 ## Functional requirements
 
-- PB-FR-001: The component shall allow an authorized user to start playback of an available recording.
-- PB-FR-002: The component shall support pause and resume.
-- PB-FR-003: The component shall support seek within the valid time range of the recording.
-- PB-FR-004: The component shall expose playback state and errors to the user interface.
-- PB-FR-005: The component shall obtain recording media through approved storage/media interfaces.
-- PB-FR-006: The component shall support event- or time-based selection of a recording when the required metadata is available.
+- PLAYBACK-FR-001: The component shall implement its product-owned behavior independently of selected operating-system, vendor, database, cloud, or hardware providers.
+- PLAYBACK-FR-002: The component shall support the deployment placements enabled by the selected Product Profile.
+- PLAYBACK-FR-003: The component shall expose deterministic lifecycle and failure states.
+- PLAYBACK-FR-004: Optional capabilities shall have defined unavailable behavior.
 
 ## Interface requirements
 
-- PB-IR-001: The component shall use approved application/framework interfaces for presentation.
-- PB-IR-002: The component shall use System Service interfaces for storage, media, network, and device-state capabilities.
-- PB-IR-003: The component shall not access storage HAL, kernel drivers, or storage hardware directly.
-- PB-IR-004: The component shall not depend on another component's private implementation directory.
-
-## Performance requirements
-
-- PB-PR-001: Playback startup shall minimize avoidable index, storage, and decode delay.
-- PB-PR-002: Seek operations shall use indexed/keyframe-aware access where supported.
-- PB-PR-003: Buffering shall be bounded and configurable.
-- PB-PR-004: The component shall expose metrics for startup delay, buffering, decode failures, and playback interruption.
+- PLAYBACK-IR-001: Cross-component dependencies shall use documented product contracts.
+- PLAYBACK-IR-002: Control/state/event contracts shall be separated from high-bandwidth media paths where applicable.
+- PLAYBACK-IR-003: Provider-specific paths, handles, SDK types, and private implementation details shall not appear in portable product contracts.
+- PLAYBACK-IR-004: Contract version compatibility shall be selected and validated by Product Profile.
 
 ## Security requirements
 
-- PB-SR-001: Playback access shall be authorized using approved IAM and RBAC mechanisms.
-- PB-SR-002: Remote playback shall use approved transport protection where applicable.
-- PB-SR-003: Access to recordings shall be auditable.
-- PB-SR-004: Playback shall not expose storage paths or secrets directly to the UI.
-- PB-SR-005: The component shall reject access to recordings for which the requester is not authorized.
+- PLAYBACK-SR-001: Authorization shall be enforced at the deployment that performs the protected action.
+- PLAYBACK-SR-002: Standalone camera operation shall retain required local authentication/authorization behavior.
+- PLAYBACK-SR-003: Security-relevant operations and failures shall be auditable.
+- PLAYBACK-SR-004: Ordinary user configuration shall not disable mandatory security obligations.
 
 ## Reliability requirements
 
-- PB-RR-001: Missing or deleted recordings shall produce a defined error state.
-- PB-RR-002: Corrupt or unsupported media shall not crash the application.
-- PB-RR-003: The component shall release media and storage resources when playback stops.
-- PB-RR-004: Network interruption during remote playback shall result in a recoverable or clearly reported failure state.
+- PLAYBACK-RR-001: Offline or unavailable gateway/backend behavior shall be defined.
+- PLAYBACK-RR-002: Provider failure shall map to stable product-level status.
+- PLAYBACK-RR-003: Recovery/reconnect behavior shall be bounded by the selected Product Profile.
+
+## Design acceptance criteria
+
+- PLAYBACK-AC-001: The same playback contract works with local or cloud recording repositories.
+- PLAYBACK-AC-002: Deleted or expired recordings produce deterministic behavior during active playback.
+- PLAYBACK-AC-003: Corrupt media is reported without exposing provider internals.
+- PLAYBACK-AC-004: Unauthorized recording access is denied consistently offline and online.
+- PLAYBACK-AC-005: Buffering remains within the selected product-profile budget.
 
 ## Changelog
 
-- 2026-10-03: Added initial detailed and traceable Playback requirements.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and globally unique requirement IDs.

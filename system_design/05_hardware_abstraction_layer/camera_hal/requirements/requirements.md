@@ -1,26 +1,28 @@
-# Camera HAL Requirements
-
-## Component
-`camera_hal`
+# Camera Capture Adapter / HAL Requirements — Platform Baseline v2
 
 ## Functional requirements
-- CH-FR-001: The component shall enumerate camera capabilities.
-- CH-FR-002: The component shall configure approved capture modes.
-- CH-FR-003: The component shall start and stop capture streams.
-- CH-FR-004: The component shall translate vendor errors to stable status.
+- CAMERA_HAL-FR-001: The adapter shall expose portable capability and lifecycle semantics independent of selected supplier.
+- CAMERA_HAL-FR-002: Product Profile shall select provider/version and capability presence.
+- CAMERA_HAL-FR-003: Unsupported capability shall be reported before use.
 
 ## Interface requirements
-- CH-IR-001: Use only approved upper/lower interfaces.
-- CH-IR-002: Hide vendor-specific implementation from consumers.
+- CAMERA_HAL-IR-001: Buffer/resource ownership and lifecycle shall be explicit.
+- CAMERA_HAL-IR-002: Vendor/driver-specific types shall not escape the adapter.
+- CAMERA_HAL-IR-003: Cancellation, timeout, reset, and stable error mapping shall be defined.
 
 ## Security requirements
-- CH-SR-001: Use approved security services and policies for protected operations.
-- CH-SR-002: Report security-relevant failures for audit.
+- CAMERA_HAL-SR-001: Boundary inputs shall be validated before provider execution.
+- CAMERA_HAL-SR-002: Security-relevant faults shall be auditable.
 
 ## Reliability requirements
-- CH-RR-001: Provide defined behavior for sensor absent.
-- CH-RR-002: Provide defined behavior for unsupported mode.
-- CH-RR-003: Provide defined behavior for driver error.
+- CAMERA_HAL-RR-001: Provider reset/unavailability shall map to stable product-level status.
+- CAMERA_HAL-RR-002: Optional adapter absence shall follow Product Profile fallback/unavailable policy.
+
+## Design acceptance criteria
+- CAMERA_HAL-AC-001: A new sensor/vendor capture adapter can replace the existing one without Camera Service changes.
+- CAMERA_HAL-AC-002: Frame ownership has defined acquire/release semantics.
+- CAMERA_HAL-AC-003: Unsupported mode is rejected through capability negotiation.
+- CAMERA_HAL-AC-004: Reset/cancellation returns stable portable status.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

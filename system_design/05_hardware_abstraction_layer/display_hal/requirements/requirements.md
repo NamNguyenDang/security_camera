@@ -1,26 +1,28 @@
-# Display HAL Requirements
-
-## Component
-`display_hal`
+# Local Display Adapter / HAL Requirements — Platform Baseline v2
 
 ## Functional requirements
-- DH-FR-001: The component shall enumerate display capabilities.
-- DH-FR-002: The component shall configure supported display modes.
-- DH-FR-003: The component shall present approved surfaces.
-- DH-FR-004: The component shall report display/device loss.
+- DISPLAY_HAL-FR-001: Product Profile shall declare capability presence and selected provider.
+- DISPLAY_HAL-FR-002: The adapter shall expose portable capability/lifecycle semantics.
+- DISPLAY_HAL-FR-003: Unsupported capability shall fail deterministically.
 
 ## Interface requirements
-- DH-IR-001: Expose only the approved HAL/driver interface.
-- DH-IR-002: Hide vendor/private implementation from upper layers.
+- DISPLAY_HAL-IR-001: Buffer/resource/device ownership shall be explicit where applicable.
+- DISPLAY_HAL-IR-002: Provider/OS-specific types shall remain behind the adapter.
+- DISPLAY_HAL-IR-003: Reset/error/capability mapping shall be stable.
 
 ## Security requirements
-- DH-SR-001: Respect approved secure HAL/kernel policy.
-- DH-SR-002: Surface security-relevant device failures for audit.
+- DISPLAY_HAL-SR-001: Raw privileged device operations shall not be exposed to untrusted upper layers.
+- DISPLAY_HAL-SR-002: Security-relevant provider faults shall be auditable.
 
 ## Reliability requirements
-- DH-RR-001: Provide defined behavior for display unavailable.
-- DH-RR-002: Provide defined behavior for unsupported mode.
-- DH-RR-003: Provide defined behavior for driver error.
+- DISPLAY_HAL-RR-001: Provider/device failure shall map to stable product-level status.
+- DISPLAY_HAL-RR-002: Optional capability absence shall be a supported state.
+
+## Design acceptance criteria
+- DISPLAY_HAL-AC-001: Headless camera has no display dependency.
+- DISPLAY_HAL-AC-002: Changing local graphics/display backend does not alter camera product services.
+- DISPLAY_HAL-AC-003: Client presentation remains independent of camera Display HAL.
+- DISPLAY_HAL-AC-004: Surface/buffer lifecycle has no ambiguous ownership.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

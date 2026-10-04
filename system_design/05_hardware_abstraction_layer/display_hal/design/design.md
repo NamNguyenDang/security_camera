@@ -1,52 +1,50 @@
-# Display HAL Detailed Design
+# Local Display Adapter / HAL Detailed Design — Platform Baseline v2
 
-## Component
-`display_hal`
+## Status
+Revised against PR #77.
 
-## Purpose
-Abstracts display and rendering hardware capabilities from middleware and framework consumers.
+## Deployment placement
+**Optional Camera-local display adapter only**
+
+## Purpose and ownership
+Make display support optional and explicitly separate camera-local display from Android/iOS/Web client presentation.
+
+## Portable contract
+LocalDisplay contract with capability/mode negotiation, surface/buffer ownership, presentation lifecycle, reset, and stable errors.
 
 ## Relationship overview
-![Display HAL relationship](./display_hal_relationship.svg)
+![Local Display Adapter / HAL relationship](./display_hal_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Headless camera profiles omit the component.
+- Client screens are outside this HAL.
+- Graphics API/driver selection is a platform adapter choice.
+- Surface/buffer ownership is explicit.
+- Display reset/failure behavior is defined.
 
-### Application Layer
-- Live View
-- Playback
-- Mobile / Web UI
-### Application Framework
-- View System
-- Window Manager
-### Middleware
-- OpenGL ES
-- Vulkan
-### HAL
-- Display HAL
-### Linux Kernel
-- Display Driver
-### Hardware Platform
-- Display
-- SoC / CPU
+## Product Profile inputs
+- capability present/absent;
+- selected provider and compatible version;
+- performance/resource/power constraints;
+- recovery and security profile.
 
-## Security context
-- Secure HAL Interface
-- Kernel Hardening
+## Supplier qualification
+Provider replacement is qualified against ownership, lifecycle, timing/durability, reset/error, and capability scenarios.
 
-## Communication boundaries
-- Middleware Bus
-- HAL Bus
-- Kernel Bus
+## Security
+- raw device/provider controls are not exposed to applications;
+- access is mediated by owning platform/service boundaries;
+- security-relevant failures are auditable.
 
-## Dependency rules
-- Preserve the stable HAL/driver boundary.
-- Keep vendor-specific behavior private to the owning lower layer.
-- Do not expose direct hardware access to upper layers.
+## Open decisions
+- selected OS/vendor provider;
+- numerical capability and recovery constraints.
 
-## Failure behavior
-- display unavailable
-- unsupported mode
-- driver error
+## Design acceptance criteria
+1. Headless camera has no display dependency.
+2. Changing local graphics/display backend does not alter camera product services.
+3. Client presentation remains independent of camera Display HAL.
+4. Surface/buffer lifecycle has no ambiguous ownership.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and supplier-replacement review feedback.

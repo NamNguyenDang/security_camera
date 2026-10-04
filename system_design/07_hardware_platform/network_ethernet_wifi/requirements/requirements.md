@@ -1,26 +1,28 @@
-# Network (Ethernet / Wi-Fi) Requirements
-
-## Component
-`network_ethernet_wifi`
+# Network Hardware (Ethernet / Wi-Fi) Requirements — Platform Baseline v2
 
 ## Functional requirements
-- NEW-FR-001: The hardware component shall provide supported wired and wireless connectivity.
-- NEW-FR-002: The hardware component shall report physical/link status.
-- NEW-FR-003: The hardware component shall support approved interface power states.
-- NEW-FR-004: The hardware component shall expose required hardware capabilities to drivers.
+- NETWORK_ETHERNET_WIFI-FR-001: Product/Security Profile shall declare required and optional capabilities.
+- NETWORK_ETHERNET_WIFI-FR-002: Hardware/provider shall satisfy documented qualification constraints.
+- NETWORK_ETHERNET_WIFI-FR-003: Unsupported capability shall be detected before protected use.
 
 ## Interface requirements
-- NEW-IR-001: Interact through approved hardware, driver, and HAL interfaces.
-- NEW-IR-002: Advertise only supported capabilities and status.
+- NETWORK_ETHERNET_WIFI-IR-001: Supplier-specific interfaces shall remain behind platform/provider adapters.
+- NETWORK_ETHERNET_WIFI-IR-002: Capabilities and status exposed upward shall be provider-neutral.
+- NETWORK_ETHERNET_WIFI-IR-003: Compatible driver/firmware/provider versions shall be recorded.
 
 ## Security requirements
-- NEW-SR-001: Participate in approved boot, trust, identity, and protection mechanisms where applicable.
-- NEW-SR-002: Surface security-relevant status and failures to the owning driver or service.
+- NETWORK_ETHERNET_WIFI-SR-001: Required protection outcomes shall be enforced independently of supplier choice.
+- NETWORK_ETHERNET_WIFI-SR-002: Security-relevant lifecycle/fault state shall be auditable.
 
 ## Reliability requirements
-- NEW-RR-001: Provide defined behavior for link unavailable.
-- NEW-RR-002: Provide defined behavior for radio hardware fault.
-- NEW-RR-003: Provide defined behavior for interface reset.
+- NETWORK_ETHERNET_WIFI-RR-001: Reset/power/provider failure behavior shall be documented.
+- NETWORK_ETHERNET_WIFI-RR-002: Optional capability absence shall follow Product/Security Profile.
+
+## Design acceptance criteria
+- NETWORK_ETHERNET_WIFI-AC-001: A wired-only profile omits Wi-Fi hardware.
+- NETWORK_ETHERNET_WIFI-AC-002: Transport-security policy remains unchanged when NIC/radio supplier changes.
+- NETWORK_ETHERNET_WIFI-AC-003: Reset/power behavior satisfies declared product limits.
+- NETWORK_ETHERNET_WIFI-AC-004: Upper Network Service receives provider-neutral capability/status.
 
 ## Changelog
-- 2026-10-04: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

@@ -1,55 +1,50 @@
-# Network (Ethernet / Wi-Fi) Detailed Design
+# Network Hardware (Ethernet / Wi-Fi) Detailed Design — Platform Baseline v2
 
-## Component
-`network_ethernet_wifi`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides physical and link-layer network connectivity for local management, remote viewing, playback, telemetry, and device-cloud communication.
+## Deployment placement
+**Qualified camera network hardware target**
+
+## Purpose and ownership
+Separate physical/link connectivity qualification from transport security, device authentication, cloud integration, and application protocols.
+
+## Qualification contract
+Network hardware qualification constraints for supported wired/wireless combinations, capability reporting, reset/power behavior, and driver compatibility.
 
 ## Relationship overview
-![Network (Ethernet / Wi-Fi) relationship](./network_ethernet_wifi_relationship.svg)
+![Network Hardware (Ethernet / Wi-Fi) relationship](./network_ethernet_wifi_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- Physical/link hardware does not own TLS or device/cloud authentication.
+- Ethernet/Wi-Fi combinations are Product Profile selections.
+- Capability/reset/power behavior is measurable.
+- Provider/application protocols remain above hardware boundary.
+- Optionality is explicit.
 
-### Application Layer
-- Live View
-- Playback
-- Device Config
-- Mobile / Web UI
-### System Services
-- Network Service
-- Device Management
-### Middleware
-- SSL / TLS
-### HAL
-- Network HAL
-### Linux Kernel
-- Network Driver
-- Wi-Fi / BT Driver
-### Hardware Platform
-- Ethernet / Wi-Fi
-- SoC / CPU
+## Product / Security Profile inputs
+- required and optional capabilities;
+- supplier/provider selection;
+- compatible board/driver/firmware versions;
+- measurable power/performance/security constraints.
 
-## Security context
-- Device Identity
-- TLS / mTLS
-- Kernel Hardening
-- Secure Boot
+## Qualification model
+Supplier/provider replacement is permitted only when the selected implementation satisfies the same portable upper contracts and profile obligations.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Security
+- security outcomes are defined by the security profile, not by vendor marketing categories;
+- hardware details remain below provider contracts;
+- relevant faults and lifecycle events are auditable.
 
-## Dependency rules
-- Hardware shall be accessed only through approved driver, HAL, and service ownership.
-- Platform-specific behavior shall remain below the appropriate abstraction boundary.
-- Upper layers shall consume declared capabilities rather than raw device details.
+## Open decisions
+- concrete supplier/provider selection;
+- profile-specific measurable thresholds and evidence.
 
-## Failure behavior
-- link unavailable
-- radio hardware fault
-- interface reset
+## Design acceptance criteria
+1. A wired-only profile omits Wi-Fi hardware.
+2. Transport-security policy remains unchanged when NIC/radio supplier changes.
+3. Reset/power behavior satisfies declared product limits.
+4. Upper Network Service receives provider-neutral capability/status.
 
 ## Changelog
-- 2026-10-04: Added detailed relationship design.
+- 2026-10-04: Reworked as hardware/provider qualification design for Platform Architecture Baseline v2.

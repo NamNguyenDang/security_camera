@@ -1,34 +1,30 @@
-# Device Config Requirements
-
-## Component
-
-`device_config`
+# Device Config Requirements — Platform Baseline v2
 
 ## Functional requirements
-
-- DC-FR-001: The component shall read device configuration.
-- DC-FR-002: The component shall submit validated configuration changes.
-- DC-FR-003: The component shall show apply/restart requirements.
-- DC-FR-004: The component shall show device configuration status.
+- DEVICE_CONFIG-FR-001: The component shall implement portable product behavior independent of selected platform providers.
+- DEVICE_CONFIG-FR-002: The component shall honor Product Profile capability and deployment selections.
+- DEVICE_CONFIG-FR-003: The component shall expose deterministic validation/lifecycle/failure state as applicable.
 
 ## Interface requirements
-
-- DC-IR-001: The component shall use approved architecture interfaces and communication buses.
-- DC-IR-002: The component shall not directly access lower-layer private implementation details.
-- DC-IR-003: The component shall not depend on another component's private `src/` directory.
+- DEVICE_CONFIG-IR-001: Cross-component interactions shall use documented versioned contracts.
+- DEVICE_CONFIG-IR-002: Provider-specific SDK types, hardware details, paths, and private implementation shall not appear in portable contracts.
+- DEVICE_CONFIG-IR-003: Contract revision conflicts or incompatible versions shall be reported explicitly.
 
 ## Security requirements
-
-- DC-SR-001: Access shall be controlled through approved identity and authorization mechanisms where applicable.
-- DC-SR-002: Security-relevant actions and failures shall be auditable.
-- DC-SR-003: Secrets and cryptographic material shall use approved security services.
+- DEVICE_CONFIG-SR-001: Protected actions shall require approved authorization.
+- DEVICE_CONFIG-SR-002: Mandatory security policy shall not be weakened by ordinary user configuration.
+- DEVICE_CONFIG-SR-003: Security-relevant changes and failures shall be auditable.
 
 ## Reliability requirements
+- DEVICE_CONFIG-RR-001: Offline/unavailable backend behavior shall be defined.
+- DEVICE_CONFIG-RR-002: Provider failure shall map to stable product-level state.
 
-- DC-RR-001: The component shall provide defined behavior for unsupported option.
-- DC-RR-002: The component shall provide defined behavior for device busy.
-- DC-RR-003: The component shall provide defined behavior for policy rejection.
+## Design acceptance criteria
+- DEVICE_CONFIG-AC-001: A client can edit desired state without direct hardware access.
+- DEVICE_CONFIG-AC-002: Stale revision writes are rejected or reconciled deterministically.
+- DEVICE_CONFIG-AC-003: Partial apply produces explicit per-field status.
+- DEVICE_CONFIG-AC-004: Offline camera changes reconcile according to defined precedence.
+- DEVICE_CONFIG-AC-005: Product Profile cannot be modified through ordinary device configuration.
 
 ## Changelog
-
-- 2026-10-03: Added initial detailed and traceable requirements.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

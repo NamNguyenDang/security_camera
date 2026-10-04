@@ -1,26 +1,29 @@
-# SSL / TLS Requirements
-
-## Component
-`ssl_tls`
+# Secure Transport Provider Adapter Requirements — Platform Baseline v2
 
 ## Functional requirements
-- ST-FR-001: The component shall establish approved secure sessions.
-- ST-FR-002: The component shall validate peer identity according to policy.
-- ST-FR-003: The component shall use approved cipher/protocol configuration.
-- ST-FR-004: The component shall report handshake and certificate failures.
+- SSL_TLS-FR-001: Product Profile shall declare whether this adapter is present.
+- SSL_TLS-FR-002: Portable behavior shall remain independent of selected provider implementation.
+- SSL_TLS-FR-003: Unsupported capability shall be reported deterministically.
 
 ## Interface requirements
-- ST-IR-001: Use only approved upper/lower interfaces.
-- ST-IR-002: Hide vendor-specific implementation from consumers.
+- SSL_TLS-IR-001: Provider-specific API types shall not escape the adapter boundary.
+- SSL_TLS-IR-002: Portable contracts shall be versioned and capability-aware.
+- SSL_TLS-IR-003: Provider replacement shall preserve defined product semantics.
 
 ## Security requirements
-- ST-SR-001: Use approved security services and policies for protected operations.
-- ST-SR-002: Report security-relevant failures for audit.
+- SSL_TLS-SR-001: Security-sensitive behavior shall follow the owning security profile/policy.
+- SSL_TLS-SR-002: Required protections shall not fall back to insecure modes.
+- SSL_TLS-SR-003: Security-relevant failures shall be auditable.
 
 ## Reliability requirements
-- ST-RR-001: Provide defined behavior for certificate invalid.
-- ST-RR-002: Provide defined behavior for handshake failure.
-- ST-RR-003: Provide defined behavior for key unavailable.
+- SSL_TLS-RR-001: Provider loss or initialization failure shall map to stable product state.
+- SSL_TLS-RR-002: Optional capability absence shall remain a supported state.
+
+## Design acceptance criteria
+- SSL_TLS-AC-001: A TLS library can be replaced without changing transport-security policy.
+- SSL_TLS-AC-002: Invalid peer identity fails according to security policy.
+- SSL_TLS-AC-003: Provider never silently falls back to insecure transport.
+- SSL_TLS-AC-004: Credential rotation does not require changes to product callers.
 
 ## Changelog
-- 2026-10-03: Added detailed requirements baseline.
+- 2026-10-04: Reworked with globally unique IDs for Platform Architecture Baseline v2.

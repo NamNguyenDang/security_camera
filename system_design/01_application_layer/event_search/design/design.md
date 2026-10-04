@@ -1,80 +1,59 @@
-# Event Search Detailed Design
+# Event Search Detailed Design — Platform Baseline v2
 
-## Component
+## Status
+Revised against PR #77.
 
-`event_search`
+## Deployment placement
+**Client + Camera/Gateway/Backend repositories selected by Product Profile**
 
-## Purpose
+## Purpose and ownership
+Provide a product-owned event query contract independent of database engine and repository placement.
 
-searches and filters recorded security events and links result metadata to playback or investigation workflows.
+## Product-owned contract
+EventQuery contract with scoped filters, stable event identity, stable recording references, pagination, and time semantics.
 
 ## Relationship overview
-
 ![Event Search relationship](./event_search_relationship.svg)
 
-## Relevant system path
+## Interaction model
+- Commands use stable product contracts.
+- State and durable domain events are separate from provider APIs.
+- Deployment transport is selected by Product Profile.
+- Provider and operating-system details remain behind adapters.
 
-### Application Layer
-- Event Search
-- Playback
-- Mobile / Web UI
+## Review-driven design decisions
+- Search is independent of local database APIs.
+- Scope includes customer/site/area/device permissions.
+- Pagination and time-zone/timestamp semantics are explicit.
+- Stale indexes and deleted recordings have defined outcomes.
+- Local camera, gateway, and cloud query deployments preserve one contract.
 
-### Application Framework
-- Content Providers
-- View System
+## Product Profile inputs
+- deployment placement and optional backend/gateway;
+- capability and compatible contract versions;
+- provider/adapter selection;
+- security and offline policy.
 
-### System Services
-- Storage Service
-- Media Service
-- Device Management
+## Security
+- camera-side enforcement remains explicit for standalone operation;
+- mandatory security policy cannot be disabled by ordinary preferences;
+- protected operations are auditable.
 
-### Middleware
-- Database
-- Media Framework
+## Decisions
+- Shared product behavior is provider independent.
+- Optional capabilities are profile-selected.
+- No private `src/` dependency is a product contract.
 
-### HAL
-- Storage HAL
+## Open decisions
+- exact provider/transport selections;
+- profile-specific limits and retention/version policies.
 
-### Linux Kernel
-- Storage Driver
-
-### Hardware Platform
-- Storage eMMC / SSD
-- SoC / CPU
-
-## Communication boundaries
-
-- Application Bus
-- System Service Bus
-- Data Bus
-
-## Security context
-
-- IAM / RBAC
-- Encryption Services
-- Audit
-
-## Dependency rules
-
-- Use approved APIs and buses rather than bypassing layer ownership.
-- Application logic shall not absorb lower-layer implementation responsibilities.
-- Vendor-specific details remain behind the owning abstraction boundary.
-- Another component's private `src/` directory is not a supported dependency surface.
-
-## Failure behavior
-
-- index unavailable
-- query timeout
-- recording deleted
-- authorization failure
-
-## Open detailed-design topics
-
-- final API contract and data model
-- timing, concurrency, and lifecycle behavior
-- observability and audit events
-- component-specific performance limits
+## Design acceptance criteria
+1. Database replacement does not change query semantics.
+2. Permission filtering occurs before results are exposed.
+3. Deleted recordings leave a stable event result with defined recording availability.
+4. Pagination is deterministic for a fixed query snapshot.
+5. Requirement IDs use EVENT_SEARCH prefix.
 
 ## Changelog
-
-- 2026-10-03: Added component-specific detailed design and relationship diagram.
+- 2026-10-04: Reworked for Platform Architecture Baseline v2 and review feedback.

@@ -1,34 +1,30 @@
-# Event Search Requirements
-
-## Component
-
-`event_search`
+# Event Search Requirements — Platform Baseline v2
 
 ## Functional requirements
-
-- ES-FR-001: The component shall search events by supported filters.
-- ES-FR-002: The component shall paginate or bound result sets.
-- ES-FR-003: The component shall open associated event context.
-- ES-FR-004: The component shall handoff selected media to playback.
+- EVENT_SEARCH-FR-001: The component shall implement product behavior independently of selected providers.
+- EVENT_SEARCH-FR-002: The component shall support Product Profile deployment and capability selection.
+- EVENT_SEARCH-FR-003: The component shall expose deterministic lifecycle and failure states.
 
 ## Interface requirements
-
-- ES-IR-001: The component shall use approved architecture interfaces and communication buses.
-- ES-IR-002: The component shall not directly access lower-layer private implementation details.
-- ES-IR-003: The component shall not depend on another component's private `src/` directory.
+- EVENT_SEARCH-IR-001: Cross-component dependencies shall use documented versioned contracts.
+- EVENT_SEARCH-IR-002: Provider-specific types, paths, and private implementation details shall not appear in portable contracts.
+- EVENT_SEARCH-IR-003: Stale or incompatible contract versions shall be rejected deterministically.
 
 ## Security requirements
-
-- ES-SR-001: Access shall be controlled through approved identity and authorization mechanisms where applicable.
-- ES-SR-002: Security-relevant actions and failures shall be auditable.
-- ES-SR-003: Secrets and cryptographic material shall use approved security services.
+- EVENT_SEARCH-SR-001: Authorization shall be enforced where the protected action occurs.
+- EVENT_SEARCH-SR-002: Standalone operation shall retain required local enforcement.
+- EVENT_SEARCH-SR-003: Security-relevant operations and failures shall be auditable.
 
 ## Reliability requirements
+- EVENT_SEARCH-RR-001: Offline/unavailable backend behavior shall be defined.
+- EVENT_SEARCH-RR-002: Provider failure shall map to stable product-level status.
 
-- ES-RR-001: The component shall provide defined behavior for index unavailable.
-- ES-RR-002: The component shall provide defined behavior for query timeout.
-- ES-RR-003: The component shall provide defined behavior for recording deleted.
+## Design acceptance criteria
+- EVENT_SEARCH-AC-001: Database replacement does not change query semantics.
+- EVENT_SEARCH-AC-002: Permission filtering occurs before results are exposed.
+- EVENT_SEARCH-AC-003: Deleted recordings leave a stable event result with defined recording availability.
+- EVENT_SEARCH-AC-004: Pagination is deterministic for a fixed query snapshot.
+- EVENT_SEARCH-AC-005: Requirement IDs use EVENT_SEARCH prefix.
 
 ## Changelog
-
-- 2026-10-03: Added initial detailed and traceable requirements.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

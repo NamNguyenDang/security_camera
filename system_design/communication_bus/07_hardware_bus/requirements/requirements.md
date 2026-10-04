@@ -1,27 +1,29 @@
-# Hardware Bus Requirements
-
-## Component
-`hardware_bus`
+# Physical Interconnect Qualification Requirements — Platform Baseline v2
 
 ## Functional requirements
-- HB-FR-001: The bus shall provide supported physical/peripheral communication.
-- HB-FR-002: The bus shall preserve required electrical/protocol ordering constraints.
-- HB-FR-003: The bus shall report bus/device fault state to owning hardware/driver layer.
-- HB-FR-004: The bus shall support approved reset and power sequencing.
+- HW_BUS-FR-001: The boundary shall expose stable guarantees appropriate to its integration/physical role.
+- HW_BUS-FR-002: Product Profile shall declare selected OS/board/protocol/provider and compatible versions.
+- HW_BUS-FR-003: Unsupported/incompatible configuration shall fail qualification or initialization deterministically.
 
 ## Interface requirements
-- HB-IR-001: All cross-boundary communication shall use the approved interface or physical protocol contract.
-- HB-IR-002: Upper layers shall not bypass the owning boundary to access lower implementation details directly.
-- HB-IR-003: Unsupported capabilities or invalid parameters shall be rejected deterministically.
+- HW_BUS-IR-001: Upper product contracts shall not expose raw driver/register/electrical implementation details.
+- HW_BUS-IR-002: Ownership of reset, errors, lifecycle, and capability translation shall be explicit.
+- HW_BUS-IR-003: Physical protocol and software service semantics shall not be conflated.
 
 ## Security requirements
-- HB-SR-001: The boundary shall preserve approved trust, identity, hardening, or secure-boot assumptions where applicable.
-- HB-SR-002: Security-relevant boundary failures shall be auditable through the owning software layer.
+- HW_BUS-SR-001: Security assumptions and isolation ownership shall be documented.
+- HW_BUS-SR-002: Mandatory protection shall be enforced by actual security boundaries, not fictional bus features.
+- HW_BUS-SR-003: Security-relevant faults shall be surfaced for audit/recovery where applicable.
 
 ## Reliability requirements
-- HB-RR-001: The bus shall provide defined behavior for peripheral bus fault.
-- HB-RR-002: The bus shall provide defined behavior for device not responding.
-- HB-RR-003: The bus shall provide defined behavior for power or reset sequencing failure.
+- HW_BUS-RR-001: Reset/power/error behavior shall be documented and testable.
+- HW_BUS-RR-002: Replacement platform/board implementation shall preserve portable upper guarantees after qualification.
+
+## Design acceptance criteria
+- HW_BUS-AC-001: Board qualification names actual protocols used.
+- HW_BUS-AC-002: Timing/electrical limits are testable.
+- HW_BUS-AC-003: Hardware interconnect has no fake software authorization/version API.
+- HW_BUS-AC-004: Requirement IDs use HW_BUS prefix.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary requirements.
+- 2026-10-04: Reworked with globally unique requirement IDs for Platform Architecture Baseline v2.

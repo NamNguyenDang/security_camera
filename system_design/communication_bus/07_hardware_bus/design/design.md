@@ -1,49 +1,45 @@
-# Hardware Bus Detailed Design
+# Physical Interconnect Qualification Detailed Design — Platform Baseline v2
 
-## Component
-`hardware_bus`
+## Status
+Revised against PR #77.
 
-## Purpose
-Defines the approved **SoC / Peripheral** communication boundary between **Hardware Platform / SoC** and **Physical Peripherals**.
+## Deployment placement
+**Board/vendor hardware qualification only**
+
+## Purpose and ownership
+Treat physical interconnects as board/vendor qualification specifications separate from software message buses.
+
+## Boundary contract
+PhysicalInterconnect qualification for selected protocols, electrical/timing/reset constraints, error ownership, power sequencing, and security assumptions.
 
 ## Relationship overview
-![Hardware Bus relationship](./hardware_bus_relationship.svg)
+![Physical Interconnect Qualification relationship](./hardware_bus_relationship.svg)
 
-## Upper-side participants
-- SoC / CPU
-- Security Chip / TPM
-- Power / Clock Controls
+## Review-driven decisions
+- Protocols are product/board selected, not generic software buses.
+- Electrical and timing constraints are explicit.
+- Reset/power sequencing is explicit.
+- Error ownership between device/driver/platform is assigned.
+- Security assumptions are documented without pretending hardware bus implements authorization/version negotiation.
 
-## Lower-side participants
-- Camera Sensor
-- NPU / AI Accelerator
-- Display
-- Storage
-- Ethernet / Wi-Fi
-- Audio / Other Peripherals
+## Product Profile inputs
+- selected OS/board/protocol/provider;
+- compatible versions/capabilities;
+- reset/power/error ownership;
+- security and qualification constraints.
 
-## Boundary responsibilities
-- Define stable operations and ownership rules appropriate to SoC / Peripheral.
-- Validate capabilities, parameters, lifecycle state, and resource ownership.
-- Return stable status/errors without leaking uncontrolled implementation details upward.
-- Prevent direct bypass of the owning kernel, HAL, or hardware boundary.
+## Boundary rule
+Implementation and physical boundaries expose stable guarantees upward but are not modeled as mandatory product services unless a concrete deployment requires one.
 
-## Security controls
-- Hardware Root of Trust
-- Device Provisioning
-- Secure Boot
-- Device Identity
+## Open decisions
+- concrete OS/board/protocol selections;
+- numerical electrical/timing/reset limits.
 
-## Failure behavior
-- peripheral bus fault
-- device not responding
-- power or reset sequencing failure
-
-## Open design items
-- exact interface/protocol versioning and compatibility rules
-- timeout, reset, and recovery behavior
-- observability and fault-correlation identifiers
-- power/lifecycle interaction across the boundary
+## Design acceptance criteria
+1. Board qualification names actual protocols used.
+2. Timing/electrical limits are testable.
+3. Hardware interconnect has no fake software authorization/version API.
+4. Requirement IDs use HW_BUS prefix.
 
 ## Changelog
-- 2026-10-04: Added detailed communication-boundary design and relationship diagram.
+- 2026-10-04: Re-scoped from generic bus model to Platform Architecture Baseline v2 boundary/qualification model.

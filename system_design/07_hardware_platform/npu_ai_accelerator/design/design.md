@@ -1,50 +1,50 @@
-# NPU / AI Accelerator Detailed Design
+# NPU / AI Accelerator Hardware Detailed Design — Platform Baseline v2
 
-## Component
-`npu_ai_accelerator`
+## Status
+Revised against PR #77.
 
-## Purpose
-Provides dedicated hardware acceleration for machine-learning inference workloads used by approved AI services.
+## Deployment placement
+**Optional qualified hardware capability selected by Product Profile**
+
+## Purpose and ownership
+Treat neural acceleration as optional unless required by Product Profile and keep it distinct from dedicated video codec acceleration.
+
+## Qualification contract
+Accelerator qualification constraints for inference capability, runtime/model compatibility, memory, thermal, reset, isolation, and security.
 
 ## Relationship overview
-![NPU / AI Accelerator relationship](./npu_ai_accelerator_relationship.svg)
+![NPU / AI Accelerator Hardware relationship](./npu_ai_accelerator_relationship.svg)
 
-## Relevant system path
+## Review-driven decisions
+- NPU is not the general video encoder/decoder contract.
+- Upper services use inference contracts rather than hardware assumptions.
+- Model/runtime compatibility is qualified.
+- Memory/thermal/reset/security criteria are explicit.
+- Absence follows profile fallback/unavailable behavior.
 
-### Application Layer
-- Alarm
-- Event Search
-### System Services
-- AI Inference Service
-### Middleware
-- AI Runtime
-### HAL
-- AI / NPU HAL
-### Linux Kernel
-- NPU Driver
-### Hardware Platform
-- NPU / AI Accelerator
-- SoC / CPU
+## Product Profile inputs
+- hardware capability required/optional;
+- operating envelope and resource budgets;
+- compatible OS/driver/runtime/toolchain;
+- security and fallback policy.
 
-## Security context
-- Hardware Root of Trust
-- Model Integrity
-- Secure Boot
+## Qualification model
+Hardware is selected by measurable capability and compatibility criteria. Supplier replacement is permitted after qualification while preserving upper product contracts.
 
-## Communication boundaries
-- HAL Bus
-- Kernel Bus
-- Hardware Bus
+## Security
+- hardware trust/isolation capabilities are declared, not assumed;
+- mandatory protection requirements come from the security profile;
+- security-relevant hardware faults are auditable.
 
-## Dependency rules
-- Hardware is consumed only through approved kernel/HAL/service abstractions.
-- Platform-specific behavior shall not leak into upper-layer application APIs.
-- Security and lifecycle controls remain active across reset and power transitions.
+## Open decisions
+- concrete supplier targets;
+- numerical compute/thermal/power/resource thresholds.
 
-## Failure behavior
-- accelerator unavailable
-- thermal limit
-- reset failure
+## Design acceptance criteria
+1. Product profile without NPU remains valid when inference fallback is allowed.
+2. Codec path does not require NPU.
+3. New accelerator preserves upper inference contracts after qualification.
+4. Thermal/reset behavior satisfies declared product limits.
 
 ## Changelog
-- 2026-10-03: Added detailed relationship design.
+- 2026-10-04: Reworked as Product Profile / hardware qualification design for Platform Architecture Baseline v2.
